@@ -8,6 +8,8 @@ import 'package:flame/components/mixins/resizable.dart';
 class Driver extends AnimationComponent with Resizable {
   static const ACCELERATION = 20.0;
 
+  final Function pauseGame;
+
   bool frozen = true;
   double speed = 10;
 
@@ -16,7 +18,7 @@ class Driver extends AnimationComponent with Resizable {
 
   Size gameSize;
 
-  Driver(this.gameSize)
+  Driver(this.gameSize, this.pauseGame)
       : super.sequenced(96, 96, 'drivers/tomato_anim.png', 100,
             textureWidth: 96, textureHeight: 96) {
     anchor = Anchor.center;
@@ -49,7 +51,10 @@ class Driver extends AnimationComponent with Resizable {
 
       speed += ACCELERATION * dt;
 
-      if (y > gameSize.height || y < 0 || x > gameSize.width || x < 0) reset();
+      if (y > gameSize.height || y < 0 || x > gameSize.width || x < 0) {
+        reset();
+        pauseGame();
+      }
     }
   }
 
