@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:toilet_racer/constants.dart';
+import 'package:toilet_racer/app/constants.dart';
 
-class GameMenu extends StatelessWidget {
+class StartMenu extends StatelessWidget {
   final Function startGame;
   final Function quitGame;
 
-  const GameMenu({
+  const StartMenu({
     Key key,
     this.startGame,
     this.quitGame,

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flame/components/component.dart';
 import 'package:flame/components/mixins/tapable.dart';
 import 'package:flutter/material.dart';
-import 'package:toilet_racer/views/driver.dart';
+import 'package:toilet_racer/components/driver.dart';
 
 class Controller extends Component with Tapable {
   static final Paint _paint = Paint()..color = Colors.black.withAlpha(50);

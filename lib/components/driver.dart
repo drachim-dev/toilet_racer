@@ -4,11 +4,14 @@ import 'dart:ui';
 import 'package:flame/anchor.dart';
 import 'package:flame/components/animation_component.dart';
 import 'package:flame/components/mixins/resizable.dart';
+import 'package:toilet_racer/app/locator.dart';
+import 'package:toilet_racer/services/audio_service.dart';
 
 class Driver extends AnimationComponent with Resizable {
   static const ACCELERATION = 20.0;
 
   final Function pauseGame;
+  final AudioService _audioService = locator<AudioService>();
 
   bool frozen = true;
   double speed = 10;
@@ -19,7 +22,7 @@ class Driver extends AnimationComponent with Resizable {
   Size gameSize;
 
   Driver(this.gameSize, this.pauseGame)
-      : super.sequenced(96, 96, 'drivers/tomato_anim.png', 100,
+      : super.sequenced(96, 96, 'drivers/tomato_anim.png', 135,
             textureWidth: 96, textureHeight: 96) {
     anchor = Anchor.center;
   }
@@ -52,6 +55,7 @@ class Driver extends AnimationComponent with Resizable {
       speed += ACCELERATION * dt;
 
       if (y > gameSize.height || y < 0 || x > gameSize.width || x < 0) {
+        _audioService.playDropSound('fart.mp3');
         reset();
         pauseGame();
       }
