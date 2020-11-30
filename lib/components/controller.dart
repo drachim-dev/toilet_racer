@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:flame/components/component.dart';
+import 'package:flame/components/position_component.dart';
 import 'package:flame/components/mixins/tapable.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/components/driver.dart';
