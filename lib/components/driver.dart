@@ -2,12 +2,12 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/anchor.dart';
-import 'package:flame/components/animation_component.dart';
+import 'package:flame/components/sprite_animation_component.dart';
 import 'package:flame/components/mixins/resizable.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 
-class Driver extends AnimationComponent with Resizable {
+class Driver extends SpriteAnimationComponent with Resizable {
   static const ACCELERATION = 20.0;
 
   final Function pauseGame;

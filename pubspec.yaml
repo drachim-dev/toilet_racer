@@ -24,7 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flame: ^0.28.0
+  flame: ^1.0.0-rc2
+  flame_audio: ^0.1.0-rc2
   get_it: ^5.0.1
   shared_preferences: '>=0.5.12+4 <2.0.0'
 
