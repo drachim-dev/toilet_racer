@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/audio_service.dart';
-import 'package:toilet_racer/views/overlay_widget.dart';
 
 class OverlayUi extends StatefulWidget {
   final bool soundEnabled;
@@ -24,7 +23,8 @@ class _OverlayUiState extends State<OverlayUi> {
 
   @override
   Widget build(BuildContext context) {
-    return OverlayWidget(
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: IconButton(
           icon: musicEnabled
               ? Icon(Icons.volume_up, size: overlayUiIconSize)

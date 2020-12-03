@@ -15,5 +15,8 @@ Future<void> main() async {
   final gameSize = await flameUtils.initialDimensions();
 
   final game = RaceGame(gameSize);
-  runApp(game.widget);
+  runApp(MaterialApp(
+    theme: ThemeData(fontFamily: 'NerkoOne'),
+    home: Material(child: game.widget),
+  ));
 }

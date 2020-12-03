@@ -42,31 +42,31 @@ class StartMenu extends StatelessWidget {
     );
 
     const titleStyle = TextStyle(
-        fontSize: 64, color: Colors.brown, fontWeight: FontWeight.bold);
+        fontSize: 72, color: Colors.brown, fontFamily: 'NerkoOne');
 
     const spacing = 36.0;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(title, style: titleStyle, textAlign: TextAlign.center),
-        SizedBox(height: spacing * 3),
-        FlatButton(
-          child: Text('PLAY', style: buttonStyle),
-          onPressed: startGame,
-        ),
-        SizedBox(height: spacing),
-        FlatButton(
-          child: Text('OPTIONS', style: buttonStyle),
-          onPressed: () {},
-        ),
-        SizedBox(height: spacing),
-        FlatButton(
-          child: Text('QUIT', style: buttonStyle),
-          onPressed: quitGame,
-        ),
-      ],
-    );
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+    Text(title, style: titleStyle, textAlign: TextAlign.center),
+    SizedBox(height: spacing * 3),
+    FlatButton(
+      child: Text('PLAY', style: buttonStyle),
+      onPressed: startGame,
+    ),
+    SizedBox(height: spacing),
+    FlatButton(
+      child: Text('OPTIONS', style: buttonStyle),
+      onPressed: () {},
+    ),
+    SizedBox(height: spacing),
+    FlatButton(
+      child: Text('QUIT', style: buttonStyle),
+      onPressed: quitGame,
+    ),
+        ],
+      );
   }
 }

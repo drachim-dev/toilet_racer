@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:toilet_racer/components/driver.dart';
 
 class Controller extends Component with Tapable {
-  static final Paint _paint = Paint()..color = Colors.black.withAlpha(50);
+  static final Paint _paint = Paint()..color = Colors.transparent;
+  static const double _height = 140.0;
 
   final Size gameSize;
   final Driver driver;
@@ -15,8 +16,9 @@ class Controller extends Component with Tapable {
 
   @override
   void render(Canvas c) {
-    c.drawOval(
-        Rect.fromLTWH(0, gameSize.height - 100, gameSize.width, 100), _paint);
+    c.drawRect(
+        Rect.fromLTWH(0, gameSize.height - _height, gameSize.width, _height),
+        _paint);
   }
 
   @override
@@ -26,7 +28,7 @@ class Controller extends Component with Tapable {
 
   @override
   Rect toRect() {
-    return Rect.fromLTWH(0, gameSize.height - 100, gameSize.width, 100);
+    return Rect.fromLTWH(0, gameSize.height - _height, gameSize.width, _height);
   }
 
   @override
@@ -35,5 +37,4 @@ class Controller extends Component with Tapable {
 
     driver.move();
   }
-
 }
