@@ -1,4 +1,5 @@
 import 'package:flame/util.dart';
+import 'package:flame/extensions/vector2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -14,7 +15,7 @@ Future<void> main() async {
   await flameUtils.setOrientation(DeviceOrientation.portraitUp);
   final gameSize = await flameUtils.initialDimensions();
 
-  final game = RaceGame(gameSize);
+  final game = RaceGame(gameSize.toSize());
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'NerkoOne'),
     home: Material(child: game.widget),

@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:vector_math/vector_math_64.dart';
 import 'package:flame/anchor.dart';
 import 'package:flame/components/sprite_animation_component.dart';
 import 'package:flame/components/mixins/resizable.dart';
+import 'package:flame/extensions/vector2.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 
@@ -19,17 +21,16 @@ class Driver extends SpriteAnimationComponent with Resizable {
   @override
   double angle = 0;
 
-  Size gameSize;
-
-  Driver(this.gameSize, this.pauseGame)
-      : super.sequenced(96, 96, 'drivers/tomato_anim.png', 135,
-            textureWidth: 96, textureHeight: 96) {
+  Driver(Image image, this.pauseGame)
+      : super.sequenced(Vector2(96, 96), image, 135,
+            textureSize: Vector2(96, 96), stepTime: 0.1) {
+    //'drivers/tomato_anim.png'
     anchor = Anchor.center;
   }
 
   void reset() {
-    x = gameSize.width / 2;
-    y = gameSize.height / 1.4;
+    x = gameSize.toSize().width / 2;
+    y = gameSize.toSize().height / 1.4;
 
     speed = 10;
     angle = 0;
@@ -38,8 +39,8 @@ class Driver extends SpriteAnimationComponent with Resizable {
   }
 
   @override
-  void resize(Size size) {
-    super.resize(size);
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
 
     reset();
   }
@@ -54,7 +55,10 @@ class Driver extends SpriteAnimationComponent with Resizable {
 
       speed += ACCELERATION * dt;
 
-      if (y > gameSize.height || y < 0 || x > gameSize.width || x < 0) {
+      if (y > gameSize.toSize().height ||
+          y < 0 ||
+          x > gameSize.toSize().width ||
+          x < 0) {
         _audioService.playDropSound('fart.mp3');
         reset();
         pauseGame();
