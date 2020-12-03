@@ -1,15 +1,17 @@
 import 'dart:ui';
 
 import 'package:flame/components/mixins/tapable.dart';
+import 'package:flame/components/sprite_component.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/game/base_game.dart';
+import 'package:flame/extensions/size.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
-import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/driver.dart';
 import 'package:toilet_racer/components/help_text.dart';
@@ -28,18 +30,26 @@ class RaceGame extends BaseGame with HasTapableComponents, HasWidgetsOverlay {
   Controller controller;
   HelpText controlHelpText;
 
+  Image driverImage;
+
   RaceGame(this.gameSize) {
     _init();
 
-    add(Background(gameSize));
     _showMenu();
+  }
+
+  @override
+  Future<void> onLoad() async {
+    driverImage = await Flame.images.load('drivers/tomato_anim.png');
+    add(SpriteComponent.fromImage(
+        gameSize.toVector2(), await Flame.images.load('roads/toilet.jpg')));
   }
 
   void _init() {
     _musicEnabled = _prefService.getBool(prefKeyMusicEnabled) ?? _musicEnabled;
     _showHelp = _prefService.getBool(prefKeyShowHelp) ?? _showHelp;
 
-    Flame.bgm.initialize();
+    FlameAudio.bgm.initialize();
     if (_musicEnabled) {
       AudioService().playMusic();
     }
@@ -55,7 +65,7 @@ class RaceGame extends BaseGame with HasTapableComponents, HasWidgetsOverlay {
   }
 
   void _startGame() {
-    add(driver = Driver(gameSize, _pauseGame));
+    add(driver = Driver(driverImage, _pauseGame));
     add(controller = Controller(gameSize, driver));
 
     if (_showHelp) {
@@ -72,9 +82,9 @@ class RaceGame extends BaseGame with HasTapableComponents, HasWidgetsOverlay {
   }
 
   void _pauseGame() {
-    markToRemove(driver);
-    markToRemove(controller);
-    markToRemove(controlHelpText);
+    remove(driver);
+    remove(controller);
+    remove(controlHelpText);
     removeWidgetOverlay(overlayUi);
     _showMenu();
   }

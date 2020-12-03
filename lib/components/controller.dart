@@ -5,7 +5,7 @@ import 'package:flame/components/mixins/tapable.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/components/driver.dart';
 
-class Controller extends Component with Tapable {
+class Controller extends PositionComponent with Tapable {
   static final Paint _paint = Paint()..color = Colors.transparent;
   static const double _height = 140.0;
 
@@ -16,13 +16,15 @@ class Controller extends Component with Tapable {
 
   @override
   void render(Canvas c) {
+    super.render(c);
     c.drawRect(
         Rect.fromLTWH(0, gameSize.height - _height, gameSize.width, _height),
         _paint);
   }
 
   @override
-  void update(double t) {
+  void update(double dt) {
+    super.update(dt);
     // TODO: implement update
   }
 
