@@ -6,6 +6,7 @@ class AudioService {
 
   static Future<AudioService> getInstance() async {
     if (_instance == null) {
+      FlameAudio.audioCache.prefix = audioPath;
       _instance = AudioService();
       await _instance.init();
     }
@@ -14,7 +15,7 @@ class AudioService {
 
   Future<void> init() async {
     // preload audio
-    await FlameAudio.audioCache.loadAll([
+    await FlameAudio.bgm.audioCache.loadAll([
       audioBackgroundPath,
     ]);
   }

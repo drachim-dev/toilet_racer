@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flame/components/mixins/tapable.dart';
 import 'package:flame/components/sprite_component.dart';
+import 'package:flame/extensions/size.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/game/base_game.dart';
-import 'package:flame/extensions/size.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/services.dart';
@@ -84,7 +84,10 @@ class RaceGame extends BaseGame with HasTapableComponents, HasWidgetsOverlay {
   void _pauseGame() {
     remove(driver);
     remove(controller);
-    remove(controlHelpText);
+
+    if (_showHelp) {
+      remove(controlHelpText);
+    }
     removeWidgetOverlay(overlayUi);
     _showMenu();
   }
