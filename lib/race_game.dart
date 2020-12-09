@@ -6,7 +6,9 @@ import 'package:flame/extensions/size.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/game/base_game.dart';
+import 'package:vector_math/vector_math_64.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +22,8 @@ import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
 // Extend Box2DGame class to use a physics engine
-class RaceGame extends BaseGame with HasTapableComponents, HasWidgetsOverlay {
+class RaceGame extends Forge2DGame
+    with HasTapableComponents, HasWidgetsOverlay {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final Size gameSize;
   bool _musicEnabled = true;
@@ -32,7 +35,8 @@ class RaceGame extends BaseGame with HasTapableComponents, HasWidgetsOverlay {
 
   Image driverImage;
 
-  RaceGame(this.gameSize) {
+  RaceGame(this.gameSize) : super(scale: 4.0, gravity: Vector2(0, 0)) {
+    viewport.resize(gameSize.toVector2());
     _init();
 
     _showMenu();
