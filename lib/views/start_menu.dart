@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/race_game.dart';
 
 class StartMenu extends StatelessWidget {
-  final Function startGame;
-  final Function quitGame;
+  final RaceGame game;
 
-  const StartMenu({
-    Key key,
-    this.startGame,
-    this.quitGame,
-  }) : super(key: key);
+  const StartMenu(this.game);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +50,7 @@ class StartMenu extends StatelessWidget {
     SizedBox(height: spacing * 3),
     FlatButton(
       child: Text('PLAY', style: buttonStyle),
-      onPressed: startGame,
+      onPressed: game.startGame,
     ),
     SizedBox(height: spacing),
     FlatButton(
@@ -64,7 +60,7 @@ class StartMenu extends StatelessWidget {
     SizedBox(height: spacing),
     FlatButton(
       child: Text('QUIT', style: buttonStyle),
-      onPressed: quitGame,
+      onPressed: game.quitGame,
     ),
         ],
       );

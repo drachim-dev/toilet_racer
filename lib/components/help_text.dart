@@ -15,15 +15,13 @@ class HelpText extends Component {
     ..strokeWidth = 5.0
     ..style = PaintingStyle.stroke;
 
-  final Size gameSize;
-
-  HelpText(this.gameSize);
+  Vector2 _gameSize;
 
   @override
   void render(Canvas c) {
-    var p1 = Offset(gameSize.width, gameSize.height - 225);
+    var p1 = Offset(_gameSize.x, _gameSize.y - 225);
     var bend1 = Offset(p1.dx - 20, p1.dy + 120);
-    var p2 = Offset(gameSize.width / 2 + 70, p1.dy + 150);
+    var p2 = Offset(_gameSize.x / 2 + 70, p1.dy + 150);
 
     var path = Path()
       ..moveTo(p1.dx, p1.dy)
@@ -42,5 +40,14 @@ class HelpText extends Component {
   @override
   void update(double dt) {
     super.update(dt);
+    if (_gameSize == null) {
+      return;
+    }
+  }
+
+  @override
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+    _gameSize = gameSize;
   }
 }

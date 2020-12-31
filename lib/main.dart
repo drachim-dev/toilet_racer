@@ -1,23 +1,35 @@
-import 'package:flame/util.dart';
-import 'package:flame/extensions/vector2.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/game/game_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/views/overlay_ui.dart';
+import 'package:toilet_racer/views/start_menu.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setupLocator();
 
-  var flameUtils = Util();
-  await flameUtils.fullScreen();
-  await flameUtils.setOrientation(DeviceOrientation.portraitUp);
-  final gameSize = await flameUtils.initialDimensions();
+  Flame.initializeWidget();
+  await Flame.util.fullScreen();
+  await Flame.util.setOrientation(DeviceOrientation.portraitUp);
+  final size = await Flame.util.initialDimensions();
+  final game = RaceGame(size);
 
-  final game = RaceGame(gameSize.toSize());
   runApp(MaterialApp(
     theme: ThemeData(fontFamily: 'NerkoOne'),
-    home: Material(child: game.widget),
+    home: Material(
+      child: GameWidget(
+        game: game,
+        overlayBuilderMap: {
+          startMenu: (_, game) => StartMenu(game),
+          overlayUi: (_, game) => OverlayUi(),
+        },
+        initialActiveOverlays: const [startMenu],
+      ),
+    ),
   ));
 }

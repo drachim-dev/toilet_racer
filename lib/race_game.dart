@@ -2,14 +2,9 @@ import 'dart:ui';
 
 import 'package:flame/components/mixins/tapable.dart';
 import 'package:flame/components/sprite_component.dart';
-import 'package:flame/extensions/size.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/game.dart';
-import 'package:flame/game/base_game.dart';
-import 'package:vector_math/vector_math_64.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
-import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -18,14 +13,10 @@ import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/driver.dart';
 import 'package:toilet_racer/components/help_text.dart';
 import 'package:toilet_racer/services/audio_service.dart';
-import 'package:toilet_racer/views/overlay_ui.dart';
-import 'package:toilet_racer/views/start_menu.dart';
+import 'package:vector_math/vector_math_64.dart';
 
-// Extend Box2DGame class to use a physics engine
-class RaceGame extends Forge2DGame
-    with HasTapableComponents, HasWidgetsOverlay {
+class RaceGame extends Forge2DGame with HasTapableComponents {
   final SharedPreferences _prefService = locator<SharedPreferences>();
-  final Size gameSize;
   bool _musicEnabled = true;
   bool _showHelp = true;
 
@@ -35,8 +26,8 @@ class RaceGame extends Forge2DGame
 
   Image driverImage;
 
-  RaceGame(this.gameSize) : super(scale: 4.0, gravity: Vector2(0, 0)) {
-    viewport.resize(gameSize.toVector2());
+  RaceGame(Vector2 screenSize) : super(scale: 4.0, gravity: Vector2(0, 0)) {
+    size.setFrom(screenSize);
     _init();
 
     _showMenu();
@@ -45,8 +36,8 @@ class RaceGame extends Forge2DGame
   @override
   Future<void> onLoad() async {
     driverImage = await Flame.images.load('drivers/tomato_anim.png');
-    add(SpriteComponent.fromImage(
-        gameSize.toVector2(), await Flame.images.load('roads/toilet.jpg')));
+    await add(SpriteComponent.fromImage(
+        size, await Flame.images.load('roads/toilet.jpg')));
   }
 
   void _init() {
@@ -60,42 +51,34 @@ class RaceGame extends Forge2DGame
   }
 
   void _showMenu() {
-    addWidgetOverlay(
-        startMenu,
-        StartMenu(
-          startGame: _startGame,
-          quitGame: _quitGame,
-        ));
+    overlays.add(startMenu);
   }
 
-  void _startGame() {
-    add(driver = Driver(driverImage, _pauseGame));
-    add(controller = Controller(gameSize, driver));
+  void startGame() {
+    add(driver = Driver(driverImage, pauseGame));
+    add(controller = Controller(driver));
 
     if (_showHelp) {
-      add(controlHelpText = HelpText(gameSize));
+      add(controlHelpText = HelpText());
       _showHelp = false;
       _prefService.setBool(prefKeyShowHelp, _showHelp);
     }
 
-    removeWidgetOverlay(startMenu);
-    addWidgetOverlay(
-      overlayUi,
-      OverlayUi(soundEnabled: _musicEnabled),
-    );
+    overlays.remove(startMenu);
+    overlays.add(overlayUi);
   }
 
-  void _pauseGame() {
+  void pauseGame() {
     remove(driver);
     remove(controller);
 
     if (_showHelp) {
       remove(controlHelpText);
     }
-    removeWidgetOverlay(overlayUi);
+    overlays.remove(overlayUi);
     _showMenu();
   }
 
-  void _quitGame() =>
+  void quitGame() =>
       SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 }

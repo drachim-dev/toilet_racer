@@ -5,28 +5,29 @@ import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 
 class OverlayUi extends StatefulWidget {
-  final bool soundEnabled;
-
-  OverlayUi({this.soundEnabled});
-
   @override
-  _OverlayUiState createState() => _OverlayUiState(musicEnabled: soundEnabled);
+  _OverlayUiState createState() => _OverlayUiState();
 }
 
 class _OverlayUiState extends State<OverlayUi> {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final AudioService _audioService = locator<AudioService>();
 
-  bool musicEnabled;
+  bool _musicEnabled;
 
-  _OverlayUiState({@required this.musicEnabled});
+  @override
+  void initState() {
+    super.initState();
+
+    _musicEnabled = _prefService.getBool(prefKeyMusicEnabled) ?? true;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: IconButton(
-          icon: musicEnabled
+          icon: _musicEnabled
               ? Icon(Icons.volume_up, size: overlayUiIconSize)
               : Icon(Icons.volume_off, size: overlayUiIconSize),
           color: Colors.white,
@@ -35,9 +36,9 @@ class _OverlayUiState extends State<OverlayUi> {
   }
 
   void _toggleMusic() {
-    setState(() => musicEnabled = !musicEnabled);
+    setState(() => _musicEnabled = !_musicEnabled);
 
-    _prefService.setBool(prefKeyMusicEnabled, musicEnabled);
-    musicEnabled ? _audioService.playMusic() : _audioService.pause();
+    _prefService.setBool(prefKeyMusicEnabled, _musicEnabled);
+    _musicEnabled ? _audioService.playMusic() : _audioService.pause();
   }
 }

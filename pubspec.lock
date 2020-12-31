@@ -70,7 +70,7 @@ packages:
       name: cupertino_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   fake_async:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       name: flame
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-rc2"
+    version: "1.0.0-rc5"
   flame_audio:
     dependency: "direct main"
     description:
@@ -112,7 +112,7 @@ packages:
       name: flame_forge2d
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0-rc1"
+    version: "0.6.0-rc1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -134,14 +134,14 @@ packages:
       name: forge2d
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.6.0"
   get_it:
     dependency: "direct main"
     description:
       name: get_it
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.3"
   intl:
     dependency: transitive
     description:
@@ -176,7 +176,7 @@ packages:
       name: ordered_set
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   path:
     dependency: transitive
     description:

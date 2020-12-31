@@ -24,15 +24,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flame: ^1.0.0-rc2
+  flame: ^1.0.0-rc5
   flame_audio: ^0.1.0-rc2
-  flame_forge2d: ^0.5.0-rc1
-  get_it: ^5.0.1
+  flame_forge2d: ^0.6.0-rc1
+  get_it: ^5.0.3
   shared_preferences: ">=0.5.12+4 <2.0.0"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.2
 
 dev_dependencies:
   pedantic: ^1.9.2
