@@ -15,10 +15,14 @@ import 'package:toilet_racer/components/help_text.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
+typedef AsyncCallback = Future<void> Function();
+
 class RaceGame extends Forge2DGame with HasTapableComponents {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   bool _musicEnabled = true;
   bool _showHelp = true;
+
+  AsyncCallback roundEndCallback;
 
   Driver driver;
   Controller controller;
@@ -26,7 +30,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   Image driverImage;
 
-  RaceGame(Vector2 screenSize) : super(scale: 4.0, gravity: Vector2(0, 0)) {
+  RaceGame(Vector2 screenSize, {this.roundEndCallback})
+      : super(scale: 4.0, gravity: Vector2(0, 0)) {
     size.setFrom(screenSize);
     _init();
 
@@ -68,7 +73,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     overlays.add(overlayUi);
   }
 
-  void pauseGame() {
+  void pauseGame() async {
     remove(driver);
     remove(controller);
 
@@ -76,6 +81,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
       remove(controlHelpText);
     }
     overlays.remove(overlayUi);
+
+    await roundEndCallback();
     _showMenu();
   }
 
