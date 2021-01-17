@@ -44,8 +44,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _ad = _buildAd()..load();
-    _game =
-        RaceGame(widget.size, roundEndCallback: _roundEndCallback);
+    _game = RaceGame(widget.size, roundEndCallback: _roundEndCallback);
   }
 
   @override
@@ -93,6 +92,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _roundEndCallback() async {
-    await _showAd();
+    //await _showAd();
   }
 }

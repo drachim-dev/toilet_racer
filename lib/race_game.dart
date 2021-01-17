@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
+import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/driver.dart';
 import 'package:toilet_racer/components/help_text.dart';
@@ -21,18 +22,26 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   bool _musicEnabled = true;
   bool _showHelp = true;
+  bool _collisionDetected = false;
 
   AsyncCallback roundEndCallback;
 
   Driver driver;
+  Player player;
   Controller controller;
   HelpText controlHelpText;
 
   Image driverImage;
 
+  Boundary innerBoundary;
+  Boundary outerBoundary;
+
+  BoundaryContactCallback contactCallback;
+
   RaceGame(Vector2 screenSize, {this.roundEndCallback})
       : super(scale: 4.0, gravity: Vector2(0, 0)) {
     size.setFrom(screenSize);
+    viewport.resize(size);
     _init();
 
     _showMenu();
@@ -59,9 +68,23 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     overlays.add(startMenu);
   }
 
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (_collisionDetected) {
+      pauseGame();
+      _collisionDetected = false;
+    }
+  }
+
   void startGame() {
-    add(driver = Driver(driverImage, pauseGame));
-    add(controller = Controller(driver));
+    //add(driver = Driver(driverImage, pauseGame));
+    add(player = Player());
+    add(innerBoundary = Boundary(10));
+    add(outerBoundary = Boundary(20));
+    addContactCallback(
+        contactCallback = BoundaryContactCallback(collisionDetected));
+    add(controller = Controller(driver, player));
 
     if (_showHelp) {
       add(controlHelpText = HelpText());
@@ -74,8 +97,23 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void pauseGame() async {
-    remove(driver);
+    print("pause!");
+    //remove(driver);
+    // world.destroyBody(player.body);
+    // player.remove();
+
+    // world.destroyBody(innerBoundary.body);
+    // innerBoundary.remove();
+
+    // world.destroyBody(outerBoundary.body);
+    // outerBoundary.remove();
+
+    player.body.setTransform(Vector2(0, 0), 0);
+    remove(player);
+    remove(innerBoundary);
+    remove(outerBoundary);
     remove(controller);
+    removeContactCallback(contactCallback);
 
     if (_showHelp) {
       remove(controlHelpText);
@@ -84,6 +122,10 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     await roundEndCallback();
     _showMenu();
+  }
+
+  void collisionDetected() {
+    _collisionDetected = true;
   }
 
   void quitGame() =>

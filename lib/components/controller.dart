@@ -12,8 +12,9 @@ class Controller extends PositionComponent with Tapable {
 
   Vector2 _gameSize;
   final Driver driver;
+  final Player player;
 
-  Controller(this.driver);
+  Controller(this.driver, this.player);
 
   @override
   void render(Canvas c) {
@@ -37,8 +38,8 @@ class Controller extends PositionComponent with Tapable {
 
   @override
   bool onTapDown(TapDownDetails details) {
-    driver.move();
-
+    //driver.move();
+    player.body.applyAngularImpulse(200);
     return super.onTapDown(details);
   }
 
