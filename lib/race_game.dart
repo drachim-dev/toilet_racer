@@ -97,7 +97,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void pauseGame() async {
-    print("pause!");
+    //print("pause!");
     //remove(driver);
     // world.destroyBody(player.body);
     // player.remove();
@@ -108,7 +108,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     // world.destroyBody(outerBoundary.body);
     // outerBoundary.remove();
 
-    player.body.setTransform(Vector2(0, 0), 0);
+    //player.body.setTransform(Vector2(0, 0), 0);
     remove(player);
     remove(innerBoundary);
     remove(outerBoundary);

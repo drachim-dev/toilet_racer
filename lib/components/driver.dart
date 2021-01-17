@@ -67,7 +67,7 @@ class Player extends BodyComponent {
     } else {
       final force = Rot.mulVec2(
           Rot.withAngle(body.getAngle()), Vector2(0, -1)..scale(300));
-      body.applyForce(force);
+      body.applyForceToCenter(force);
       //body.applyForceToCenter(force);
     }
   }
