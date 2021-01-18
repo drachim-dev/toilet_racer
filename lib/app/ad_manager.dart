@@ -1,11 +1,10 @@
+import 'package:firebase_admob/firebase_admob.dart';
+
 class AdManager {
-  static const String appId = String.fromEnvironment('ADMOB_APP_ID');
+  static String appId = String.fromEnvironment('ADMOB_APP_ID',
+      defaultValue: FirebaseAdMob.testAppId);
 
-  static const String interstitialAdUnitId =
-      String.fromEnvironment('ADMOB_INTERSTITIAL_AD_ID');
-
-  static const testdDevice1 = String.fromEnvironment('ADMOB_TEST_DEVICE_ID_1');
-  static const testdDevice2 = String.fromEnvironment('ADMOB_TEST_DEVICE_ID_2');
-
-  static List<String> get testDeviceId => [testdDevice1, testdDevice2];
+  static String interstitialAdUnitId = String.fromEnvironment(
+      'ADMOB_INTERSTITIAL_AD_ID',
+      defaultValue: InterstitialAd.testAdUnitId);
 }

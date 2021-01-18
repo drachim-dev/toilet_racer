@@ -74,10 +74,6 @@ class _MyAppState extends State<MyApp> {
   InterstitialAd _buildAd() {
     return InterstitialAd(
       adUnitId: AdManager.interstitialAdUnitId,
-      targetingInfo: MobileAdTargetingInfo(testDevices: [
-        AdManager.testdDevice1,
-        AdManager.testdDevice2,
-      ]),
       listener: (MobileAdEvent event) {
         if (event == MobileAdEvent.failedToLoad) {
           _ad..load();
