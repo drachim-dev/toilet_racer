@@ -28,7 +28,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 // Default values
 def dartEnvironmentVariables = [
-        ADMOB_APP_ID: "",
+        ADMOB_APP_ID: "ca-app-pub-3940256099942544~3347511713", // Default AdMob app ID for test
 ]
 if (project.hasProperty('dart-defines')) {
     dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
