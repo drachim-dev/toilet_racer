@@ -1,10 +1,11 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:flame/sprite.dart';
 import 'package:flame/sprite_animation.dart';
-import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/sprite_body_component.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flame/anchor.dart';
 import 'package:flame/components/sprite_animation_component.dart';
@@ -15,12 +16,11 @@ import 'package:flutter/material.dart' as material;
 
 import 'boundary.dart';
 
-class Player extends BodyComponent {
-  Player();
-
+class Player extends SpriteBodyComponent {
   double angle = math.pi / 2;
-
   bool shouldDestroy = false;
+
+  Player(Image image) : super(Sprite(image), Vector2(15, 12));
 
   @override
   Body createBody() {
@@ -36,7 +36,7 @@ class Player extends BodyComponent {
       ..userData = this
       // To be able to determine object in collision
       //..setUserData(this)
-      ..position = Vector2(0, -30)
+      ..position = Vector2(0, -35)
       ..type = BodyType.DYNAMIC
       ..angularDamping = 5
       ..linearDamping = 1
@@ -67,7 +67,7 @@ class Player extends BodyComponent {
     } else {
       final force = Rot.mulVec2(
           Rot.withAngle(body.getAngle()), Vector2(0, -1)..scale(300));
-      body.applyForceToCenter(force);
+      body.applyForce(force);
       //body.applyForceToCenter(force);
     }
   }

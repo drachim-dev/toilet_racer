@@ -11,7 +11,7 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/controller.dart';
-import 'package:toilet_racer/components/driver.dart';
+import 'package:toilet_racer/components/player.dart';
 import 'package:toilet_racer/components/help_text.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -20,6 +20,8 @@ typedef AsyncCallback = Future<void> Function();
 
 class RaceGame extends Forge2DGame with HasTapableComponents {
   final SharedPreferences _prefService = locator<SharedPreferences>();
+  final AudioService _audioService = locator<AudioService>();
+  
   bool _musicEnabled = true;
   bool _showHelp = true;
   bool _collisionDetected = false;
@@ -31,7 +33,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   Controller controller;
   HelpText controlHelpText;
 
-  Image driverImage;
+  Image playerImage;
 
   Boundary innerBoundary;
   Boundary outerBoundary;
@@ -49,9 +51,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   @override
   Future<void> onLoad() async {
-    driverImage = await Flame.images.load('drivers/tomato_anim.png');
+    playerImage = await Flame.images.load('players/rat.png');
     await add(SpriteComponent.fromImage(
-        size, await Flame.images.load('roads/toilet.jpg')));
+        size, await Flame.images.load('roads/toilet.png')));
   }
 
   void _init() {
@@ -79,9 +81,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void startGame() {
     //add(driver = Driver(driverImage, pauseGame));
-    add(player = Player());
-    add(innerBoundary = Boundary(10));
-    add(outerBoundary = Boundary(20));
+    add(player = Player(playerImage));
+    add(innerBoundary = Boundary(12));
+    add(outerBoundary = Boundary(23));
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
     add(controller = Controller(driver, player));
@@ -126,6 +128,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void collisionDetected() {
     _collisionDetected = true;
+
+    // Bug in audioplayers https://github.com/luanpotter/audioplayers/issues/738
+    // _audioService.playDropSound('fart.mp3');
   }
 
   void quitGame() =>

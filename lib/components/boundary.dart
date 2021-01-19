@@ -12,7 +12,7 @@ class Boundary extends BodyComponent {
   Body createBody() {
     paint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.white
+      ..color = Colors.white.withAlpha(100)
       ..strokeWidth = 2;
 
     final shape = ChainShape();

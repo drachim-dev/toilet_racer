@@ -44,10 +44,10 @@ class StartMenu extends StatelessWidget {
 
     return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+    SizedBox(height: spacing * 2),
     Text(title, style: titleStyle, textAlign: TextAlign.center),
-    SizedBox(height: spacing * 3),
+    SizedBox(height: spacing * 5),
     FlatButton(
       child: Text('PLAY', style: buttonStyle),
       onPressed: game.startGame,

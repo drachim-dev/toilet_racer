@@ -4,7 +4,7 @@ import 'package:flame/components/mixins/tapable.dart';
 import 'package:flame/components/position_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:toilet_racer/components/driver.dart';
+import 'package:toilet_racer/components/player.dart';
 
 class Controller extends PositionComponent with Tapable {
   static final Paint _paint = Paint()..color = Colors.transparent;
