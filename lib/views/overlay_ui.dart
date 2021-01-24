@@ -39,6 +39,6 @@ class _OverlayUiState extends State<OverlayUi> {
     setState(() => _musicEnabled = !_musicEnabled);
 
     _prefService.setBool(prefKeyMusicEnabled, _musicEnabled);
-    _musicEnabled ? _audioService.playMusic() : _audioService.pause();
+    _musicEnabled ? _audioService.playBgMusic() : _audioService.pause();
   }
 }

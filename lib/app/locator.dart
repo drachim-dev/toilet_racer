@@ -8,5 +8,5 @@ void setupLocator() {
   locator.registerSingletonAsync<SharedPreferences>(
       () => SharedPreferences.getInstance());
   locator
-      .registerSingletonAsync<AudioService>(() => AudioService.getInstance());
+      .registerSingleton<AudioService>(AudioService.getInstance());
 }

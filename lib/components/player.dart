@@ -1,15 +1,12 @@
 import 'dart:math' as math;
 import 'dart:ui';
 
-import 'package:flame/sprite.dart';
-import 'package:flame/sprite_animation.dart';
+import 'package:flame/components.dart';
 import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/sprite_body_component.dart';
+import 'package:toilet_racer/app/constants.dart';
 import 'package:vector_math/vector_math_64.dart';
-import 'package:flame/anchor.dart';
-import 'package:flame/components/sprite_animation_component.dart';
-import 'package:flame/extensions/vector2.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:flutter/material.dart' as material;
@@ -17,6 +14,8 @@ import 'package:flutter/material.dart' as material;
 import 'boundary.dart';
 
 class Player extends SpriteBodyComponent {
+  final double ACCELERATION = 60;
+  double speed = 300.0;
   double angle = math.pi / 2;
   bool shouldDestroy = false;
 
@@ -65,8 +64,9 @@ class Player extends SpriteBodyComponent {
       //world.destroyBody(body);
       //remove();
     } else {
+      speed += ACCELERATION * dt;
       final force = Rot.mulVec2(
-          Rot.withAngle(body.getAngle()), Vector2(0, -1)..scale(300));
+          Rot.withAngle(body.getAngle()), Vector2(0, -1)..scale(speed));
       body.applyForce(force);
       //body.applyForceToCenter(force);
     }
@@ -150,7 +150,7 @@ class Driver extends SpriteAnimationComponent {
       speed += ACCELERATION * dt;
 
       if (y > _gameSize.y || y < 0 || x > _gameSize.toSize().width || x < 0) {
-        _audioService.playDropSound('fart.mp3');
+        _audioService.playDropSound(audioToiletDropSound);
         reset();
         pauseGame();
       }

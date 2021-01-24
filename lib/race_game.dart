@@ -1,18 +1,17 @@
 import 'dart:ui';
 
-import 'package:flame/components/mixins/tapable.dart';
-import 'package:flame/components/sprite_component.dart';
+import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
+import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/controller.dart';
-import 'package:toilet_racer/components/player.dart';
 import 'package:toilet_racer/components/help_text.dart';
+import 'package:toilet_racer/components/player.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -21,7 +20,10 @@ typedef AsyncCallback = Future<void> Function();
 class RaceGame extends Forge2DGame with HasTapableComponents {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final AudioService _audioService = locator<AudioService>();
-  
+
+  @override
+  bool debugMode = true;
+
   bool _musicEnabled = true;
   bool _showHelp = true;
   bool _collisionDetected = false;
@@ -34,16 +36,15 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   HelpText controlHelpText;
 
   Image playerImage;
+  Image backgroundImage;
 
   Boundary innerBoundary;
   Boundary outerBoundary;
 
   BoundaryContactCallback contactCallback;
 
-  RaceGame(Vector2 screenSize, {this.roundEndCallback})
+  RaceGame({this.roundEndCallback})
       : super(scale: 4.0, gravity: Vector2(0, 0)) {
-    size.setFrom(screenSize);
-    viewport.resize(size);
     _init();
 
     _showMenu();
@@ -52,17 +53,16 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   @override
   Future<void> onLoad() async {
     playerImage = await Flame.images.load('players/rat.png');
-    await add(SpriteComponent.fromImage(
-        size, await Flame.images.load('roads/toilet.png')));
+    backgroundImage = await Flame.images.load('roads/toilet.png');
+    await add(Background(backgroundImage, size));
   }
 
   void _init() {
     _musicEnabled = _prefService.getBool(prefKeyMusicEnabled) ?? _musicEnabled;
     _showHelp = _prefService.getBool(prefKeyShowHelp) ?? _showHelp;
 
-    FlameAudio.bgm.initialize();
     if (_musicEnabled) {
-      AudioService().playMusic();
+      AudioService().playBgMusic();
     }
   }
 
@@ -130,7 +130,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _collisionDetected = true;
 
     // Bug in audioplayers https://github.com/luanpotter/audioplayers/issues/738
-    // _audioService.playDropSound('fart.mp3');
+    _audioService.playDropSound(audioToiletDropSound);
   }
 
   void quitGame() =>

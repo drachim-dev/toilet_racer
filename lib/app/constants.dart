@@ -15,4 +15,5 @@ const String prefKeyShowHelp = 'PREF_KEY_SHOW_HELP';
 const String audioPath = 'assets/audio/';
 const String audioBackgroundPath = 'background.mp3';
 const double audioBackgroundVolume = 0.4;
+const String audioToiletDropSound = 'fart.mp3';
 const double audioDropVolume = 0.6;

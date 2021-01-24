@@ -1,6 +1,6 @@
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/game/game_widget.dart';
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:toilet_racer/app/ad_manager.dart';
@@ -9,7 +9,6 @@ import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
-import 'package:vector_math/vector_math_64.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,17 +18,13 @@ Future<void> main() async {
   Flame.initializeWidget();
   await Flame.util.fullScreen();
   await Flame.util.setOrientation(DeviceOrientation.portraitUp);
-  final size = await Flame.util.initialDimensions();
 
   await FirebaseAdMob.instance.initialize(appId: AdManager.appId);
 
-  runApp(MyApp(size));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  final Vector2 size;
-
-  MyApp(this.size);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -44,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _ad = _buildAd()..load();
-    _game = RaceGame(widget.size, roundEndCallback: _roundEndCallback);
+    _game = RaceGame(roundEndCallback: _roundEndCallback);
   }
 
   @override

@@ -1,8 +1,6 @@
 import 'dart:ui';
 
-import 'package:flame/anchor.dart';
-import 'package:flame/components/component.dart';
-import 'package:flame/text_config.dart';
+import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 

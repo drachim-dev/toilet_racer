@@ -12,7 +12,7 @@ class Boundary extends BodyComponent {
   Body createBody() {
     paint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.white.withAlpha(100)
+      ..color = Colors.white.withAlpha(200)
       ..strokeWidth = 2;
 
     final shape = ChainShape();
@@ -31,4 +31,5 @@ class Boundary extends BodyComponent {
     final bodyDef = BodyDef()..userData = this;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
+
 }
