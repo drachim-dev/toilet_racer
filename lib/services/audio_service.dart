@@ -28,7 +28,7 @@ class AudioService {
   void playBgMusic() =>
       FlameAudio.bgm.play(audioBackgroundPath, volume: audioBackgroundVolume);
 
-  /// plays 'driver drops off the road' sound effect
+  /// plays 'player drops off the road' sound effect
   void playDropSound(String path) {
     FlameAudio.play(path, volume: audioDropVolume);
   }

@@ -5,10 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/sprite_body_component.dart';
-import 'package:toilet_racer/app/constants.dart';
 import 'package:vector_math/vector_math_64.dart';
-import 'package:toilet_racer/app/locator.dart';
-import 'package:toilet_racer/services/audio_service.dart';
 import 'package:flutter/material.dart' as material;
 
 import 'boundary.dart';
@@ -87,85 +84,4 @@ class BoundaryContactCallback extends ContactCallback<Player, Boundary> {
 
   @override
   void end(Player player, Boundary boundary, Contact contact) {}
-}
-
-class Driver extends SpriteAnimationComponent {
-  static const ACCELERATION = 20.0;
-
-  final Function pauseGame;
-  final AudioService _audioService = locator<AudioService>();
-
-  Vector2 _gameSize;
-
-  bool frozen = true;
-  double speed = 10;
-
-  @override
-  double angle = 0;
-
-  Driver(Image image, this.pauseGame)
-      : super.fromFrameData(
-            Vector2(96, 96),
-            image,
-            SpriteAnimationData.sequenced(
-              amount: 135,
-              amountPerRow: 135,
-              textureSize: Vector2(96, 96),
-              stepTime: 0.1,
-              loop: true,
-            )) {
-    //'drivers/tomato_anim.png'
-    anchor = Anchor.center;
-  }
-
-  void reset() {
-    x = _gameSize.x / 2;
-    y = _gameSize.y / 1.4;
-
-    speed = 10;
-    angle = 0;
-
-    frozen = true;
-  }
-
-  @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
-    _gameSize = gameSize;
-
-    reset();
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (_gameSize == null) {
-      return;
-    }
-
-    if (!frozen) {
-      x += (speed * dt) * math.cos(angle);
-      y += (speed * dt) * math.sin(angle);
-
-      speed += ACCELERATION * dt;
-
-      if (y > _gameSize.y || y < 0 || x > _gameSize.toSize().width || x < 0) {
-        _audioService.playDropSound(audioToiletDropSound);
-        reset();
-        pauseGame();
-      }
-    }
-  }
-
-  void move() {
-    if (frozen) {
-      frozen = false;
-    } else {
-      turn();
-    }
-  }
-
-  void turn() {
-    angle -= 0.4;
-  }
 }

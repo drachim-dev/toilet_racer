@@ -30,7 +30,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   AsyncCallback roundEndCallback;
 
-  Driver driver;
   Player player;
   Controller controller;
   HelpText controlHelpText;
@@ -80,13 +79,12 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void startGame() {
-    //add(driver = Driver(driverImage, pauseGame));
     add(player = Player(playerImage));
     add(innerBoundary = Boundary(12));
     add(outerBoundary = Boundary(23));
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
-    add(controller = Controller(driver, player));
+    add(controller = Controller(player));
 
     if (_showHelp) {
       add(controlHelpText = HelpText());
@@ -100,7 +98,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void pauseGame() async {
     //print("pause!");
-    //remove(driver);
     // world.destroyBody(player.body);
     // player.remove();
 

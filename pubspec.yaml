@@ -27,7 +27,7 @@ dependencies:
   firebase_admob: ^0.11.0+1
   flame: ^1.0.0-rc6
   flame_audio: ^0.1.0-rc3
-  flame_forge2d: ^0.6.2-rc3
+  flame_forge2d: ^0.6.3-rc3
   get_it: ^5.0.6
   shared_preferences: ">=0.5.12+4 <2.0.0"
 
