@@ -35,7 +35,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   HelpText controlHelpText;
 
   Image playerImage;
-  Image backgroundImage;
 
   Boundary innerBoundary;
   Boundary outerBoundary;
@@ -52,8 +51,10 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   @override
   Future<void> onLoad() async {
     playerImage = await Flame.images.load('players/rat.png');
-    backgroundImage = await Flame.images.load('roads/toilet.png');
-    await add(Background(backgroundImage, size));
+
+    var level = Level.toilet2;
+    await level.onLoad();
+    await add(Background(level));
   }
 
   void _init() {
