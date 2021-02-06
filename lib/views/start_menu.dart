@@ -48,17 +48,17 @@ class StartMenu extends StatelessWidget {
     SizedBox(height: spacing * 2),
     Text(title, style: titleStyle, textAlign: TextAlign.center),
     SizedBox(height: spacing * 5),
-    FlatButton(
+    TextButton(
       child: Text('PLAY', style: buttonStyle),
       onPressed: game.startGame,
     ),
     SizedBox(height: spacing),
-    FlatButton(
+    TextButton(
       child: Text('OPTIONS', style: buttonStyle),
       onPressed: () {},
     ),
     SizedBox(height: spacing),
-    FlatButton(
+    TextButton(
       child: Text('QUIT', style: buttonStyle),
       onPressed: game.quitGame,
     ),

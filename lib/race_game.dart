@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -81,8 +82,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void startGame() {
     add(player = Player(playerImage));
-    add(innerBoundary = Boundary(12));
-    add(outerBoundary = Boundary(23));
+    add(outerBoundary = Boundary(300, 300, 0.15));
+    add(outerBoundary = Boundary(300, 300, 0.08));
+
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
     add(controller = Controller(player));
