@@ -6,8 +6,9 @@ import 'dart:math' as math;
 
 class Boundary extends BodyComponent {
   final double _width, _height, _scaleFactor;
+  final Vector2 _position;
 
-  Boundary(this._width, this._height, this._scaleFactor);
+  Boundary(this._width, this._height, this._scaleFactor, this._position);
 
   @override
   Body createBody() {
@@ -18,7 +19,9 @@ class Boundary extends BodyComponent {
 
     final shape = createEllipse(_width, _height, 16);
     final fixtureDef = FixtureDef()..shape = shape;
-    final bodyDef = BodyDef()..userData = this;
+    final bodyDef = BodyDef()
+      ..userData = this
+      ..position = viewport.getScreenToWorld(_position);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
 

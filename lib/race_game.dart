@@ -40,6 +40,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   Boundary innerBoundary;
   Boundary outerBoundary;
 
+  Background background;
+
   BoundaryContactCallback contactCallback;
 
   RaceGame({this.roundEndCallback})
@@ -55,7 +57,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     var level = Level.toilet2;
     await level.onLoad();
-    await add(Background(level));
+    await add(background = Background(level));
   }
 
   void _init() {
@@ -82,8 +84,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void startGame() {
     add(player = Player(playerImage));
-    add(outerBoundary = Boundary(300, 300, 0.15));
-    add(outerBoundary = Boundary(300, 300, 0.08));
+    add(outerBoundary = Boundary(300, 300, 0.15, background.center));
+    add(innerBoundary = Boundary(300, 300, 0.08, background.center));
 
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
