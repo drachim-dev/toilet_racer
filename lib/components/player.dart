@@ -11,12 +11,14 @@ import 'package:flutter/material.dart' as material;
 import 'boundary.dart';
 
 class Player extends SpriteBodyComponent {
+  final Vector2 startPosition;
   final double ACCELERATION = 60;
   double speed = 300.0;
   double angle = math.pi / 2;
   bool shouldDestroy = false;
 
-  Player(Image image) : super(Sprite(image), Vector2(15, 12));
+  Player({Image image, this.startPosition})
+      : super(Sprite(image), Vector2(15, 12));
 
   @override
   Body createBody() {
@@ -32,7 +34,7 @@ class Player extends SpriteBodyComponent {
       ..userData = this
       // To be able to determine object in collision
       //..setUserData(this)
-      ..position = Vector2(0, -35)
+      ..position = viewport.getScreenToWorld(startPosition)
       ..type = BodyType.DYNAMIC
       ..angularDamping = 5
       ..linearDamping = 1

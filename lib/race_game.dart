@@ -16,6 +16,8 @@ import 'package:toilet_racer/components/player.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
+import 'game/level.dart';
+
 typedef AsyncCallback = Future<void> Function();
 
 class RaceGame extends Forge2DGame with HasTapableComponents {
@@ -41,6 +43,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   Boundary outerBoundary;
 
   Background background;
+  Level level;
 
   BoundaryContactCallback contactCallback;
 
@@ -55,7 +58,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   Future<void> onLoad() async {
     playerImage = await Flame.images.load('players/rat.png');
 
-    var level = Level.toilet2;
+    level = Level.toilet3;
     await level.onLoad();
     await add(background = Background(level));
   }
@@ -83,9 +86,15 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void startGame() {
-    add(player = Player(playerImage));
-    add(outerBoundary = Boundary(300, 300, 0.15, background.center));
-    add(innerBoundary = Boundary(300, 300, 0.08, background.center));
+    add(player = Player(
+        image: playerImage,
+        startPosition: background.getImageToScreen(level.startPosition)));
+    add(outerBoundary = Boundary(level.track.outerBoundary
+        .map((vertex) => background.getImageToScreen(vertex))
+        .toList()));
+    add(innerBoundary = Boundary(level.track.innerBoundary
+        .map((vertex) => background.getImageToScreen(vertex))
+        .toList()));
 
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
