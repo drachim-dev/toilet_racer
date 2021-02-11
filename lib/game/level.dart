@@ -3,29 +3,39 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
+
 abstract class Track {
-  /// The zone in the image that contains the relevant track for the game.
+  /// The zone in the image that contains the relevant track for the level.
   Rect get zone;
   List<Vector2> get innerBoundary;
   List<Vector2> get outerBoundary;
 }
 
 class EllipseTrack extends Track {
+  final int _numEdges = 50;
   Vector2 innerCenter;
   Radius innerRadii;
   Vector2 outerCenter;
   Radius outerRadii;
 
   EllipseTrack(
-      {this.innerCenter, this.innerRadii, this.outerCenter, this.outerRadii});
+      {@required this.innerCenter,
+      @required this.innerRadii,
+      @required this.outerCenter,
+      @required this.outerRadii})
+      : assert(innerCenter != null),
+        assert(innerRadii != null),
+        assert(outerCenter != null),
+        assert(outerRadii != null);
 
   @override
   List<Vector2> get innerBoundary =>
-      calculateVertices(innerCenter, innerRadii, 50);
+      calculateVertices(innerCenter, innerRadii, _numEdges);
 
   @override
   List<Vector2> get outerBoundary =>
-      calculateVertices(outerCenter, outerRadii, 50);
+      calculateVertices(outerCenter, outerRadii, _numEdges);
 
   @override
   Rect get zone => Rect.fromCenter(
@@ -58,13 +68,21 @@ class Level {
           outerCenter: Vector2(366, 755),
           outerRadii: Radius.elliptical(160, 190)));
 
-  final Track track;
-  final Vector2 startPosition;
   final String filePath;
+  final Track track;
+
+  /// The start position of the player
+  final Vector2 startPosition;
 
   Image image;
 
-  Level({this.filePath, this.startPosition, this.track});
+  Level(
+      {@required this.filePath,
+      @required this.track,
+      @required this.startPosition})
+      : assert(filePath != null),
+        assert(track != null),
+        assert(startPosition != null);
 
   Future<void> onLoad() async {
     image = await Flame.images.load(filePath);

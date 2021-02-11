@@ -23,7 +23,7 @@ class Background extends SpriteComponent with HasGameRef {
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
 
-    /// Defines where the track of the level is rendered on the screen.
+    /// The track of the level that is rendered on the screen.
     var trackScreenZone = Rect.fromCenter(
         center: gameSize.toOffset() * 0.5, width: 300, height: 300);
 

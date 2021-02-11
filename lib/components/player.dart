@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/sprite_body_component.dart';
+import 'package:flutter/foundation.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart' as material;
 
@@ -17,8 +18,10 @@ class Player extends SpriteBodyComponent {
   double angle = math.pi / 2;
   bool shouldDestroy = false;
 
-  Player({Image image, this.startPosition})
-      : super(Sprite(image), Vector2(15, 12));
+  Player({@required Image image, @required this.startPosition})
+      : assert(image != null),
+        assert(startPosition != null),
+        super(Sprite(image), Vector2(15, 12));
 
   @override
   Body createBody() {

@@ -140,7 +140,7 @@ packages:
       name: flame_forge2d
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3-rc3"
+    version: "0.6.3-rc4"
   flutter:
     dependency: "direct main"
     description: flutter
