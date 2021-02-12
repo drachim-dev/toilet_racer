@@ -14,7 +14,7 @@ class StartMenu extends StatelessWidget {
     const shadowWidth = 2.5;
 
     const buttonStyle = TextStyle(
-      fontSize: 56,
+      fontSize: 96,
       fontWeight: FontWeight.bold,
       color: foregroundColor,
       shadows: [
@@ -37,32 +37,48 @@ class StartMenu extends StatelessWidget {
       ],
     );
 
-    const titleStyle = TextStyle(
-        fontSize: 72, color: Colors.brown, fontFamily: 'NerkoOne');
+    const titleStyle =
+        TextStyle(fontSize: 128, color: Colors.brown, fontFamily: 'NerkoOne');
 
-    const spacing = 36.0;
+    const spacing = 72.0;
+    const buttonSpacing = 36.0;
 
-    return Column(
+    return Padding(
+      padding: const EdgeInsets.all(startMenuMargin),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-    SizedBox(height: spacing * 2),
-    Text(title, style: titleStyle, textAlign: TextAlign.center),
-    SizedBox(height: spacing * 5),
-    TextButton(
-      child: Text('PLAY', style: buttonStyle),
-      onPressed: game.startGame,
-    ),
-    SizedBox(height: spacing),
-    TextButton(
-      child: Text('OPTIONS', style: buttonStyle),
-      onPressed: () {},
-    ),
-    SizedBox(height: spacing),
-    TextButton(
-      child: Text('QUIT', style: buttonStyle),
-      onPressed: game.quitGame,
-    ),
+          Flexible(
+              child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Column(
+              children: [
+                Text(
+                  title,
+                  style: titleStyle,
+                ),
+                SizedBox(height: spacing * 2),
+                TextButton(
+                  child: Text('PLAY', style: buttonStyle),
+                  onPressed: game.startGame,
+                ),
+                SizedBox(height: buttonSpacing),
+                TextButton(
+                  child: Text('OPTIONS', style: buttonStyle),
+                  onPressed: () {},
+                ),
+                SizedBox(height: buttonSpacing),
+                TextButton(
+                  child: Text('QUIT', style: buttonStyle),
+                  onPressed: game.quitGame,
+                ),
+                SizedBox(height: spacing),
+              ],
+            ),
+          )),
         ],
-      );
+      ),
+    );
   }
 }

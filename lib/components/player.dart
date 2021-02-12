@@ -73,6 +73,8 @@ class Player extends SpriteBodyComponent {
       //body.applyForceToCenter(force);
     }
   }
+
+
 }
 
 class BoundaryContactCallback extends ContactCallback<Player, Boundary> {

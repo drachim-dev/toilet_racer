@@ -1,11 +1,13 @@
+import 'dart:math' as math;
 import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 
 abstract class Track {
+  static const maxSizeOnScreen = 600.0;
+
   /// The zone in the image that contains the relevant track for the level.
   Rect get zone;
   List<Vector2> get innerBoundary;
@@ -13,7 +15,7 @@ abstract class Track {
 }
 
 class EllipseTrack extends Track {
-  final int _numEdges = 50;
+  static const int _numEdges = 50;
   Vector2 innerCenter;
   Radius innerRadii;
   Vector2 outerCenter;
@@ -60,7 +62,7 @@ class EllipseTrack extends Track {
 
 class Level {
   static Level toilet3 = Level(
-      filePath: 'roads/toilet3.jpg',
+      filePath: 'roads/toilet3.webp',
       startPosition: Vector2(362, 906),
       track: EllipseTrack(
           innerCenter: Vector2(366, 765),
