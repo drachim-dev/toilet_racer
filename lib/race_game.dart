@@ -21,6 +21,8 @@ import 'game/level.dart';
 typedef AsyncCallback = Future<void> Function();
 
 class RaceGame extends Forge2DGame with HasTapableComponents {
+  static const double defaultScale = 4.0;
+
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final AudioService _audioService = locator<AudioService>();
 
@@ -48,7 +50,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   BoundaryContactCallback contactCallback;
 
   RaceGame({this.roundEndCallback})
-      : super(scale: 4.0, gravity: Vector2(0, 0)) {
+      : super(scale: defaultScale, gravity: Vector2(0, 0)) {
     _init();
 
     _showMenu();
@@ -61,6 +63,15 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     level = Level.toilet3;
     await level.onLoad();
     await add(background = Background(level));
+  }
+
+  @override
+  void onResize(Vector2 size) {
+    super.onResize(size);
+
+    if (background != null) {
+      viewport.scale = defaultScale * background.scale;
+    }
   }
 
   void _init() {
