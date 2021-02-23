@@ -27,13 +27,16 @@ dependencies:
   firebase_admob: ^0.11.0+1
   flame: ^1.0.0-rc6
   flame_audio: ^0.1.0-rc3
-  flame_forge2d: ^0.6.3-rc4
+  flame_forge2d: ^0.6.4-rc4
   get_it: ^5.0.6
   shared_preferences: ">=0.5.12+4 <2.0.0"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+dependency_overrides:
+  audioplayers: ^0.17.4
 
 dev_dependencies:
   pedantic: ^1.9.2
