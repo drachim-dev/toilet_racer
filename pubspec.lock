@@ -9,12 +9,12 @@ packages:
     source: hosted
     version: "2.5.0"
   audioplayers:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: audioplayers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.17.3"
+    version: "0.17.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -140,7 +140,7 @@ packages:
       name: flame_forge2d
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3-rc4"
+    version: "0.6.4-rc4"
   flutter:
     dependency: "direct main"
     description: flutter

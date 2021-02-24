@@ -1,9 +1,7 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:toilet_racer/app/ad_manager.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
@@ -14,37 +12,32 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setupLocator();
+  await locator.allReady();
 
   Flame.initializeWidget();
   await Flame.util.fullScreen();
   await Flame.util.setOrientation(DeviceOrientation.portraitUp);
 
-  await FirebaseAdMob.instance.initialize(appId: AdManager.appId);
-
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   RaceGame _game;
-  InterstitialAd _ad;
 
   @override
   void initState() {
     super.initState();
 
-    _ad = _buildAd()..load();
     _game = RaceGame(roundEndCallback: _roundEndCallback);
   }
 
   @override
   void dispose() {
-    _ad?.dispose();
     super.dispose();
   }
 
@@ -63,23 +56,6 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
-  }
-
-  InterstitialAd _buildAd() {
-    return InterstitialAd(
-      adUnitId: AdManager.interstitialAdUnitId,
-      listener: (MobileAdEvent event) {
-        if (event == MobileAdEvent.failedToLoad) {
-          _ad..load();
-        } else if (event == MobileAdEvent.closed) {
-          _ad = _buildAd()..load();
-        }
-      },
-    );
-  }
-
-  Future<bool> _showAd() {
-    return _ad.show();
   }
 
   Future<void> _roundEndCallback() async {

@@ -79,7 +79,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _showHelp = _prefService.getBool(prefKeyShowHelp) ?? _showHelp;
 
     if (_musicEnabled) {
-      AudioService().playBgMusic();
+      _audioService.playBgMusic();
     }
   }
 
