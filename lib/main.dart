@@ -9,14 +9,10 @@ import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await Flame.init(orientation: DeviceOrientation.portraitUp);
 
   setupLocator();
   await locator.allReady();
-
-  Flame.initializeWidget();
-  await Flame.util.fullScreen();
-  await Flame.util.setOrientation(DeviceOrientation.portraitUp);
 
   runApp(MyApp());
 }
