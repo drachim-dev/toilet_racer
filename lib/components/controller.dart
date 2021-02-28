@@ -35,7 +35,7 @@ class Controller extends PositionComponent with Tapable, HasGameRef {
 
   @override
   bool onTapDown(TapDownDetails details) {
-    player.body.applyAngularImpulse(200);
+    player.spin();
     return super.onTapDown(details);
   }
 }
