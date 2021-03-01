@@ -15,8 +15,6 @@ class Player extends SpriteBodyComponent {
   final Vector2 startPosition;
   final double ACCELERATION = 60;
   double speed = 300.0;
-  double angle = math.pi / 2;
-  bool shouldDestroy = false;
 
   Player({@required Image image, @required this.startPosition})
       : assert(image != null),
@@ -25,8 +23,8 @@ class Player extends SpriteBodyComponent {
 
   @override
   Body createBody() {
-    final shape = CircleShape();
-    shape.radius = 3;
+    final shape = CircleShape()..radius = 3;
+
     final fixtureDef = FixtureDef()
       ..shape = shape
       ..restitution = 0.8
@@ -61,20 +59,17 @@ class Player extends SpriteBodyComponent {
   @override
   void update(double dt) {
     super.update(dt);
-    if (shouldDestroy) {
-      //gameRef.remove(this);
-      //world.destroyBody(body);
-      //remove();
-    } else {
-      speed += ACCELERATION * dt;
-      final force = Rot.mulVec2(
-          Rot.withAngle(body.getAngle()), Vector2(0, -1)..scale(speed));
-      body.applyForce(force);
-      //body.applyForceToCenter(force);
-    }
+
+    speed += ACCELERATION * dt;
+    final force = Rot.mulVec2(
+        Rot.withAngle(body.getAngle()), Vector2(0, -1)..scale(speed));
+    body.applyForce(force);
   }
 
-
+  /// Rotates the player counterclockwise.
+  void spin() {
+    body.applyAngularImpulse(200);
+  }
 }
 
 class BoundaryContactCallback extends ContactCallback<Player, Boundary> {
@@ -85,7 +80,6 @@ class BoundaryContactCallback extends ContactCallback<Player, Boundary> {
   @override
   void begin(Player player, Boundary boundary, Contact contact) {
     boundary.paint.color = material.Colors.red;
-    //player.shouldDestroy = true;
     collisionDetected();
   }
 

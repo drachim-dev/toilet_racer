@@ -1,15 +1,13 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/components/player.dart';
 
-class Controller extends PositionComponent with Tapable {
+class Controller extends PositionComponent with Tapable, HasGameRef {
   static final Paint _paint = Paint()..color = Colors.transparent;
   static const double _height = 140.0;
 
-  Vector2 _gameSize;
   final Player player;
 
   Controller(this.player);
@@ -18,31 +16,26 @@ class Controller extends PositionComponent with Tapable {
   void render(Canvas c) {
     super.render(c);
     c.drawRect(
-        Rect.fromLTWH(0, _gameSize.y - _height, _gameSize.x, _height), _paint);
+        Rect.fromLTWH(0, gameRef.size.y - _height, gameRef.size.x, _height),
+        _paint);
   }
 
   @override
   void update(double dt) {
     super.update(dt);
-    if (_gameSize == null) {
+    if (gameRef.size == null) {
       return;
     }
   }
 
   @override
   Rect toRect() {
-    return Rect.fromLTWH(0, _gameSize.y - _height, _gameSize.x, _height);
+    return Rect.fromLTWH(0, gameRef.size.y - _height, gameRef.size.x, _height);
   }
 
   @override
   bool onTapDown(TapDownDetails details) {
-    player.body.applyAngularImpulse(200);
+    player.spin();
     return super.onTapDown(details);
-  }
-
-  @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
-    _gameSize = gameSize;
   }
 }
