@@ -60,6 +60,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     level = Level.toilet3;
     await level.onLoad();
+    await add(background = Background(level));
 
     _showMenu();
   }
@@ -95,27 +96,25 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     }
   }
 
-  void startGame() {
-    add(background = Background(level));
-
-    add(player = Player(
+  void startGame() async {
+    await add(player = Player(
         image: playerImage,
         startPosition: background.getImageToScreen(level.startPosition)));
-    add(outerBoundary = Boundary(level.track.outerBoundary
+    await add(outerBoundary = Boundary(level.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
         .toList()));
-    add(innerBoundary = Boundary(level.track.innerBoundary
+    await add(innerBoundary = Boundary(level.track.innerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
         .toList()));
 
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
-    add(controller = Controller(player));
+    await add(controller = Controller(player));
 
     if (_showHelp) {
-      add(controlHelpText = HelpText());
+      await add(controlHelpText = HelpText());
       _showHelp = false;
-      _prefService.setBool(prefKeyShowHelp, _showHelp);
+      await _prefService.setBool(prefKeyShowHelp, _showHelp);
     }
 
     overlays.remove(startMenu);
