@@ -52,8 +52,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   RaceGame({this.roundEndCallback})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
     _init();
-
-    _showMenu();
   }
 
   @override
@@ -62,7 +60,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     level = Level.toilet3;
     await level.onLoad();
-    await add(background = Background(level));
+
+    _showMenu();
   }
 
   @override
@@ -97,6 +96,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void startGame() {
+    add(background = Background(level));
+
     add(player = Player(
         image: playerImage,
         startPosition: background.getImageToScreen(level.startPosition)));
