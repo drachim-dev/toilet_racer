@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_id" translatable="false">808445763592</string>
+  <string name="package_name" translatable="false">dr.achim.toilet_racer</string>
+  <!--achievement GEWONNEN-->
+  <string name="achievement_gewonnen" translatable="false">CgkIiMD92MMXEAIQAg</string>
+</resources>
