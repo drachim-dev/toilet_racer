@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
+import 'package:toilet_racer/services/timer_service.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -13,4 +14,5 @@ void setupLocator() {
       () => kIsWeb ? WebAudioService().init() : AudioService().init());
   locator.registerSingletonAsync<AdService>(
       () => kIsWeb ? WebAdService().init() : AdService().init());
+  locator.registerSingleton<TimerService>(TimerService());
 }

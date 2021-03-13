@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:games_services/games_services.dart';
 import 'package:rive/rive.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/services/timer_service.dart';
 
 class StartMenu extends StatefulWidget {
   final RaceGame game;
@@ -21,6 +23,8 @@ class _StartMenuState extends State<StartMenu> {
   Artboard _artboard;
   SimpleAnimation _toiletController;
   SimpleAnimation get toiletController => _toiletController;
+
+  final TimerService _timerService = locator<TimerService>();
 
   @override
   void initState() {
@@ -105,38 +109,43 @@ class _StartMenuState extends State<StartMenu> {
                 child: Column(
                   children: [
                     Text(
-                        widget.game.score == null
+                        _timerService.seconds.value == null
                             ? ''
-                            : 'SCORE: ${widget.game.score}',
+                            : 'SCORE: ${_timerService.seconds.value}',
                         style: titleStyle),
                     SizedBox(height: spacing),
                     Text(
                       title,
                       style: titleStyle,
                     ),
-                    SizedBox(height: spacing * 2),
+                    SizedBox(height: spacing),
                     TextButton(
-                        child: Text('PLAY', style: buttonStyle),
+                        child: Text('PLAY',
+                            style: buttonStyle.copyWith(
+                                fontSize: buttonStyle.fontSize + 32)),
                         onPressed: () {
                           startGameAnimation();
                         }),
+                    SizedBox(height: spacing),
+                    TextButton(
+                      child: Text('LEVELS', style: buttonStyle),
+                      onPressed: () {},
+                    ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      child: Text('HIGHSCORE', style: buttonStyle),
+                      child: Text('SCORE', style: buttonStyle),
                       onPressed: () {
                         GamesServices.showLeaderboards();
                       },
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      child: Text('OPTIONS', style: buttonStyle),
-                      onPressed: () {},
+                      child: Text('AWARDS', style: buttonStyle),
+                      onPressed: () {
+                        GamesServices.showAchievements();
+                      },
                     ),
                     SizedBox(height: buttonSpacing),
-                    TextButton(
-                      child: Text('QUIT', style: buttonStyle),
-                      onPressed: widget.game.quitGame,
-                    ),
                     SizedBox(height: spacing),
                   ],
                 ),
