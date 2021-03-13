@@ -28,7 +28,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   final AudioService _audioService = locator<AudioService>();
 
   @override
-  bool debugMode = false;
+  bool debugMode = kDebugMode;
 
   bool _musicEnabled = true;
   bool _showHelp = true;
