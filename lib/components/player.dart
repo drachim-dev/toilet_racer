@@ -4,15 +4,14 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flame_forge2d/sprite_body_component.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flame_forge2d/position_body_component.dart';
 import 'package:flutter/material.dart' show Colors;
 import 'package:vector_math/vector_math_64.dart' show Vector2;
 import 'package:flutter/material.dart' as material;
 
 import 'boundary.dart';
 
-class Player extends SpriteBodyComponent {
+class Player extends PositionBodyComponent {
   static const pi2 = math.pi * 2;
 
   static Vector2 pointer(double angle, double length, [bool flipY = false]) {
@@ -34,10 +33,10 @@ class Player extends SpriteBodyComponent {
   /// Player starts with bearing and heading in right direction.
   double bearing = math.pi / 2;
 
-  Player({@required Image image, @required this.startPosition})
-      : assert(image != null),
+  Player(PositionComponent positionComponent, this.startPosition)
+      : assert(positionComponent != null),
         assert(startPosition != null),
-        super(Sprite(image), Vector2(15, 12));
+        super(positionComponent, positionComponent.size);
 
   @override
   Body createBody() {
