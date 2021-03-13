@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "808445763592-lrakmvb9ms9h0c4qjlnfo7vts7amaul0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dr.achim.toilet_racer",
+            "certificate_hash": "b17cbb9678ac90e3ece3d5bdd74c352822c4e755"
+          }
+        },
+        {
           "client_id": "808445763592-recg2970m2bndv3qepp28i0lh1d1im93.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -32,7 +40,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-1862953309959285~7717019948"
     }
   ],
   "configuration_version": "1"

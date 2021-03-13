@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:games_services/games_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -14,6 +15,7 @@ import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/help_text.dart';
 import 'package:toilet_racer/components/player.dart';
 import 'package:toilet_racer/services/audio_service.dart';
+import 'package:toilet_racer/services/timer_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 import 'components/removable_sprite_animation_component.dart';
@@ -26,6 +28,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final AudioService _audioService = locator<AudioService>();
+  final TimerService _timerService = locator<TimerService>();
 
   @override
   bool debugMode = kDebugMode;
@@ -49,8 +52,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   Level level;
 
   BoundaryContactCallback contactCallback;
-  Stopwatch _stopwatch;
-  int get score => _stopwatch?.elapsed?.inSeconds;
 
   RaceGame({this.roundEndCallback})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
@@ -128,11 +129,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
       await _prefService.setBool(prefKeyShowHelp, _showHelp);
     }
 
-    _stopwatch == null ? _stopwatch = Stopwatch() : _stopwatch.reset();
-    _stopwatch.start();
-
     overlays.remove(startMenu);
     overlays.add(overlayUi);
+    _timerService.start();
   }
 
   void pauseGame() async {
@@ -153,20 +152,23 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void collisionDetected() async {
     _collisionDetected = true;
-    _stopwatch.stop();
-    print('time survived: $score');
+    _timerService.cancel();
 
     await GamesServices.submitScore(
       score: Score(
-        androidLeaderboardID: 'CgkIiMD92MMXEAIQAw',
-        value: score,
+        androidLeaderboardID: kAndroidLeaderBoard,
+        value: _timerService.seconds.value,
       ),
     );
+
+    [kPlayCountLevel1, kPlayCountLevel2, kPlayCountLevel3]
+        .forEach((achievementId) {
+      GamesServices.increment(
+        achievement: Achievement(androidID: achievementId, steps: 1),
+      );
+    });
 
     // Bug in audioplayers https://github.com/luanpotter/audioplayers/issues/738
     _audioService.playDropSound(audioToiletDropSound);
   }
-
-  void quitGame() =>
-      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
 }
