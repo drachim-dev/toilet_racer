@@ -5,6 +5,7 @@ import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
+import 'package:flutter/foundation.dart';
 import 'package:games_services/games_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -30,7 +31,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   final TimerService _timerService = locator<TimerService>();
 
   @override
-  bool debugMode = true;
+  bool debugMode = kDebugMode;
 
   bool _musicEnabled = true;
   bool _showHelp = true;
