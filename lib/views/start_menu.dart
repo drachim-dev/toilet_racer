@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:games_services/games_services.dart';
 import 'package:rive/rive.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/race_game.dart';
@@ -104,6 +105,12 @@ class _StartMenuState extends State<StartMenu> {
                 child: Column(
                   children: [
                     Text(
+                        widget.game.score == null
+                            ? ''
+                            : 'SCORE: ${widget.game.score}',
+                        style: titleStyle),
+                    SizedBox(height: spacing),
+                    Text(
                       title,
                       style: titleStyle,
                     ),
@@ -113,6 +120,13 @@ class _StartMenuState extends State<StartMenu> {
                         onPressed: () {
                           startGameAnimation();
                         }),
+                    SizedBox(height: buttonSpacing),
+                    TextButton(
+                      child: Text('HIGHSCORE', style: buttonStyle),
+                      onPressed: () {
+                        GamesServices.showLeaderboards();
+                      },
+                    ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
                       child: Text('OPTIONS', style: buttonStyle),

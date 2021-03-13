@@ -28,6 +28,7 @@ dependencies:
   flame: ^1.0.0-rc6
   flame_audio: ^0.1.0-rc3
   flame_forge2d: ^0.6.4-rc4
+  games_services: ^1.0.0
   get_it: ^5.0.6
   rive: ^0.6.8
   shared_preferences: ">=0.5.12+4 <2.0.0"

@@ -6,6 +6,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:games_services/games_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -49,6 +50,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   Level level;
 
   BoundaryContactCallback contactCallback;
+  Stopwatch _stopwatch;
+  int get score => _stopwatch?.elapsed?.inSeconds;
 
   RaceGame({this.roundEndCallback})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
@@ -118,6 +121,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
       await _prefService.setBool(prefKeyShowHelp, _showHelp);
     }
 
+    _stopwatch == null ? _stopwatch = Stopwatch() : _stopwatch.reset();
+    _stopwatch.start();
+
     overlays.remove(startMenu);
     overlays.add(overlayUi);
   }
@@ -138,8 +144,17 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _showMenu();
   }
 
-  void collisionDetected() {
+  void collisionDetected() async {
     _collisionDetected = true;
+    _stopwatch.stop();
+    print('time survived: $score');
+
+    await GamesServices.submitScore(
+      score: Score(
+        androidLeaderboardID: 'CgkIiMD92MMXEAIQAw',
+        value: score,
+      ),
+    );
 
     // Bug in audioplayers https://github.com/luanpotter/audioplayers/issues/738
     _audioService.playDropSound(audioToiletDropSound);
