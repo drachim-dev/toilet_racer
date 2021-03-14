@@ -25,9 +25,14 @@ const double audioDropVolume = 0.6;
 
 // game services
 const String kAndroidLeaderBoard = 'CgkIiMD92MMXEAIQAw';
-const String kPlayCountLevel1 = 'CgkIiMD92MMXEAIQBA';
-const String kPlayCountLevel2 = 'CgkIiMD92MMXEAIQAg';
-const String kPlayCountLevel3 = 'CgkIiMD92MMXEAIQCA';
-const String kRoundDurationLevel1 = 'CgkIiMD92MMXEAIQBg';
-const String kRoundDurationLevel2 = 'CgkIiMD92MMXEAIQBQ';
-const String kRoundDurationLevel3 = 'CgkIiMD92MMXEAIQBw';
+
+const List<String> kPlayCountAchievements = [
+  'CgkIiMD92MMXEAIQBA',
+  'CgkIiMD92MMXEAIQAg',
+  'CgkIiMD92MMXEAIQCA'
+];
+const Map<int, String> kDurationAchievements = {
+  15: 'CgkIiMD92MMXEAIQBg',
+  30: 'CgkIiMD92MMXEAIQBQ',
+  45: 'CgkIiMD92MMXEAIQBw',
+};

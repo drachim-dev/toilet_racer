@@ -17,8 +17,8 @@ import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-import 'game/level.dart';
 import 'components/player.dart';
+import 'game/level.dart';
 
 typedef AsyncCallback = Future<void> Function();
 
@@ -143,6 +143,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _collisionDetected = true;
     _timerService.cancel();
 
+    _audioService.playDropSound(audioToiletDropSound);
+
+    // submit score
     await GamesServices.submitScore(
       score: Score(
         androidLeaderboardID: kAndroidLeaderBoard,
@@ -150,14 +153,17 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
       ),
     );
 
-    [kPlayCountLevel1, kPlayCountLevel2, kPlayCountLevel3]
-        .forEach((achievementId) {
-      GamesServices.increment(
-        achievement: Achievement(androidID: achievementId, steps: 1),
-      );
+    // update duration achievement
+    kDurationAchievements.forEach((duration, id) {
+      if (_timerService.seconds.value > duration) {
+        GamesServices.unlock(achievement: Achievement(androidID: id));
+      }
     });
 
-    // Bug in audioplayers https://github.com/luanpotter/audioplayers/issues/738
-    _audioService.playDropSound(audioToiletDropSound);
+    // update play count
+    kPlayCountAchievements.forEach((id) {
+      GamesServices.increment(
+          achievement: Achievement(androidID: id, steps: 1));
+    });
   }
 }
