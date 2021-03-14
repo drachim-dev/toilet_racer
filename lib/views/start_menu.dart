@@ -120,30 +120,31 @@ class _StartMenuState extends State<StartMenu> {
                     ),
                     SizedBox(height: spacing),
                     TextButton(
-                        child: Text('PLAY',
-                            style: buttonStyle.copyWith(
-                                fontSize: buttonStyle.fontSize + 32)),
-                        onPressed: () {
-                          startGameAnimation();
-                        }),
+                      onPressed: () {
+                        startGameAnimation();
+                      },
+                      child: Text('PLAY',
+                          style: buttonStyle.copyWith(
+                              fontSize: buttonStyle.fontSize + 32)),
+                    ),
                     SizedBox(height: spacing),
                     TextButton(
-                      child: Text('LEVELS', style: buttonStyle),
                       onPressed: () {},
+                      child: Text('LEVELS', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      child: Text('SCORE', style: buttonStyle),
                       onPressed: () {
                         GamesServices.showLeaderboards();
                       },
+                      child: Text('SCORE', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      child: Text('AWARDS', style: buttonStyle),
                       onPressed: () {
                         GamesServices.showAchievements();
                       },
+                      child: Text('AWARDS', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     SizedBox(height: spacing),
