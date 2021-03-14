@@ -9,7 +9,7 @@ const double startMenuMargin = 32.0;
 
 // overlay ui
 const String overlayUi = 'OVERLAY_UI';
-const double overlayUiIconSize = 32.0;
+const double kOverlayIconSize = 42.0;
 
 // preferences
 const String prefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';

@@ -26,27 +26,26 @@ class _OverlayUiState extends State<OverlayUi> {
 
   @override
   Widget build(BuildContext context) {
-    final overlayColor = Colors.white;
-    final textStyle =
-        Theme.of(context).textTheme.headline4.copyWith(color: overlayColor);
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
         children: [
           IconButton(
-            icon: _musicEnabled
-                ? Icon(Icons.volume_up, size: overlayUiIconSize)
-                : Icon(Icons.volume_off, size: overlayUiIconSize),
-            color: overlayColor,
+            icon:
+                _musicEnabled ? Icon(Icons.volume_up) : Icon(Icons.volume_off),
+            iconSize: kOverlayIconSize,
             onPressed: () => _toggleMusic(),
           ),
-          Expanded(child: SizedBox()),
           ValueListenableBuilder(
             valueListenable: _timerService.seconds,
-            builder: (_, int value, Widget child) =>
-                Text('$value', style: textStyle),
-          )
+            builder: (_, int value, Widget child) => Expanded(
+                child: Text(
+              '$value',
+              style: Theme.of(context).textTheme.headline3,
+              textAlign: TextAlign.center,
+            )),
+          ),
+          SizedBox(width: kOverlayIconSize),
         ],
       ),
     );

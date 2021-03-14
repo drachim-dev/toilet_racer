@@ -56,36 +56,9 @@ class _StartMenuState extends State<StartMenu> {
 
   @override
   Widget build(BuildContext context) {
-    const foregroundColor = Colors.orangeAccent;
-    const outlineColor = Colors.brown;
-    const shadowWidth = 2.5;
-
-    const buttonStyle = TextStyle(
-      fontSize: 96,
-      fontWeight: FontWeight.bold,
-      color: foregroundColor,
-      shadows: [
-        Shadow(
-            // bottomLeft
-            offset: Offset(-shadowWidth, -shadowWidth),
-            color: outlineColor),
-        Shadow(
-            // bottomRight
-            offset: Offset(shadowWidth, -shadowWidth),
-            color: outlineColor),
-        Shadow(
-            // topRight
-            offset: Offset(shadowWidth, shadowWidth),
-            color: outlineColor),
-        Shadow(
-            // topLeft
-            offset: Offset(-shadowWidth, shadowWidth),
-            color: outlineColor),
-      ],
-    );
-
-    const titleStyle =
-        TextStyle(fontSize: 128, color: Colors.brown, fontFamily: 'NerkoOne');
+    final titleStyle =
+        Theme.of(context).textTheme.headline1.copyWith(color: Colors.brown);
+    final buttonStyle = Theme.of(context).textTheme.headline2;
 
     const spacing = 72.0;
     const buttonSpacing = 36.0;
@@ -125,7 +98,7 @@ class _StartMenuState extends State<StartMenu> {
                       },
                       child: Text('PLAY',
                           style: buttonStyle.copyWith(
-                              fontSize: buttonStyle.fontSize + 32)),
+                              fontSize: titleStyle.fontSize)),
                     ),
                     SizedBox(height: spacing),
                     TextButton(

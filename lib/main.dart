@@ -9,6 +9,8 @@ import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
+import 'app/theme.dart';
+
 Future<void> main() async {
   await Flame.init(orientation: DeviceOrientation.portraitUp);
 
@@ -42,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(fontFamily: 'NerkoOne'),
+      theme: toiletTheme,
       home: Material(
         child: GameWidget(
           game: _game,
