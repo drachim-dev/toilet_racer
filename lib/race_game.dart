@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame/flame.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
@@ -13,13 +12,13 @@ import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/help_text.dart';
-import 'package:toilet_racer/components/player.dart';
+import 'package:toilet_racer/components/player_body.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
-import 'components/removable_sprite_animation_component.dart';
 import 'game/level.dart';
+import 'components/player.dart';
 
 typedef AsyncCallback = Future<void> Function();
 
@@ -39,11 +38,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   AsyncCallback roundEndCallback;
 
-  Player player;
+  PlayerBody playerBody;
   Controller controller;
   HelpText controlHelpText;
-
-  List<Sprite> flySprites;
 
   Boundary innerBoundary;
   Boundary outerBoundary;
@@ -58,19 +55,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _init();
   }
 
-  PositionComponent flyComponent() {
-    final flySpriteAnimation =
-        SpriteAnimation.spriteList(flySprites, stepTime: 0.1);
-    return RemovableSpriteAnimationComponent(
-        Vector2(172, 116) * 20 / 172, flySpriteAnimation);
-  }
-
   @override
   Future<void> onLoad() async {
-    final flyImages = await Flame.images
-        .loadAll(['players/fly_1@2x.png', 'players/fly_2@2x.png']);
-    flySprites = flyImages.map((image) => Sprite(image)).toList();
-
     level = Level.toilet3;
     await level.onLoad();
     await add(background = Background(level));
@@ -110,8 +96,11 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void startGame() async {
-    await add(player = Player(
-        flyComponent(), background.getImageToScreen(level.startPosition)));
+    final player = await Fly().onLoad();
+    //final player = await Stinkbug().onLoad();
+
+    await add(playerBody =
+        PlayerBody(player, background.getImageToScreen(level.startPosition)));
     await add(outerBoundary = Boundary(level.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
         .toList()));
@@ -121,7 +110,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
-    await add(controller = Controller(player));
+    await add(controller = Controller(playerBody));
 
     if (_showHelp) {
       await add(controlHelpText = HelpText());
@@ -135,7 +124,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void pauseGame() async {
-    remove(player);
+    remove(playerBody);
     remove(innerBoundary);
     remove(outerBoundary);
     remove(controller);
