@@ -97,6 +97,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void startGame() async {
     final player = await Fly().onLoad();
+    //final player = await Stinkbug().onLoad();
+
     await add(playerBody =
         PlayerBody(player, background.getImageToScreen(level.startPosition)));
     await add(outerBoundary = Boundary(level.track.outerBoundary
