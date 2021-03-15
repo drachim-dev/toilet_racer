@@ -66,16 +66,11 @@ android {
     }
 
     signingConfigs {
-        release {
+        debug {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
             storePassword keystoreProperties['storePassword']
-        }
-    }
-    buildTypes {
-        release {
-            signingConfig signingConfigs.release
         }
     }
 
@@ -93,8 +88,5 @@ flutter {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-core:17.5.0';
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
-    implementation 'com.google.android.gms:play-services-games:20.0.1'
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
 }
