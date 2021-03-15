@@ -34,5 +34,5 @@ const List<String> kPlayCountAchievements = [
 const Map<int, String> kDurationAchievements = {
   15: 'CgkIiMD92MMXEAIQBg',
   30: 'CgkIiMD92MMXEAIQBQ',
-  45: 'CgkIiMD92MMXEAIQBw',
+  40: 'CgkIiMD92MMXEAIQBw',
 };
