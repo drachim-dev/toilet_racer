@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:games_services/games_services.dart';
 import 'package:rive/rive.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 
 class StartMenu extends StatefulWidget {
@@ -24,6 +24,7 @@ class _StartMenuState extends State<StartMenu> {
   SimpleAnimation _toiletController;
   SimpleAnimation get toiletController => _toiletController;
 
+  final GameService _gameService = locator<GameService>();
   final TimerService _timerService = locator<TimerService>();
 
   @override
@@ -108,14 +109,14 @@ class _StartMenuState extends State<StartMenu> {
                     SizedBox(height: buttonSpacing),
                     TextButton(
                       onPressed: () {
-                        GamesServices.showLeaderboards();
+                        _gameService.showLeaderboards(kAndroidLeaderBoard);
                       },
                       child: Text('SCORE', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
                       onPressed: () {
-                        GamesServices.showAchievements();
+                        _gameService.showAchievements();
                       },
                       child: Text('AWARDS', style: buttonStyle),
                     ),

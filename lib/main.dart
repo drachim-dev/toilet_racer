@@ -2,10 +2,10 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:games_services/games_services.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
@@ -16,7 +16,7 @@ Future<void> main() async {
 
   setupLocator();
   await locator.allReady();
-
+  
   runApp(MyApp());
 }
 
@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _game = RaceGame(roundEndCallback: _roundEndCallback);
-    GamesServices.signIn();
+    locator<GameService>().signIn();
   }
 
   @override

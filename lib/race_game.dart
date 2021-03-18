@@ -4,7 +4,6 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
-import 'package:games_services/games_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -14,6 +13,7 @@ import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/help_text.dart';
 import 'package:toilet_racer/components/player_body.dart';
 import 'package:toilet_racer/services/audio_service.dart';
+import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -25,8 +25,8 @@ typedef AsyncCallback = Future<void> Function();
 class RaceGame extends Forge2DGame with HasTapableComponents {
   static const double defaultScale = 4.0;
 
-  final SharedPreferences _prefService = locator<SharedPreferences>();
   final AudioService _audioService = locator<AudioService>();
+  final SharedPreferences _prefService = locator<SharedPreferences>();
   final TimerService _timerService = locator<TimerService>();
 
   @override
@@ -139,31 +139,34 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _showMenu();
   }
 
-  void collisionDetected() async {
+  void collisionDetected() {
     _collisionDetected = true;
     _timerService.cancel();
 
     _audioService.playDropSound(audioToiletDropSound);
 
-    // submit score
-    await GamesServices.submitScore(
-      score: Score(
-        androidLeaderboardID: kAndroidLeaderBoard,
-        value: _timerService.seconds.value,
-      ),
-    );
+    updateScoreAndAchievements();
+  }
 
-    // update duration achievement
-    kDurationAchievements.forEach((duration, id) {
-      if (_timerService.seconds.value > duration) {
-        GamesServices.unlock(achievement: Achievement(androidID: id));
-      }
-    });
+  /// Updates score and achievement status async in background.
+  void updateScoreAndAchievements() async {
+    final _gameService = locator<GameService>();
 
-    // update play count
-    kPlayCountAchievements.forEach((id) {
-      GamesServices.increment(
-          achievement: Achievement(androidID: id, steps: 1));
-    });
+    if (_gameService.signedIn) {
+      // submit score
+      await _gameService.submitScore(
+          kAndroidLeaderBoard, _timerService.seconds.value);
+
+      // update duration achievement
+      kDurationAchievements.forEach((duration, id) {
+        if (_timerService.seconds.value > duration) {
+          _gameService.unlockAchievement(id);
+        }
+      });
+
+      // update play count
+      kPlayCountAchievements
+          .forEach((id) => _gameService.incrementAchievement(id));
+    }
   }
 }

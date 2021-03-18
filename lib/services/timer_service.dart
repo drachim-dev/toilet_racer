@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class TimerService {
   final ValueNotifier<int> _seconds = ValueNotifier(null);
