@@ -1,9 +1,6 @@
-import 'package:firebase_admob/firebase_admob.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdManager {
-  static String appId = String.fromEnvironment('ADMOB_APP_ID',
-      defaultValue: FirebaseAdMob.testAppId);
-
   static String interstitialAdUnitId = String.fromEnvironment(
       'ADMOB_INTERSTITIAL_AD_ID',
       defaultValue: InterstitialAd.testAdUnitId);

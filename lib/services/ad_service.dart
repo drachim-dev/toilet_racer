@@ -1,24 +1,18 @@
-import 'package:firebase_admob/firebase_admob.dart';
-import 'package:toilet_racer/app/ad_manager.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdService {
   Future<AdService> init() async {
-    await FirebaseAdMob.instance.initialize(appId: AdManager.appId);
+    await MobileAds.instance.initialize();
     return this;
   }
 
-  //InterstitialAd _buildAd() {
-  // return InterstitialAd(
-  //   adUnitId: AdManager.interstitialAdUnitId,
-  //   listener: (MobileAdEvent event) {
-  //     if (event == MobileAdEvent.failedToLoad) {
-  //       _ad..load();
-  //     } else if (event == MobileAdEvent.closed) {
-  //       _ad = _buildAd()..load();
-  //     }
-  //   },
-  // );
-  //}
+  // InterstitialAd _buildAd() {
+  //  return InterstitialAd(
+  //      adUnitId: _interstitialAdUnitId,
+  //      request: AdRequest(),
+  //      listener: AdListener());
+  // }
+
 }
 
 class WebAdService implements AdService {
