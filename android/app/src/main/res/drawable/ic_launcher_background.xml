@@ -6,10 +6,10 @@
   <group android:scaleX="0.25"
       android:scaleY="0.25">
     <path
-        android:pathData="M0,0h432v432h-432z"
+        android:pathData="M0,0h432v432H0z"
         android:fillColor="#FFAB40"/>
     <path
-        android:pathData="M0,0H432L0,432V0Z"
+        android:pathData="M0,0h432L0,432V0z"
         android:fillColor="#FFD54F"/>
   </group>
 </vector>
