@@ -6,7 +6,6 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/game_service.dart';
-import 'package:toilet_racer/services/timer_service.dart';
 
 class StartMenu extends StatefulWidget {
   final RaceGame game;
@@ -26,7 +25,6 @@ class _StartMenuState extends State<StartMenu> {
   SimpleAnimation get toiletController => _toiletController;
 
   final GameService _gameService = locator<GameService>();
-  final TimerService _timerService = locator<TimerService>();
 
   @override
   void initState() {
@@ -85,21 +83,11 @@ class _StartMenuState extends State<StartMenu> {
                 fit: BoxFit.scaleDown,
                 child: Column(
                   children: [
-                    Text(
-                        _timerService.seconds.value == null
-                            ? ''
-                            : 'SCORE: ${_timerService.seconds.value}',
-                        style: titleStyle),
                     SizedBox(height: spacing),
-                    Text(
-                      title,
-                      style: titleStyle,
-                    ),
+                    Text(title, style: titleStyle),
                     SizedBox(height: spacing),
                     TextButton(
-                      onPressed: () {
-                        startGameAnimation();
-                      },
+                      onPressed: startGameAnimation,
                       child: Text('PLAY',
                           style: buttonStyle.copyWith(
                               fontSize: titleStyle.fontSize)),
@@ -111,16 +99,13 @@ class _StartMenuState extends State<StartMenu> {
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      onPressed: () {
-                        _gameService.showLeaderboards(kAndroidLeaderBoard);
-                      },
+                      onPressed: () =>
+                          _gameService.showLeaderboards(kAndroidLeaderBoard),
                       child: Text('SCORE', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      onPressed: () {
-                        _gameService.showAchievements();
-                      },
+                      onPressed: _gameService.showAchievements,
                       child: Text('AWARDS', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
