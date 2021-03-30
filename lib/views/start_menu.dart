@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -45,7 +46,9 @@ class _StartMenuState extends State<StartMenu> {
             print('Animation started playing');
           } else {
             print('Animation stopped playing');
-            widget.game.startGame();
+            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+              widget.game.onPlayButtonPressed();
+            });
           }
         });
 

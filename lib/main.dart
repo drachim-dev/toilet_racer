@@ -6,6 +6,7 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/game_service.dart';
+import 'package:toilet_racer/views/game_over_menu.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
@@ -16,7 +17,7 @@ Future<void> main() async {
 
   setupLocator();
   await locator.allReady();
-  
+
   runApp(MyApp());
 }
 
@@ -51,6 +52,11 @@ class _MyAppState extends State<MyApp> {
           overlayBuilderMap: {
             startMenu: (_, RaceGame game) => StartMenu(game),
             overlayUi: (_, RaceGame game) => OverlayUi(),
+            gameOverMenu: (_, RaceGame game) => GameOverMenu(
+                  game.onBackToMenuButtonPressed,
+                  game.onPlayButtonPressed,
+                  5,
+                ),
           },
           initialActiveOverlays: const [startMenu],
         ),

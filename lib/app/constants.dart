@@ -11,6 +11,9 @@ const double startMenuMargin = 32.0;
 const String overlayUi = 'OVERLAY_UI';
 const double kOverlayIconSize = 42.0;
 
+// game over menu
+const String gameOverMenu = 'GAME_OVER_MENU';
+
 // preferences
 const String prefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
 const String prefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';

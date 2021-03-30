@@ -38,12 +38,9 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   AsyncCallback roundEndCallback;
 
-  PlayerBody playerBody;
-  Controller controller;
   HelpText controlHelpText;
 
-  Boundary innerBoundary;
-  Boundary outerBoundary;
+  Set<Component> gameComponents;
 
   Background background;
   Level level;
@@ -61,7 +58,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     await level.onLoad();
     await add(background = Background(level));
 
-    _showMenu();
+    overlays.add(startMenu);
   }
 
   @override
@@ -82,10 +79,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     }
   }
 
-  void _showMenu() {
-    overlays.add(startMenu);
-  }
-
   @override
   void update(double dt) {
     super.update(dt);
@@ -95,12 +88,45 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     }
   }
 
-  void startGame() async {
-    final player = await Fly().onLoad();
-    //final player = await Stinkbug().onLoad();
+  void onBackToMenuButtonPressed() {
+    _removeActiveOverlays();
+    overlays.add(startMenu);
+  }
 
+  void onPlayButtonPressed() {
+    // remove all active overlays
+    final activeOverlays = overlays.value.toSet();
+    activeOverlays.forEach((overlay) {
+      overlays.remove(overlay);
+    });
+
+    // add game overlays
+    overlays.add(overlayUi);
+
+    // add help text
+    if (_showHelp) {
+      add(controlHelpText = HelpText());
+      _showHelp = false;
+      _prefService.setBool(prefKeyShowHelp, _showHelp);
+    }
+
+    // start the game
+    _startGame();
+  }
+
+  void _registerGameComponents() async {
+    PlayerBody playerBody;
+    Boundary innerBoundary;
+    Boundary outerBoundary;
+    Controller controller;
+
+    final player = await Fly().onLoad();
     await add(playerBody =
         PlayerBody(player, background.getImageToScreen(level.startPosition)));
+    await add(controller = Controller(playerBody));
+
+    //final player = await Stinkbug().onLoad();
+
     await add(outerBoundary = Boundary(level.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
         .toList()));
@@ -110,33 +136,29 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
-    await add(controller = Controller(playerBody));
 
-    if (_showHelp) {
-      await add(controlHelpText = HelpText());
-      _showHelp = false;
-      await _prefService.setBool(prefKeyShowHelp, _showHelp);
-    }
+    gameComponents = {playerBody, outerBoundary, innerBoundary, controller};
+  }
 
-    overlays.remove(startMenu);
-    overlays.add(overlayUi);
+  void _startGame() {
+    _registerGameComponents();
+
+    // TODO: wait for all components beeing added?
     _timerService.start();
   }
 
   void pauseGame() async {
-    remove(playerBody);
-    remove(innerBoundary);
-    remove(outerBoundary);
-    remove(controller);
+    gameComponents.forEach((component) => remove(component));
     removeContactCallback(contactCallback);
 
     if (_showHelp) {
       remove(controlHelpText);
     }
-    overlays.remove(overlayUi);
+
+    _removeActiveOverlays();
 
     await roundEndCallback();
-    _showMenu();
+    overlays.add(gameOverMenu);
   }
 
   void collisionDetected() {
@@ -145,11 +167,11 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     _audioService.playDropSound(audioToiletDropSound);
 
-    updateScoreAndAchievements();
+    _updateScoreAndAchievements();
   }
 
   /// Updates score and achievement status async in background.
-  void updateScoreAndAchievements() async {
+  void _updateScoreAndAchievements() async {
     final _gameService = locator<GameService>();
 
     if (_gameService.signedIn) {
@@ -168,5 +190,12 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
       kPlayCountAchievements
           .forEach((id) => _gameService.incrementAchievement(id));
     }
+  }
+
+  void _removeActiveOverlays() {
+    final activeOverlays = overlays.value.toSet();
+    activeOverlays.forEach((overlay) {
+      overlays.remove(overlay);
+    });
   }
 }
