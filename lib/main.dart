@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
             gameOverMenu: (_, RaceGame game) => GameOverMenu(
                   game.onBackToMenuButtonPressed,
                   game.onPlayButtonPressed,
-                  5,
+                  game.score,
                 ),
           },
           initialActiveOverlays: const [startMenu],

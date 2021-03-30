@@ -40,6 +40,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   HelpText controlHelpText;
 
+  int get score => _timerService?.seconds?.value ?? 0;
+
   Set<Component> gameComponents;
 
   Background background;
