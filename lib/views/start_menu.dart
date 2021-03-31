@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:rive/rive.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/game_service.dart';
+import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
   final RaceGame game;
@@ -16,44 +14,26 @@ class StartMenu extends StatefulWidget {
   _StartMenuState createState() => _StartMenuState();
 }
 
-class _StartMenuState extends State<StartMenu> {
-  final riveFileName = 'assets/animations/toilet_lid-up.riv';
-  Rive rive;
-
-  Artboard _artboard;
-  SimpleAnimation _toiletController;
-  SimpleAnimation get toiletController => _toiletController;
-
+class _StartMenuState extends State<StartMenu>
+    with SingleTickerProviderStateMixin {
   final GameService _gameService = locator<GameService>();
-
+  AnimationController _controller;
   @override
   void initState() {
-    _loadRiveFile();
-
     super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1000),
+      value: 0,
+    );
   }
 
-  void _loadRiveFile() async {
-    final bytes = await rootBundle.load(riveFileName);
-    final file = RiveFile();
+  @override
+  void dispose() {
+    _controller?.dispose();
 
-    if (file.import(bytes)) {
-      _toiletController = SimpleAnimation('lid-up')
-        ..isActiveChanged.addListener(() {
-          if (toiletController.isActive) {
-            print('Animation started playing');
-          } else {
-            print('Animation stopped playing');
-            SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-              widget.game.onPlayButtonPressed();
-            });
-          }
-        });
-
-      setState(() {
-        _artboard = file.mainArtboard;
-      });
-    }
+    super.dispose();
   }
 
   @override
@@ -65,13 +45,23 @@ class _StartMenuState extends State<StartMenu> {
     const spacing = 72.0;
     const buttonSpacing = 36.0;
 
+    final bottomImage = Image.asset(
+      'assets/animations/toilet_no-lid.webp',
+      fit: BoxFit.cover,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+    );
+
+    final topImage = Image.asset('assets/animations/toilet_lid.webp', scale: 3);
+
     return Stack(
       children: [
-        if (_artboard != null)
-          Rive(
-            artboard: _artboard,
-            fit: BoxFit.cover,
-          ),
+        FlipWidget(
+          background: bottomImage,
+          flippable: topImage,
+          controller: _controller,
+          flippablePosition: Offset(100, 370),
+        ),
         Padding(
           padding: const EdgeInsets.all(startMenuMargin),
           child: Column(
@@ -87,7 +77,7 @@ class _StartMenuState extends State<StartMenu> {
                     Text(title, style: titleStyle),
                     SizedBox(height: spacing),
                     TextButton(
-                      onPressed: startGameAnimation,
+                      onPressed: _startGame,
                       child: Text('PLAY',
                           style: buttonStyle.copyWith(
                               fontSize: titleStyle.fontSize)),
@@ -120,7 +110,8 @@ class _StartMenuState extends State<StartMenu> {
     );
   }
 
-  void startGameAnimation() {
-    _artboard.addController(_toiletController);
+  Future<void> _startGame() async {
+    await _controller.forward();
+    widget.game.onPlayButtonPressed();
   }
 }
