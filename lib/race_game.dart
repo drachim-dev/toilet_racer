@@ -62,8 +62,6 @@ class RaceGame extends Forge2DGame with TapDetector {
     level = Level.toilet3;
     await level.onLoad();
     await add(background = Background(level));
-
-    overlays.add(kStartMenu);
   }
 
   @override
@@ -100,19 +98,11 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void onBackToMenuButtonPressed() {
-    _removeActiveOverlays();
-    overlays.add(kStartMenu);
+    _showMenuOverlay(kStartMenu);
   }
 
   void onPlayButtonPressed() {
-    // remove all active overlays
-    final activeOverlays = overlays.value.toSet();
-    activeOverlays.forEach((overlay) {
-      overlays.remove(overlay);
-    });
-
-    // add game overlays
-    overlays.add(kOverlayUi);
+    _showMenuOverlay(kOverlayUi);
 
     // add help text
     if (_showHelp) {
@@ -164,10 +154,9 @@ class RaceGame extends Forge2DGame with TapDetector {
       remove(controlHelpText);
     }
 
-    _removeActiveOverlays();
-
     await onGameOver();
-    overlays.add(kGameOverMenu);
+
+    _showMenuOverlay(kGameOverMenu);
   }
 
   void collisionDetected() {
@@ -201,10 +190,14 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
   }
 
-  void _removeActiveOverlays() {
+  /// Removes all active overlays and then show [overlayName]
+  void _showMenuOverlay(String overlayName) {
+    // remove overlays
     final activeOverlays = overlays.value.toSet();
     activeOverlays.forEach((overlay) {
       overlays.remove(overlay);
     });
+
+    overlays.add(overlayName);
   }
 }
