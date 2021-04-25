@@ -19,6 +19,7 @@ const String kPrefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
 const String kPrefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';
 const String kPrefKeyShowHelp = 'PREF_KEY_SHOW_HELP';
 
+
 // audio
 const String kAudioPath = 'assets/audio/';
 const String kAudioBackgroundPath = 'background.mp3';
@@ -42,3 +43,4 @@ const Map<int, String> kDurationAchievements = {
 
 // ads
 const int kDefaultAdInterval = 5;
+const String kPrefKeyAdIntervalCounter = 'PREF_KEY_AD_INTERVAL_COUNTER';
