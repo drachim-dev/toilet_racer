@@ -1,30 +1,30 @@
-const String title = 'Toilet Racer';
+const String kTitle = 'Toilet Racer';
 
 // game size
-const double gameScreenMargin = 48.0;
+const double kGameScreenMargin = 48.0;
 
 // start menu
-const String startMenu = 'START_MENU';
-const double startMenuMargin = 32.0;
+const String kStartMenu = 'START_MENU';
+const double kStartMenuMargin = 32.0;
 
 // overlay ui
-const String overlayUi = 'OVERLAY_UI';
+const String kOverlayUi = 'OVERLAY_UI';
 const double kOverlayIconSize = 42.0;
 
 // game over menu
-const String gameOverMenu = 'GAME_OVER_MENU';
+const String kGameOverMenu = 'GAME_OVER_MENU';
 
 // preferences
-const String prefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
-const String prefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';
-const String prefKeyShowHelp = 'PREF_KEY_SHOW_HELP';
+const String kPrefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
+const String kPrefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';
+const String kPrefKeyShowHelp = 'PREF_KEY_SHOW_HELP';
 
 // audio
-const String audioPath = 'assets/audio/';
-const String audioBackgroundPath = 'background.mp3';
-const double audioBackgroundVolume = 0.4;
-const String audioToiletDropSound = 'fart.mp3';
-const double audioDropVolume = 0.6;
+const String kAudioPath = 'assets/audio/';
+const String kAudioBackgroundPath = 'background.mp3';
+const double kAudioBackgroundVolume = 0.4;
+const String kAudioToiletDropSound = 'fart.mp3';
+const double kAudioDropVolume = 0.6;
 
 // game services
 const String kAndroidLeaderBoard = 'CgkIiMD92MMXEAIQAw';

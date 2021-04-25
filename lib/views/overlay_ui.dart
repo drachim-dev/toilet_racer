@@ -21,7 +21,7 @@ class _OverlayUiState extends State<OverlayUi> {
   void initState() {
     super.initState();
 
-    _musicEnabled = _prefService.getBool(prefKeyMusicEnabled) ?? true;
+    _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? true;
   }
 
   @override
@@ -54,7 +54,7 @@ class _OverlayUiState extends State<OverlayUi> {
   void _toggleMusic() {
     setState(() => _musicEnabled = !_musicEnabled);
 
-    _prefService.setBool(prefKeyMusicEnabled, _musicEnabled);
+    _prefService.setBool(kPrefKeyMusicEnabled, _musicEnabled);
     _musicEnabled ? _audioService.playBgMusic() : _audioService.pause();
   }
 }

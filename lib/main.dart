@@ -57,15 +57,15 @@ class _MyAppState extends State<MyApp> {
         child: GameWidget(
           game: _game,
           overlayBuilderMap: {
-            startMenu: (_, RaceGame game) => StartMenu(game),
-            overlayUi: (_, RaceGame game) => OverlayUi(),
-            gameOverMenu: (_, RaceGame game) => GameOverMenu(
+            kStartMenu: (_, RaceGame game) => StartMenu(game),
+            kOverlayUi: (_, RaceGame game) => OverlayUi(),
+            kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                   game.onBackToMenuButtonPressed,
                   game.onPlayButtonPressed,
                   game.score,
                 ),
           },
-          initialActiveOverlays: const [startMenu],
+          initialActiveOverlays: const [kStartMenu],
         ),
       ),
     );

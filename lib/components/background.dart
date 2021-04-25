@@ -27,7 +27,7 @@ class Background extends SpriteComponent with HasGameRef {
 
     final minScreenSide =
         math.min(gameSize.toSize().width, gameSize.toSize().height) -
-            gameScreenMargin;
+            kGameScreenMargin;
 
     /// Enlarge track to fill display size, but not more than Track.maxSize.
     final trackSize = minScreenSide > Track.maxSizeOnScreen

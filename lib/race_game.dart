@@ -60,7 +60,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     await level.onLoad();
     await add(background = Background(level));
 
-    overlays.add(startMenu);
+    overlays.add(kStartMenu);
   }
 
   @override
@@ -73,8 +73,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void _init() {
-    _musicEnabled = _prefService.getBool(prefKeyMusicEnabled) ?? _musicEnabled;
-    _showHelp = _prefService.getBool(prefKeyShowHelp) ?? _showHelp;
+    _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
+    _showHelp = _prefService.getBool(kPrefKeyShowHelp) ?? _showHelp;
 
     if (_musicEnabled) {
       _audioService.playBgMusic();
@@ -92,7 +92,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   void onBackToMenuButtonPressed() {
     _removeActiveOverlays();
-    overlays.add(startMenu);
+    overlays.add(kStartMenu);
   }
 
   void onPlayButtonPressed() {
@@ -103,13 +103,13 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     });
 
     // add game overlays
-    overlays.add(overlayUi);
+    overlays.add(kOverlayUi);
 
     // add help text
     if (_showHelp) {
       add(controlHelpText = HelpText());
       _showHelp = false;
-      _prefService.setBool(prefKeyShowHelp, _showHelp);
+      _prefService.setBool(kPrefKeyShowHelp, _showHelp);
     }
 
     // start the game
@@ -160,14 +160,14 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _removeActiveOverlays();
 
     await onGameOver();
-    overlays.add(gameOverMenu);
+    overlays.add(kGameOverMenu);
   }
 
   void collisionDetected() {
     _collisionDetected = true;
     _timerService.cancel();
 
-    _audioService.playDropSound(audioToiletDropSound);
+    _audioService.playDropSound(kAudioToiletDropSound);
 
     _updateScoreAndAchievements();
   }

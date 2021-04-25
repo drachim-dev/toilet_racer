@@ -4,26 +4,26 @@ import 'package:toilet_racer/app/constants.dart';
 class AudioService {
   Future<AudioService> init() async {
     FlameAudio.bgm.initialize();
-    FlameAudio.audioCache.prefix = audioPath;
+    FlameAudio.audioCache.prefix = kAudioPath;
 
     // preload bg audio
     await FlameAudio.bgm.audioCache.loadAll([
-      audioBackgroundPath,
+      kAudioBackgroundPath,
     ]);
 
     // preload audio
     await FlameAudio.audioCache.loadAll([
-      audioToiletDropSound,
+      kAudioToiletDropSound,
     ]);
     return this;
   }
 
   void playBgMusic() =>
-      FlameAudio.bgm.play(audioBackgroundPath, volume: audioBackgroundVolume);
+      FlameAudio.bgm.play(kAudioBackgroundPath, volume: kAudioBackgroundVolume);
 
   /// plays 'player drops off the road' sound effect
   void playDropSound(String path) {
-    FlameAudio.play(path, volume: audioDropVolume);
+    FlameAudio.play(path, volume: kAudioDropVolume);
   }
 
   void pause() => FlameAudio.bgm.pause();
