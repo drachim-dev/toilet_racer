@@ -36,7 +36,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   bool _showHelp = true;
   bool _collisionDetected = false;
 
-  AsyncCallback roundEndCallback;
+  AsyncCallback onGameOver;
 
   HelpText controlHelpText;
 
@@ -49,7 +49,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   BoundaryContactCallback contactCallback;
 
-  RaceGame({this.roundEndCallback})
+  RaceGame({this.onGameOver})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
     _init();
   }
@@ -85,7 +85,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   void update(double dt) {
     super.update(dt);
     if (_collisionDetected) {
-      pauseGame();
+      gameOver();
       _collisionDetected = false;
     }
   }
@@ -149,7 +149,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _timerService.start();
   }
 
-  void pauseGame() async {
+  void gameOver() async {
     gameComponents.forEach((component) => remove(component));
     removeContactCallback(contactCallback);
 
@@ -159,7 +159,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
     _removeActiveOverlays();
 
-    await roundEndCallback();
+    await onGameOver();
     overlays.add(gameOverMenu);
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/game_over_menu.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
@@ -27,18 +28,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final AdService _adService = locator<AdService>();
+
   RaceGame _game;
 
   @override
   void initState() {
     super.initState();
 
-    _game = RaceGame(roundEndCallback: _roundEndCallback);
+    _game = RaceGame(onGameOver: _onGameOver);
     locator<GameService>().signIn();
+
+    _adService.load();
   }
 
   @override
   void dispose() {
+    _adService.dispose();
+
     super.dispose();
   }
 
@@ -64,7 +71,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<void> _roundEndCallback() async {
-    //await _showAd();
-  }
+  Future<void> _onGameOver() => _adService?.mayShow();
 }

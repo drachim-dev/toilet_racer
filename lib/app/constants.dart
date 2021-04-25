@@ -39,3 +39,6 @@ const Map<int, String> kDurationAchievements = {
   30: 'CgkIiMD92MMXEAIQBQ',
   40: 'CgkIiMD92MMXEAIQBw',
 };
+
+// ads
+const int kDefaultAdInterval = 5;
