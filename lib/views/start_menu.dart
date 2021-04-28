@@ -58,7 +58,7 @@ class _StartMenuState extends State<StartMenu>
           controller: _controller,
         ),
         Padding(
-          padding: const EdgeInsets.all(startMenuMargin),
+          padding: const EdgeInsets.all(kStartMenuMargin),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +69,7 @@ class _StartMenuState extends State<StartMenu>
                 child: Column(
                   children: [
                     SizedBox(height: spacing),
-                    Text(title, style: titleStyle),
+                    Text(kTitle, style: titleStyle),
                     SizedBox(height: spacing),
                     TextButton(
                       onPressed: _startGame,

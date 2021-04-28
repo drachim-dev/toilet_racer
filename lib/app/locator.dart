@@ -14,7 +14,8 @@ void setupLocator() {
   locator.registerSingletonAsync<AudioService>(
       () => kIsWeb ? WebAudioService().init() : AudioService().init());
   locator.registerSingletonAsync<AdService>(
-      () => kIsWeb ? WebAdService().init() : AdService().init());
+      () => kIsWeb ? WebAdService().init() : MobileAdService().init(),
+      dependsOn: [SharedPreferences]);
   locator.registerSingleton<GameService>(GameService());
   locator.registerSingleton<TimerService>(TimerService());
 }

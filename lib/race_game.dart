@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/gestures.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
-import 'package:toilet_racer/components/controller.dart';
 import 'package:toilet_racer/components/help_text.dart';
 import 'package:toilet_racer/components/player_body.dart';
 import 'package:toilet_racer/services/audio_service.dart';
@@ -22,7 +23,7 @@ import 'game/level.dart';
 
 typedef AsyncCallback = Future<void> Function();
 
-class RaceGame extends Forge2DGame with HasTapableComponents {
+class RaceGame extends Forge2DGame with TapDetector {
   static const double defaultScale = 4.0;
 
   final AudioService _audioService = locator<AudioService>();
@@ -36,9 +37,11 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   bool _showHelp = true;
   bool _collisionDetected = false;
 
-  AsyncCallback roundEndCallback;
+  AsyncCallback onGameOver;
 
   HelpText controlHelpText;
+
+  PlayerBody _playerBody;
 
   int get score => _timerService?.seconds?.value ?? 0;
 
@@ -49,7 +52,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
 
   BoundaryContactCallback contactCallback;
 
-  RaceGame({this.roundEndCallback})
+  RaceGame({this.onGameOver})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
     _init();
   }
@@ -59,8 +62,6 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     level = Level.toilet3;
     await level.onLoad();
     await add(background = Background(level));
-
-    overlays.add(startMenu);
   }
 
   @override
@@ -73,8 +74,8 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void _init() {
-    _musicEnabled = _prefService.getBool(prefKeyMusicEnabled) ?? _musicEnabled;
-    _showHelp = _prefService.getBool(prefKeyShowHelp) ?? _showHelp;
+    _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
+    _showHelp = _prefService.getBool(kPrefKeyShowHelp) ?? _showHelp;
 
     if (_musicEnabled) {
       _audioService.playBgMusic();
@@ -85,31 +86,29 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   void update(double dt) {
     super.update(dt);
     if (_collisionDetected) {
-      pauseGame();
+      gameOver();
       _collisionDetected = false;
     }
   }
 
+  @override
+  void onTapDown(TapDownDetails details) {
+    _playerBody?.spin();
+    return super.onTapDown(details);
+  }
+
   void onBackToMenuButtonPressed() {
-    _removeActiveOverlays();
-    overlays.add(startMenu);
+    _showMenuOverlay(kStartMenu);
   }
 
   void onPlayButtonPressed() {
-    // remove all active overlays
-    final activeOverlays = overlays.value.toSet();
-    activeOverlays.forEach((overlay) {
-      overlays.remove(overlay);
-    });
-
-    // add game overlays
-    overlays.add(overlayUi);
+    _showMenuOverlay(kOverlayUi);
 
     // add help text
     if (_showHelp) {
       add(controlHelpText = HelpText());
       _showHelp = false;
-      _prefService.setBool(prefKeyShowHelp, _showHelp);
+      _prefService.setBool(kPrefKeyShowHelp, _showHelp);
     }
 
     // start the game
@@ -117,17 +116,15 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
   }
 
   void _registerGameComponents() async {
-    PlayerBody playerBody;
+    _playerBody;
     Boundary innerBoundary;
     Boundary outerBoundary;
-    Controller controller;
 
     final player = await Fly().onLoad();
-    await add(playerBody =
+    await add(_playerBody =
         PlayerBody(player, background.getImageToScreen(level.startPosition)));
-    await add(controller = Controller(playerBody));
 
-    //final player = await Stinkbug().onLoad();
+    // final player = await Stinkbug().onLoad();
 
     await add(outerBoundary = Boundary(level.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
@@ -139,7 +136,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     addContactCallback(
         contactCallback = BoundaryContactCallback(collisionDetected));
 
-    gameComponents = {playerBody, outerBoundary, innerBoundary, controller};
+    gameComponents = {_playerBody, outerBoundary, innerBoundary};
   }
 
   void _startGame() {
@@ -149,7 +146,7 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     _timerService.start();
   }
 
-  void pauseGame() async {
+  void gameOver() async {
     gameComponents.forEach((component) => remove(component));
     removeContactCallback(contactCallback);
 
@@ -157,17 +154,16 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
       remove(controlHelpText);
     }
 
-    _removeActiveOverlays();
+    await onGameOver();
 
-    await roundEndCallback();
-    overlays.add(gameOverMenu);
+    _showMenuOverlay(kGameOverMenu);
   }
 
   void collisionDetected() {
     _collisionDetected = true;
     _timerService.cancel();
 
-    _audioService.playDropSound(audioToiletDropSound);
+    _audioService.playDropSound(kAudioToiletDropSound);
 
     _updateScoreAndAchievements();
   }
@@ -194,10 +190,14 @@ class RaceGame extends Forge2DGame with HasTapableComponents {
     }
   }
 
-  void _removeActiveOverlays() {
+  /// Removes all active overlays and then show [overlayName]
+  void _showMenuOverlay(String overlayName) {
+    // remove overlays
     final activeOverlays = overlays.value.toSet();
     activeOverlays.forEach((overlay) {
       overlays.remove(overlay);
     });
+
+    overlays.add(overlayName);
   }
 }

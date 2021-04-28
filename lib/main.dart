@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/game_over_menu.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
@@ -27,18 +28,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final AdService _adService = locator<AdService>();
+
   RaceGame _game;
 
   @override
   void initState() {
     super.initState();
 
-    _game = RaceGame(roundEndCallback: _roundEndCallback);
+    _game = RaceGame(onGameOver: _onGameOver);
     locator<GameService>().signIn();
+
+    _adService.load();
   }
 
   @override
   void dispose() {
+    _adService.dispose();
+
     super.dispose();
   }
 
@@ -50,21 +57,19 @@ class _MyAppState extends State<MyApp> {
         child: GameWidget(
           game: _game,
           overlayBuilderMap: {
-            startMenu: (_, RaceGame game) => StartMenu(game),
-            overlayUi: (_, RaceGame game) => OverlayUi(),
-            gameOverMenu: (_, RaceGame game) => GameOverMenu(
+            kStartMenu: (_, RaceGame game) => StartMenu(game),
+            kOverlayUi: (_, RaceGame game) => OverlayUi(),
+            kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                   game.onBackToMenuButtonPressed,
                   game.onPlayButtonPressed,
                   game.score,
                 ),
           },
-          initialActiveOverlays: const [startMenu],
+          initialActiveOverlays: const [kStartMenu],
         ),
       ),
     );
   }
 
-  Future<void> _roundEndCallback() async {
-    //await _showAd();
-  }
+  Future<void> _onGameOver() => _adService?.mayShow();
 }
