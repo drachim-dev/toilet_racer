@@ -47,12 +47,8 @@ class _StartMenuState extends State<StartMenu>
 
     final bottomImage = Image.asset(
       'assets/animations/toilet_no-lid.webp',
-      fit: BoxFit.cover,
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
     );
-
-    final topImage = Image.asset('assets/animations/toilet_lid.webp', scale: 3);
+    final topImage = Image.asset('assets/animations/toilet_lid.webp');
 
     return Stack(
       children: [
@@ -60,7 +56,6 @@ class _StartMenuState extends State<StartMenu>
           background: bottomImage,
           flippable: topImage,
           controller: _controller,
-          flippablePosition: Offset(100, 370),
         ),
         Padding(
           padding: const EdgeInsets.all(startMenuMargin),
@@ -106,6 +101,33 @@ class _StartMenuState extends State<StartMenu>
             ],
           ),
         ),
+        // Positioned.fill(
+        //   // width: MediaQuery.of(context).size.width,
+        //   // height: MediaQuery.of(context).size.height,
+        //   child: FittedBox(
+        //     fit: BoxFit.cover,
+        //     child: SizedBox(
+        //       height: 200,
+        //       width: 200,
+        //       child: Stack(children: [
+        //         Positioned.fill(
+        //           child: Placeholder(
+        //             color: Colors.green,
+        //           ),
+        //         ),
+        //         Positioned(
+        //           top: 75,
+        //           left: 50,
+        //           height: 100,
+        //           width: 100,
+        //           child: Placeholder(
+        //             color: Colors.red,
+        //           ),
+        //         ),
+        //       ]),
+        //     ),
+        //   ),
+        // )
       ],
     );
   }
