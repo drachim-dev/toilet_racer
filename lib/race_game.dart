@@ -11,7 +11,7 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
-import 'package:toilet_racer/components/help_text.dart';
+import 'package:toilet_racer/components/game_help.dart';
 import 'package:toilet_racer/components/player_body.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
@@ -39,7 +39,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   AsyncCallback onGameOver;
 
-  HelpText controlHelpText;
+  GameHelp gameHelp;
 
   PlayerBody _playerBody;
 
@@ -106,7 +106,28 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     // add help text
     if (_showHelp) {
-      add(controlHelpText = HelpText());
+      final outerBoundary = List<Vector2>.from(level.track.outerBoundary)
+          .map((e) => background.getImageToScreen(e))
+          .toList();
+      final innerBoundary = List<Vector2>.from(level.track.innerBoundary)
+          .map((e) => background.getImageToScreen(e))
+          .toList();
+
+      // calc new boundary between inner and outer
+      var boundary = List<Vector2>.from(outerBoundary);
+      for (var i = 0; i < outerBoundary.length; i++) {
+        boundary[i].add(innerBoundary[i]);
+        boundary[i].scale(0.5);
+      }
+
+      add(gameHelp = GameHelp(
+        boundary: boundary,
+        darken: true,
+        bottomArrow: true,
+        topArrow: true,
+        helpText: 'Stay on the\ntoilet',
+      ));
+
       _showHelp = false;
       _prefService.setBool(kPrefKeyShowHelp, _showHelp);
     }
@@ -151,7 +172,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     removeContactCallback(contactCallback);
 
     if (_showHelp) {
-      remove(controlHelpText);
+      remove(gameHelp);
     }
 
     await onGameOver();
