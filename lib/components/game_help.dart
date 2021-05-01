@@ -1,6 +1,8 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
@@ -14,7 +16,7 @@ class GameHelp extends Component {
   );
 
   static final Paint _paint = Paint()
-    ..color = Colors.white.withOpacity(0.8)
+    ..color = Colors.white
     ..strokeCap = StrokeCap.round
     ..strokeJoin = StrokeJoin.round
     ..strokeWidth = 10.0
@@ -79,28 +81,36 @@ class GameHelp extends Component {
   }
 
   void _drawArrow(Canvas c, List<Vector2> vertices) {
-    var path = Path();
+    final path = Path();
     for (var i = 0; i < vertices.length - 1; i++) {
       var element = vertices[i];
       var nextElement = vertices[i + 1];
-      // arrow body
+      
       path.moveTo(element.x, element.y);
       path.quadraticBezierTo(
           element.x, element.y, nextElement.x, nextElement.y);
 
-      // arrow head
       if (nextElement == vertices.last) {
-        // when nextElement.y > prevElement.y => south direction
-        var directionFactor = nextElement.y > element.y ? -1 : 1;
-
-        var length = 30.0;
-        path.relativeLineTo(-length, length * directionFactor);
-        path.moveTo(nextElement.x, nextElement.y);
-        path.relativeLineTo(length, length * directionFactor);
+        _drawArrowHead(c, element, nextElement, 40.0);
       }
     }
 
     c.drawPath(path, _paint);
+  }
+
+  void _drawArrowHead(Canvas c, Vector2 from, Vector2 to, double length) {
+    final dx = to.x - from.x;
+    final dy = to.y - from.y;
+    final angle = atan2(dy, dx);
+
+    final p1 = Offset(to.x - length * cos(angle + pi / 6),
+        to.y - length * sin(angle + pi / 6));
+    final p2 = Offset(to.x, to.y);
+    final p3 = Offset(to.x - length * cos(angle - pi / 6),
+        to.y - length * sin(angle - pi / 6));
+
+    final head = Path()..addPolygon([p1, p2, p3], false);
+    c.drawPath(head, _paint);
   }
 
   @override
