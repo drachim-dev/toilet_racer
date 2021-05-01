@@ -36,39 +36,49 @@ class GameHelp extends Component {
 
   @override
   void render(Canvas c) {
+    // darken background
     if (darken) {
-      // dark background and draw arrows
       c.drawColor(Colors.black26, BlendMode.darken);
     }
 
-    // calculate middle y position
-    boundary.sort((a, b) => a.y.compareTo(b.y));
-    final middle = (boundary.first.y + boundary.last.y) / 2;
+    if (bottomArrow || topArrow) {
+      // calculate middle y position
+      boundary.sort((a, b) => a.y.compareTo(b.y));
+      final middleY = (boundary.first.y + boundary.last.y) / 2;
 
-    if (bottomArrow) {
-      // get lower half and sort by x asc
-      final vertices = boundary.where((element) => element.y > middle).toList()
-        ..sort((a, b) => a.x.compareTo(b.x));
+      if (bottomArrow) {
+        _drawBottomArrow(c, middleY);
+      }
 
-      drawArrow(c, vertices);
-    }
-
-    if (topArrow) {
-      // get upper half and sort by x desc
-      final vertices = boundary.where((element) => element.y < middle).toList()
-        ..sort((a, b) => b.x.compareTo(a.x));
-
-      drawArrow(c, vertices);
+      if (topArrow) {
+        _drawTopArrow(c, middleY);
+      }
     }
 
     // draw hint text
     if (helpText.isNotEmpty) {
-      var position = Vector2(_gameSize.x / 2, kGameScreenMargin);
+      final position = Vector2(_gameSize.x / 2, kGameScreenMargin);
       _textConfig.render(c, helpText, position, anchor: Anchor.topCenter);
     }
   }
 
-  void drawArrow(Canvas c, List<Vector2> vertices) {
+  void _drawBottomArrow(Canvas c, double middleY) {
+    // get lower half and sort by x asc
+    final vertices = boundary.where((element) => element.y > middleY).toList()
+      ..sort((a, b) => a.x.compareTo(b.x));
+
+    _drawArrow(c, vertices);
+  }
+
+  void _drawTopArrow(Canvas c, double middleY) {
+    // get upper half and sort by x desc
+    final vertices = boundary.where((element) => element.y < middleY).toList()
+      ..sort((a, b) => b.x.compareTo(a.x));
+
+    _drawArrow(c, vertices);
+  }
+
+  void _drawArrow(Canvas c, List<Vector2> vertices) {
     var path = Path();
     for (var i = 0; i < vertices.length - 1; i++) {
       var element = vertices[i];
