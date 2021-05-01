@@ -18,6 +18,7 @@ import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 import 'package:vector_math/vector_math_64.dart';
 
+import 'app/utils.dart';
 import 'components/player.dart';
 import 'game/level.dart';
 
@@ -30,27 +31,24 @@ class RaceGame extends Forge2DGame with TapDetector {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final TimerService _timerService = locator<TimerService>();
 
+  final AsyncCallback onGameOver;
+
   @override
   bool debugMode = kDebugMode;
 
   bool _musicEnabled = true;
-  bool _showHelp = true;
+  bool _isFirstLaunch = true;
   bool _collisionDetected = false;
-
-  AsyncCallback onGameOver;
-
-  GameHelp gameHelp;
-
-  PlayerBody _playerBody;
-
-  int get score => _timerService?.seconds?.value ?? 0;
-
-  Set<Component> gameComponents;
 
   Background background;
   Level level;
-
   BoundaryContactCallback contactCallback;
+
+  Set<Component> gameComponents;
+  PlayerBody _playerBody;
+  Iterator<GameHelp> gameHelper;
+
+  int get score => _timerService?.seconds?.value ?? 0;
 
   RaceGame({this.onGameOver})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
@@ -75,7 +73,8 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _init() {
     _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
-    _showHelp = _prefService.getBool(kPrefKeyShowHelp) ?? _showHelp;
+    _isFirstLaunch =
+        _prefService.getBool(kPrefKeyIsFirstLaunch) ?? _isFirstLaunch;
 
     if (_musicEnabled) {
       _audioService.playBgMusic();
@@ -93,53 +92,34 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   @override
   void onTapDown(TapDownDetails details) {
+    // Iterate over GameHelpers on firstLaunch
+    if (_isFirstLaunch) {
+      remove(gameHelper.current);
+      if (gameHelper.moveNext()) {
+        add(gameHelper.current);
+        return;
+      }
+      _prefService.setBool(kPrefKeyIsFirstLaunch, _isFirstLaunch = false);
+      _startGame();
+      return;
+    }
+
     _playerBody?.spin();
     return super.onTapDown(details);
   }
 
   void onBackToMenuButtonPressed() {
-    _showMenuOverlay(kStartMenu);
+    _swapMenuOverlay(kStartMenu);
   }
 
   void onPlayButtonPressed() {
-    _showMenuOverlay(kOverlayUi);
+    _removeOverlays();
 
-    // add help text
-    if (_showHelp) {
-      final outerBoundary = List<Vector2>.from(level.track.outerBoundary)
-          .map((e) => background.getImageToScreen(e))
-          .toList();
-      final innerBoundary = List<Vector2>.from(level.track.innerBoundary)
-          .map((e) => background.getImageToScreen(e))
-          .toList();
-
-      // calc new boundary between inner and outer
-      var boundary = List<Vector2>.from(outerBoundary);
-      for (var i = 0; i < outerBoundary.length; i++) {
-        boundary[i].add(innerBoundary[i]);
-        boundary[i].scale(0.5);
-      }
-
-      add(gameHelp = GameHelp(
-        boundary: boundary,
-        darken: true,
-        bottomArrow: true,
-        topArrow: true,
-        helpText: 'Stay on the\ntoilet',
-      ));
-
-      _showHelp = false;
-      _prefService.setBool(kPrefKeyShowHelp, _showHelp);
-    }
-
-    // start the game
-    _startGame();
+    _isFirstLaunch ? _initGameHelp() : _startGame();
   }
 
   void _registerGameComponents() async {
-    _playerBody;
-    Boundary innerBoundary;
-    Boundary outerBoundary;
+    Boundary innerBoundary, outerBoundary;
 
     final player = await Fly().onLoad();
     await add(_playerBody =
@@ -162,6 +142,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _startGame() {
     _registerGameComponents();
+    _swapMenuOverlay(kOverlayUi);
 
     // TODO: wait for all components beeing added?
     _timerService.start();
@@ -171,13 +152,9 @@ class RaceGame extends Forge2DGame with TapDetector {
     gameComponents.forEach((component) => remove(component));
     removeContactCallback(contactCallback);
 
-    if (_showHelp) {
-      remove(gameHelp);
-    }
-
     await onGameOver();
 
-    _showMenuOverlay(kGameOverMenu);
+    _swapMenuOverlay(kGameOverMenu);
   }
 
   void collisionDetected() {
@@ -211,14 +188,46 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
   }
 
-  /// Removes all active overlays and then show [overlayName]
-  void _showMenuOverlay(String overlayName) {
-    // remove overlays
+  /// Removes all active overlays in favor of [overlayName]
+  void _swapMenuOverlay(String overlayName) {
+    _removeOverlays();
+    overlays.add(overlayName);
+  }
+
+  /// Removes all active overlays
+  void _removeOverlays() {
     final activeOverlays = overlays.value.toSet();
     activeOverlays.forEach((overlay) {
       overlays.remove(overlay);
     });
+  }
 
-    overlays.add(overlayName);
+  void _initGameHelp() {
+    final middleBoundary = getMiddleVertices(
+      level.track.outerBoundary
+          .map((e) => background.getImageToScreen(e))
+          .toList(),
+      level.track.innerBoundary
+          .map((e) => background.getImageToScreen(e))
+          .toList(),
+    );
+
+    gameHelper = [
+      GameHelp(
+        boundary: middleBoundary,
+        bottomArrow: true,
+        topArrow: true,
+        helpText: 'Stay on the\ntoilet',
+      ),
+      GameHelp(
+        boundary: middleBoundary,
+        bottomArrow: true,
+        helpText: 'Tap anywhere\nto turn',
+      )
+    ].iterator;
+
+    // show first gameHelp
+    gameHelper.moveNext();
+    add(gameHelper.current);
   }
 }

@@ -28,7 +28,7 @@ class GameHelp extends Component {
 
   GameHelp({
     this.boundary,
-    this.darken = false,
+    this.darken = true,
     this.bottomArrow = false,
     this.topArrow = false,
     this.helpText,
