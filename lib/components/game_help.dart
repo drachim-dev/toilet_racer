@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
-class GameHelp extends Component {
+class GameHelp extends PositionComponent {
   static final TextConfig _textConfig = TextConfig(
     fontSize: 56.0,
     color: Colors.white,
@@ -38,6 +38,8 @@ class GameHelp extends Component {
 
   @override
   void render(Canvas c) {
+    super.render(c);
+
     // darken background
     if (darken) {
       c.drawColor(Colors.black26, BlendMode.darken);
@@ -85,7 +87,7 @@ class GameHelp extends Component {
     for (var i = 0; i < vertices.length - 1; i++) {
       var element = vertices[i];
       var nextElement = vertices[i + 1];
-      
+
       path.moveTo(element.x, element.y);
       path.quadraticBezierTo(
           element.x, element.y, nextElement.x, nextElement.y);
