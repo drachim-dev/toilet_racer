@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    _game = RaceGame(onGameOver: _onGameOver);
+    _game = RaceGame(gameOverCallback: _onGameOver);
     locator<GameService>().signIn();
 
     _adService.load();
@@ -57,11 +57,11 @@ class _MyAppState extends State<MyApp> {
         child: GameWidget(
           game: _game,
           overlayBuilderMap: {
-            kStartMenu: (_, RaceGame game) => StartMenu(game),
+            kStartMenu: (_, RaceGame game) => StartMenu(game.startGame),
             kOverlayUi: (_, RaceGame game) => OverlayUi(),
             kGameOverMenu: (_, RaceGame game) => GameOverMenu(
-                  game.onBackToMenuButtonPressed,
-                  game.onPlayButtonPressed,
+                  game.showStartMenu,
+                  game.startGame,
                   game.score,
                 ),
           },

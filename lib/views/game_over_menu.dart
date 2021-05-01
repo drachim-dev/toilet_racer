@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
 
 class GameOverMenu extends StatelessWidget {
-  final VoidCallback onPlayButtonPressed;
-  final VoidCallback onBackToMenuButtonPressed;
+  final VoidCallback onBackToMenuPressed, onPlayPressed;
   final int score;
 
-  GameOverMenu(
-      this.onBackToMenuButtonPressed, this.onPlayButtonPressed, this.score);
+  const GameOverMenu(this.onBackToMenuPressed, this.onPlayPressed, this.score);
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +56,12 @@ class GameOverMenu extends StatelessWidget {
               child: Column(
                 children: [
                   TextButton(
-                    onPressed: onBackToMenuButtonPressed,
+                    onPressed: onBackToMenuPressed,
                     child: Text('HOME', style: buttonStyle),
                   ),
                   SizedBox(height: spacing),
                   TextButton(
-                    onPressed: onPlayButtonPressed,
+                    onPressed: onPlayPressed,
                     child: Text('TRY AGAIN', style: buttonStyle),
                   ),
                 ],

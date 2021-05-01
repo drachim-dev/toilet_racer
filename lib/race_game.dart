@@ -31,13 +31,13 @@ class RaceGame extends Forge2DGame with TapDetector {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final TimerService _timerService = locator<TimerService>();
 
-  final AsyncCallback onGameOver;
+  final AsyncCallback gameOverCallback;
 
   @override
   bool debugMode = kDebugMode;
 
   bool _musicEnabled = true;
-  bool _isFirstLaunch = true;
+  bool _firstLaunch = true;
   bool _collisionDetected = false;
 
   Background background;
@@ -50,7 +50,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   int get score => _timerService?.seconds?.value ?? 0;
 
-  RaceGame({this.onGameOver})
+  RaceGame({this.gameOverCallback})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
     _init();
   }
@@ -73,133 +73,25 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _init() {
     _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
-    _isFirstLaunch =
-        _prefService.getBool(kPrefKeyIsFirstLaunch) ?? _isFirstLaunch;
+    _firstLaunch = _prefService.getBool(kPrefKeyIsFirstLaunch) ?? _firstLaunch;
 
     if (_musicEnabled) {
       _audioService.playBgMusic();
     }
   }
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (_collisionDetected) {
-      gameOver();
-      _collisionDetected = false;
-    }
-  }
-
-  @override
-  void onTapDown(TapDownDetails details) {
-    // Iterate over GameHelpers on firstLaunch
-    if (_isFirstLaunch) {
-      remove(gameHelper.current);
-      if (gameHelper.moveNext()) {
-        add(gameHelper.current);
-        return;
-      }
-      _prefService.setBool(kPrefKeyIsFirstLaunch, _isFirstLaunch = false);
-      _startGame();
-      return;
-    }
-
-    _playerBody?.spin();
-    return super.onTapDown(details);
-  }
-
-  void onBackToMenuButtonPressed() {
-    _swapMenuOverlay(kStartMenu);
-  }
-
-  void onPlayButtonPressed() {
+  void startGame() async {
     _removeOverlays();
 
-    _isFirstLaunch ? _initGameHelp() : _startGame();
-  }
-
-  void _registerGameComponents() async {
-    Boundary innerBoundary, outerBoundary;
-
-    final player = await Fly().onLoad();
-    await add(_playerBody =
-        PlayerBody(player, background.getImageToScreen(level.startPosition)));
-
-    // final player = await Stinkbug().onLoad();
-
-    await add(outerBoundary = Boundary(level.track.outerBoundary
-        .map((vertex) => background.getImageToScreen(vertex))
-        .toList()));
-    await add(innerBoundary = Boundary(level.track.innerBoundary
-        .map((vertex) => background.getImageToScreen(vertex))
-        .toList()));
-
-    addContactCallback(
-        contactCallback = BoundaryContactCallback(collisionDetected));
-
-    gameComponents = {_playerBody, outerBoundary, innerBoundary};
-  }
-
-  void _startGame() {
-    _registerGameComponents();
-    _swapMenuOverlay(kOverlayUi);
-
-    // TODO: wait for all components beeing added?
-    _timerService.start();
-  }
-
-  void gameOver() async {
-    gameComponents.forEach((component) => remove(component));
-    removeContactCallback(contactCallback);
-
-    await onGameOver();
-
-    _swapMenuOverlay(kGameOverMenu);
-  }
-
-  void collisionDetected() {
-    _collisionDetected = true;
-    _timerService.cancel();
-
-    _audioService.playDropSound(kAudioToiletDropSound);
-
-    _updateScoreAndAchievements();
-  }
-
-  /// Updates score and achievement status async in background.
-  void _updateScoreAndAchievements() async {
-    final _gameService = locator<GameService>();
-
-    if (_gameService.signedIn) {
-      // submit score
-      await _gameService.submitScore(
-          kAndroidLeaderBoard, _timerService.seconds.value);
-
-      // update duration achievement
-      kDurationAchievements.forEach((duration, id) {
-        if (_timerService.seconds.value > duration) {
-          _gameService.unlockAchievement(id);
-        }
-      });
-
-      // update play count
-      kPlayCountAchievements
-          .forEach((id) => _gameService.incrementAchievement(id));
+    // Init and show game help
+    if (_firstLaunch) {
+      _initGameHelp();
+      await add(gameHelper.current);
+    } else {
+      await _addGameComponents();
+      _swapMenuOverlay(kOverlayUi);
+      _timerService.start();
     }
-  }
-
-  /// Removes all active overlays in favor of [overlayName]
-  void _swapMenuOverlay(String overlayName) {
-    _removeOverlays();
-    overlays.add(overlayName);
-  }
-
-  /// Removes all active overlays
-  void _removeOverlays() {
-    final activeOverlays = overlays.value.toSet();
-    activeOverlays.forEach((overlay) {
-      overlays.remove(overlay);
-    });
   }
 
   void _initGameHelp() {
@@ -224,10 +116,112 @@ class RaceGame extends Forge2DGame with TapDetector {
         bottomArrow: true,
         helpText: 'Tap anywhere\nto turn',
       )
-    ].iterator;
+    ].iterator
+      ..moveNext();
+  }
 
-    // show first gameHelp
-    gameHelper.moveNext();
-    add(gameHelper.current);
+  Future<void> _addGameComponents() async {
+    Boundary innerBoundary, outerBoundary;
+
+    final player = await Fly().onLoad();
+    await add(_playerBody =
+        PlayerBody(player, background.getImageToScreen(level.startPosition)));
+
+    // final player = await Stinkbug().onLoad();
+
+    await add(outerBoundary = Boundary(level.track.outerBoundary
+        .map((vertex) => background.getImageToScreen(vertex))
+        .toList()));
+    await add(innerBoundary = Boundary(level.track.innerBoundary
+        .map((vertex) => background.getImageToScreen(vertex))
+        .toList()));
+
+    addContactCallback(
+        contactCallback = BoundaryContactCallback(_onCollisionDetected));
+
+    gameComponents = {_playerBody, outerBoundary, innerBoundary};
+  }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (_collisionDetected) {
+      _onGameOver();
+      _collisionDetected = false;
+    }
+  }
+
+  @override
+  void onTapDown(TapDownDetails details) {
+    // Iterate over GameHelpers on firstLaunch
+    if (_firstLaunch) {
+      remove(gameHelper.current);
+      if (gameHelper.moveNext()) {
+        add(gameHelper.current);
+        return;
+      }
+      _prefService.setBool(kPrefKeyIsFirstLaunch, _firstLaunch = false);
+      startGame();
+      return;
+    }
+
+    _playerBody?.spin();
+    return super.onTapDown(details);
+  }
+
+  void _onCollisionDetected() {
+    _collisionDetected = true;
+    _timerService.cancel();
+
+    _audioService.playDropSound(kAudioToiletDropSound);
+
+    _updateScoreAndAchievements();
+  }
+
+  void _onGameOver() async {
+    gameComponents.forEach((c) => remove(c));
+    removeContactCallback(contactCallback);
+
+    await gameOverCallback();
+
+    _swapMenuOverlay(kGameOverMenu);
+  }
+
+  /// Updates score and achievement status async in background.
+  void _updateScoreAndAchievements() async {
+    final _gameService = locator<GameService>();
+
+    if (_gameService.signedIn) {
+      // submit score
+      await _gameService.submitScore(
+          kAndroidLeaderBoard, _timerService.seconds.value);
+
+      // update duration achievement
+      kDurationAchievements.forEach((duration, id) {
+        if (_timerService.seconds.value > duration) {
+          _gameService.unlockAchievement(id);
+        }
+      });
+
+      // update play count
+      kPlayCountAchievements
+          .forEach((id) => _gameService.incrementAchievement(id));
+    }
+  }
+
+  void showStartMenu() => _swapMenuOverlay(kStartMenu);
+
+  /// Removes all active overlays
+  void _removeOverlays() {
+    final activeOverlays = overlays.value.toSet();
+    activeOverlays.forEach((overlay) {
+      overlays.remove(overlay);
+    });
+  }
+
+  /// Removes all active overlays in favor of [overlayName]
+  void _swapMenuOverlay(String overlayName) {
+    _removeOverlays();
+    overlays.add(overlayName);
   }
 }

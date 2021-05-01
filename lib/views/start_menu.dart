@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
-import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
-  final RaceGame game;
+  final VoidCallback onPlayPressed;
 
-  const StartMenu(this.game);
+  const StartMenu(this.onPlayPressed);
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -24,7 +23,7 @@ class _StartMenuState extends State<StartMenu>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(seconds: 1),
       value: 0,
     );
   }
@@ -134,6 +133,6 @@ class _StartMenuState extends State<StartMenu>
 
   Future<void> _startGame() async {
     await _controller.forward();
-    widget.game.onPlayButtonPressed();
+    widget.onPlayPressed();
   }
 }
