@@ -56,10 +56,13 @@ flutter:
 
   assets:
     - assets/audio/
-    - assets/images/
-    - assets/images/players/
-    - assets/images/roads/
     - assets/animations/
+    - assets/images/
+    - assets/images/player/
+    - assets/images/player/fly/
+    - assets/images/player/stinkbug/
+    - assets/images/level/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

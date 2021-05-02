@@ -11,7 +11,7 @@ class Stinkbug extends Player {
   @override
   Future<Player> onLoad() async {
     final filePaths = Iterable<int>.generate(5)
-        .map((index) => 'players/stinkbug_${index + 1}.png')
+        .map((index) => 'player/stinkbug/stinkbug_${index + 1}.png')
         .toList();
     final sprites = await loadSprites(filePaths);
     final spriteAnimation = SpriteAnimation.spriteList(sprites, stepTime: 0.1);
@@ -35,8 +35,8 @@ class Fly extends Player {
 
   @override
   Future<Player> onLoad() async {
-    final sprites =
-        await loadSprites(['players/fly_1@2x.png', 'players/fly_2@2x.png']);
+    final sprites = await loadSprites(
+        ['player/fly/fly_1@2x.png', 'player/fly/fly_2@2x.png']);
     final spriteAnimation =
         SpriteAnimation.spriteList(sprites, stepTime: maxAnimationStepTime);
 

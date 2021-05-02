@@ -16,10 +16,8 @@ abstract class Track {
 
 class EllipseTrack extends Track {
   static const int _numEdges = 50;
-  Vector2 innerCenter;
-  Radius innerRadii;
-  Vector2 outerCenter;
-  Radius outerRadii;
+  Vector2 innerCenter, outerCenter;
+  Radius innerRadii, outerRadii;
 
   EllipseTrack(
       {@required this.innerCenter,
@@ -61,8 +59,8 @@ class EllipseTrack extends Track {
 }
 
 class Level {
-  static Level toilet3 = Level(
-      filePath: 'roads/toilet3.webp',
+  static Level toilet = Level(
+      filePath: 'level/toilet3.webp',
       startPosition: Vector2(362, 906),
       track: EllipseTrack(
           innerCenter: Vector2(366, 765),
