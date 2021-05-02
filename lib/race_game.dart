@@ -57,7 +57,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   @override
   Future<void> onLoad() async {
-    level = Level.toilet;
+    level = Level.toilet2;
     await level.onLoad();
     await add(background = Background(level));
   }

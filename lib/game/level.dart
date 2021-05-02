@@ -59,8 +59,17 @@ class EllipseTrack extends Track {
 }
 
 class Level {
-  static Level toilet = Level(
-      filePath: 'level/toilet3.webp',
+  static Level toilet1 = Level(
+      filePath: 'level/toilet1.webp',
+      startPosition: Vector2(767, 1695),
+      track: EllipseTrack(
+          innerCenter: Vector2(767, 1415),
+          innerRadii: Radius.elliptical(200, 210),
+          outerCenter: Vector2(767, 1405),
+          outerRadii: Radius.elliptical(320, 360)));
+
+  static Level toilet2 = Level(
+      filePath: 'level/toilet2.webp',
       startPosition: Vector2(362, 906),
       track: EllipseTrack(
           innerCenter: Vector2(366, 765),
