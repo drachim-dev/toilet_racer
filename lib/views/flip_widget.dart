@@ -25,14 +25,14 @@ class FlipWidget extends StatelessWidget {
         child: SizedBox(
           // original size of background image as reference
           height: 1920,
-          width: 1080,
+          width: 1014,
           child: Stack(children: [
             background,
             Positioned(
               // manually found coords and size (width will be set automatically)
-              top: 845,
-              left: 332,
-              height: 490,
+              top: 835,
+              left: 278,
+              height: 475,
               child: AnimatedBuilder(
                 animation: _controller,
                 builder: (_, __) {
