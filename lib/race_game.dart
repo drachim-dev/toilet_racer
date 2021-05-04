@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:flame/components.dart';
+import 'package:flame/components.dart' hide Timer;
 import 'package:flame/gestures.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -115,7 +115,11 @@ class RaceGame extends Forge2DGame with TapDetector {
         boundary: middleBoundary,
         bottomArrow: true,
         helpText: 'Tap anywhere\nto turn',
-      )
+      ),
+      GameHelp(
+        helpText: 'Tap to begin',
+        textPosition: GamePosition.CENTER,
+      ),
     ].iterator
       ..moveNext();
   }
@@ -161,7 +165,7 @@ class RaceGame extends Forge2DGame with TapDetector {
         return;
       }
       _prefService.setBool(kPrefKeyIsFirstLaunch, _firstLaunch = false);
-      startGame();
+      _swapMenuOverlay(kCountDownOverlay);
       return;
     }
 

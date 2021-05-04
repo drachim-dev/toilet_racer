@@ -10,6 +10,7 @@ const double kStartMenuMargin = 32.0;
 // overlay ui
 const String kOverlayUi = 'OVERLAY_UI';
 const double kOverlayIconSize = 42.0;
+const String kCountDownOverlay = 'COUNTDOWN_OVERLAY';
 
 // game over menu
 const String kGameOverMenu = 'GAME_OVER_MENU';
@@ -18,7 +19,6 @@ const String kGameOverMenu = 'GAME_OVER_MENU';
 const String kPrefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
 const String kPrefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';
 const String kPrefKeyIsFirstLaunch = 'PREF_KEY_IS_FIRST_LAUNCH';
-
 
 // audio
 const String kAudioPath = 'assets/audio/';

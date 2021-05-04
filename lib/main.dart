@@ -7,6 +7,7 @@ import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
+import 'package:toilet_racer/views/countdown_overlay.dart';
 import 'package:toilet_racer/views/game_over_menu.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
@@ -59,6 +60,9 @@ class _MyAppState extends State<MyApp> {
           overlayBuilderMap: {
             kStartMenu: (_, RaceGame game) => StartMenu(game.startGame),
             kOverlayUi: (_, RaceGame game) => OverlayUi(),
+            kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
+                  onCountDownFinished: game.startGame,
+                ),
             kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                   game.showStartMenu,
                   game.startGame,

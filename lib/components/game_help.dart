@@ -25,6 +25,7 @@ class GameHelp extends PositionComponent {
   final List<Vector2> boundary;
   final bool darken, bottomArrow, topArrow;
   final String helpText;
+  final GamePosition textPosition;
 
   Vector2 _gameSize;
 
@@ -34,6 +35,7 @@ class GameHelp extends PositionComponent {
     this.bottomArrow = false,
     this.topArrow = false,
     this.helpText,
+    this.textPosition = GamePosition.TOP,
   });
 
   @override
@@ -61,8 +63,24 @@ class GameHelp extends PositionComponent {
 
     // draw hint text
     if (helpText.isNotEmpty) {
-      final position = Vector2(_gameSize.x / 2, kGameScreenMargin);
-      _textConfig.render(c, helpText, position, anchor: Anchor.topCenter);
+      Anchor anchor;
+      Vector2 position;
+      switch (textPosition) {
+        case GamePosition.TOP:
+          position = Vector2(_gameSize.x / 2, kGameScreenMargin);
+          anchor = Anchor.topCenter;
+          break;
+        case GamePosition.CENTER:
+          position = Vector2(_gameSize.x / 2, _gameSize.y / 2);
+          anchor = Anchor.center;
+          break;
+        case GamePosition.BOTTOM:
+          position = Vector2(_gameSize.x / 2, _gameSize.y - kGameScreenMargin);
+          anchor = Anchor.bottomCenter;
+          break;
+      }
+
+      _textConfig.render(c, helpText, position, anchor: anchor);
     }
   }
 
@@ -129,3 +147,5 @@ class GameHelp extends PositionComponent {
     _gameSize = gameSize;
   }
 }
+
+enum GamePosition { TOP, CENTER, BOTTOM }
