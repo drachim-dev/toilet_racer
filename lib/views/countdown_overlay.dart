@@ -34,21 +34,14 @@ class _CountDownOverlayState extends State<CountDownOverlay>
     _controller = AnimationController(duration: kCountDownTime, vsync: this);
 
     _scaleAnimation = TweenSequence(
-      [
-        TweenSequenceItem<double>(
+      List.generate(
+        3,
+        (index) => TweenSequenceItem<double>(
           tween: Tween(begin: 250.0, end: 50.0),
           weight: 1.0,
         ),
-        TweenSequenceItem<double>(
-          tween: Tween(begin: 250.0, end: 50.0),
-          weight: 1.0,
-        ),
-        TweenSequenceItem<double>(
-          tween: Tween(begin: 250.0, end: 50.0),
-          weight: 1.0,
-        ),
-      ],
-    ).animate(CurvedAnimation(parent: _controller, curve: Interval(0.0, 1.0)));
+      ),
+    ).animate(_controller);
 
     _counterAnimation =
         StepTween(begin: kCountFrom + 1, end: kCountTo).animate(_controller);
