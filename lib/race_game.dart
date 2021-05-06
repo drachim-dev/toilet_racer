@@ -87,7 +87,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     // Init and show game help
     if (_firstLaunch) {
-      _initGameHelp();
+      await _initGameHelp();
       await add(gameHelper.current);
     } else {
       await _addGameComponents();
@@ -96,7 +96,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
   }
 
-  void _initGameHelp() {
+  Future<void> _initGameHelp() async {
     final middleBoundary = getMiddleVertices(
       level.track.outerBoundary
           .map((e) => background.getImageToScreen(e))
@@ -106,17 +106,22 @@ class RaceGame extends Forge2DGame with TapDetector {
           .toList(),
     );
 
+    final player = await Fly().onLoad();
+    final _playerBody = PlayerBody(
+        player, background.getImageToScreen(level.startPosition),
+        preview: true);
+
     gameHelper = [
+      GameHelp(
+          boundary: middleBoundary,
+          rightArrow: true,
+          helpText: 'Tap anywhere\nto turn',
+          player: _playerBody),
       GameHelp(
         boundary: middleBoundary,
         bottomArrow: true,
         topArrow: true,
         helpText: 'Stay on the\ntoilet',
-      ),
-      GameHelp(
-        boundary: middleBoundary,
-        rightArrow: true,
-        helpText: 'Tap anywhere\nto turn',
       ),
       GameHelp(
         helpText: 'Tap to begin',

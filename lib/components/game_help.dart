@@ -6,9 +6,10 @@ import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/components/player_body.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
-class GameHelp extends PositionComponent {
+class GameHelp extends PositionComponent with HasGameRef {
   static final TextConfig _textConfig = TextConfig(
     fontSize: 56.0,
     color: Colors.white,
@@ -30,6 +31,8 @@ class GameHelp extends PositionComponent {
   final String helpText;
   final GamePosition textPosition;
 
+  final PlayerBody player;
+
   Vector2 _gameSize;
 
   GameHelp({
@@ -41,7 +44,16 @@ class GameHelp extends PositionComponent {
     this.rightArrow = false,
     this.helpText,
     this.textPosition = GamePosition.TOP,
+    this.player,
   });
+
+  @override
+  Future<void> onLoad() async {
+    if (player != null) {
+      await addChild(player);
+    }
+    return super.onLoad();
+  }
 
   @override
   void render(Canvas c) {
@@ -135,17 +147,21 @@ class GameHelp extends PositionComponent {
   }
 
   void _drawArrow(Canvas c, List<Vector2> vertices) {
-    for (var i = 0; i < vertices.length - 1; i++) {
-      final element = vertices[i];
-      final nextElement = vertices[i + 1];
+    final reducedArrow =
+        vertices.skip((boundary.length * 0.05).round()).toList();
 
-      final path = Path()
+    final path = Path();
+    for (var i = 0; i < reducedArrow.length - 1; i++) {
+      final element = reducedArrow[i];
+      final nextElement = reducedArrow[i + 1];
+
+      path
         ..moveTo(element.x, element.y)
         ..quadraticBezierTo(element.x, element.y, nextElement.x, nextElement.y);
 
-      if (nextElement == vertices.last) {
-        c.drawPath(path, _paint);
+      if (nextElement == reducedArrow.last) {
         _drawArrowHead(c, element, nextElement, _arrowLength);
+        c.drawPath(path, _paint);
       }
     }
   }

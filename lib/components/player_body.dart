@@ -36,7 +36,9 @@ class PlayerBody extends PositionBodyComponent {
   /// Player starts with bearing and heading in right direction.
   double bearing = math.pi / 2;
 
-  PlayerBody(this.player, this.startPosition)
+  final bool preview;
+
+  PlayerBody(this.player, this.startPosition, {this.preview = false})
       : assert(player != null),
         assert(startPosition != null),
         super(player.positionComponent, player.positionComponent.size);
@@ -105,6 +107,8 @@ class PlayerBody extends PositionBodyComponent {
   @override
   void update(double dt) {
     super.update(dt);
+
+    if (preview) return;
 
     player.update(velocity: body.linearVelocity.length);
 
