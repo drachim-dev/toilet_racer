@@ -73,7 +73,9 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _init() {
     _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
-    _firstLaunch = _prefService.getBool(kPrefKeyIsFirstLaunch) ?? _firstLaunch;
+    // TODO: Remove true
+    _firstLaunch =
+        true ?? _prefService.getBool(kPrefKeyIsFirstLaunch) ?? _firstLaunch;
 
     if (_musicEnabled) {
       _audioService.playBgMusic();
@@ -113,7 +115,7 @@ class RaceGame extends Forge2DGame with TapDetector {
       ),
       GameHelp(
         boundary: middleBoundary,
-        bottomArrow: true,
+        rightArrow: true,
         helpText: 'Tap anywhere\nto turn',
       ),
       GameHelp(

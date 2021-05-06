@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flame/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,7 +14,10 @@ class CountDownOverlay extends StatefulWidget {
 
 class _CountDownOverlayState extends State<CountDownOverlay>
     with SingleTickerProviderStateMixin {
-  static const kCountDownTime = Duration(seconds: 3);
+  static const kCountFrom = 3;
+  static const kCountTo = 1;
+
+  static const kCountDownTime = Duration(seconds: 2);
 
   AnimationController _controller;
   Animation<double> _scaleAnimation;
@@ -49,8 +51,7 @@ class _CountDownOverlayState extends State<CountDownOverlay>
     ).animate(CurvedAnimation(parent: _controller, curve: Interval(0.0, 1.0)));
 
     _counterAnimation =
-        StepTween(begin: _controller.duration.inSeconds + 1, end: 1)
-            .animate(_controller);
+        StepTween(begin: kCountFrom + 1, end: kCountTo).animate(_controller);
 
     _controller.forward().then((value) => widget.onCountDownFinished());
   }

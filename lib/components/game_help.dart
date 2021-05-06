@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -22,8 +23,10 @@ class GameHelp extends PositionComponent {
     ..strokeWidth = 10.0
     ..style = PaintingStyle.stroke;
 
+  static const double _arrowLength = 40.0;
+
   final List<Vector2> boundary;
-  final bool darken, bottomArrow, topArrow;
+  final bool darken, bottomArrow, topArrow, leftArrow, rightArrow;
   final String helpText;
   final GamePosition textPosition;
 
@@ -34,6 +37,8 @@ class GameHelp extends PositionComponent {
     this.darken = true,
     this.bottomArrow = false,
     this.topArrow = false,
+    this.leftArrow = false,
+    this.rightArrow = false,
     this.helpText,
     this.textPosition = GamePosition.TOP,
   });
@@ -55,9 +60,22 @@ class GameHelp extends PositionComponent {
       if (bottomArrow) {
         _drawBottomArrow(c, middleY);
       }
-
       if (topArrow) {
         _drawTopArrow(c, middleY);
+      }
+    }
+
+    if (leftArrow || rightArrow) {
+      // calculate middle x position
+      boundary.sort((a, b) => a.x.compareTo(b.x));
+      final middleX = (boundary.first.x + boundary.last.x) / 2;
+
+      if (leftArrow) {
+        _drawLeftArrow(c, middleX);
+      }
+
+      if (rightArrow) {
+        _drawRightArrow(c, middleX);
       }
     }
 
@@ -100,22 +118,36 @@ class GameHelp extends PositionComponent {
     _drawArrow(c, vertices);
   }
 
-  void _drawArrow(Canvas c, List<Vector2> vertices) {
-    final path = Path();
-    for (var i = 0; i < vertices.length - 1; i++) {
-      var element = vertices[i];
-      var nextElement = vertices[i + 1];
+  void _drawLeftArrow(Canvas c, double middleX) {
+    // get left half and sort by y asc
+    final vertices = boundary.where((element) => element.x < middleX).toList()
+      ..sort((a, b) => a.y.compareTo(b.y));
 
-      path.moveTo(element.x, element.y);
-      path.quadraticBezierTo(
-          element.x, element.y, nextElement.x, nextElement.y);
+    _drawArrow(c, vertices);
+  }
+
+  void _drawRightArrow(Canvas c, double middleX) {
+    // get right half and sort by y desc
+    final vertices = boundary.where((element) => element.x > middleX).toList()
+      ..sort((a, b) => b.y.compareTo(a.y));
+
+    _drawArrow(c, vertices);
+  }
+
+  void _drawArrow(Canvas c, List<Vector2> vertices) {
+    for (var i = 0; i < vertices.length - 1; i++) {
+      final element = vertices[i];
+      final nextElement = vertices[i + 1];
+
+      final path = Path()
+        ..moveTo(element.x, element.y)
+        ..quadraticBezierTo(element.x, element.y, nextElement.x, nextElement.y);
 
       if (nextElement == vertices.last) {
-        _drawArrowHead(c, element, nextElement, 40.0);
+        c.drawPath(path, _paint);
+        _drawArrowHead(c, element, nextElement, _arrowLength);
       }
     }
-
-    c.drawPath(path, _paint);
   }
 
   void _drawArrowHead(Canvas c, Vector2 from, Vector2 to, double length) {
