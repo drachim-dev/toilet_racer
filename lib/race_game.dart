@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/gestures.dart';
@@ -32,6 +33,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   final TimerService _timerService = locator<TimerService>();
 
   final AsyncCallback gameOverCallback;
+
+  final Random random = Random();
 
   @override
   bool debugMode = kDebugMode;
@@ -135,10 +138,11 @@ class RaceGame extends Forge2DGame with TapDetector {
     Boundary innerBoundary, outerBoundary;
 
     final player = await Fly().onLoad();
-    await add(_playerBody =
-        PlayerBody(player, background.getImageToScreen(level.startPosition)));
-
-    // final player = await Stinkbug().onLoad();
+    // 10% chance to move clockwise
+    final clockwise = random.nextInt(10) == 0;
+    await add(_playerBody = PlayerBody(
+        player, background.getImageToScreen(level.startPosition),
+        counterclockwise: !clockwise));
 
     await add(outerBoundary = Boundary(level.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))

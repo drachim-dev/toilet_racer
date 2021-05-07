@@ -13,6 +13,7 @@ import 'package:flutter/material.dart' as material;
 import 'boundary.dart';
 
 class PlayerBody extends PositionBodyComponent {
+  static const pi = math.pi;
   static const pi2 = math.pi * 2;
 
   static Vector2 pointer(double angle, double length, [bool flipY = false]) {
@@ -24,6 +25,20 @@ class PlayerBody extends PositionBodyComponent {
     }
   }
 
+  /// Assure any angle to be in range (-pi..pi] (exclusive..inclusive]
+  static double directionalAngle(double angle) {
+    final normalizedAngle = normalizeAngle(angle);
+    if (normalizedAngle > pi) {
+      return normalizedAngle - pi2;
+    }
+    return normalizedAngle;
+  }
+
+  /// Assure any angle to be [0..2*pi) (inclusive..exclusive]
+  static double normalizeAngle(double angle) {
+    return (angle % pi2 + pi2) % pi2;
+  }
+
   final Player player;
 
   /// Total time that the player exists.
@@ -32,16 +47,23 @@ class PlayerBody extends PositionBodyComponent {
 
   final Vector2 startPosition;
 
-  /// This is the angle of the direction the player wants to go.
-  /// Player starts with bearing and heading in right direction.
-  double bearing = math.pi / 2;
+  final bool counterclockwise;
+
+  /// Angle of the direction the player wants to go.
+  double bearing;
 
   final bool preview;
 
-  PlayerBody(this.player, this.startPosition, {this.preview = false})
+  PlayerBody(this.player, this.startPosition,
+      {this.preview = false, this.counterclockwise = true})
       : assert(player != null),
         assert(startPosition != null),
-        super(player.positionComponent, player.positionComponent.size);
+        super(player.positionComponent, player.positionComponent.size) {
+    /// Player starts with bearing and heading
+    /// in right direction when turning counterclockwise
+    /// and in left direction when turning clockwise
+    bearing = counterclockwise ? pi / 2 : -pi / 2;
+  }
 
   @override
   Body createBody() {
@@ -60,7 +82,7 @@ class PlayerBody extends PositionBodyComponent {
       // Dichte: compute the density based on our given mass and radius
       // we do this, so we can safely adjust the radius
       // without changing the forces applied to the player
-      ..density = mass / (shape.radius * shape.radius * math.pi)
+      ..density = mass / (shape.radius * shape.radius * pi)
       // Elastizität: Not really relevant for us right now - using default value
       ..restitution = 0.0
       // Reibung: Not really relevant for us right now - using default value
@@ -114,10 +136,11 @@ class PlayerBody extends PositionBodyComponent {
 
     time += dt;
 
-    final heading = body.getAngle() % pi2;
+    final heading = normalizeAngle(body.getAngle());
 
-    // set new linear velocity of the player in direction of heading
+    // 1. Set new linear velocity of the player in direction of heading
     // See http://fooplot.com/#W3sidHlwZSI6MCwiZXEiOiIoLSh4LzYwLTEpXigyKSsxKSo5MCsxMCIsImNvbG9yIjoiIzAwMDAwMCJ9LHsidHlwZSI6MTAwMCwid2luZG93IjpbIi0yLjA3MjMwNzY5MjMwNzY5MjQiLCI4MCIsIi00Ljk2NTAwMDAwMDAwMDAwMSIsIjExMCJdfV0-
+
     const maxVelocity = 100.0;
     const timeToMaxVelocity = 60.0;
     const startVelocity = 10.0;
@@ -131,12 +154,25 @@ class PlayerBody extends PositionBodyComponent {
     final impulse = (velocity - body.linearVelocity) * body.mass;
     body.applyLinearImpulse(impulse);
 
-    // turns the players heading in direction of bearing
-    const maxAngularVelocity = pi2 / 2; // 90°/s
+    // 2. Turns the players heading in direction of bearing
 
-    final deltaAngle = (bearing - heading) % pi2;
-    final angularVelocity =
-        deltaAngle > 0 && deltaAngle < math.pi ? maxAngularVelocity : 0;
+    const maxAngularVelocity = pi2 / 2; // 180°/s
+
+    // Only turn the player when the difference between bearing and heading exceeds the turning threshold.
+    // The threshold has to be small enough so the player does not notice.
+    // The threshold has to be large enough so the turning algorithm settles and does not "flicker".
+    // "Flickering" would occur when the player turns left and right by small steps the whole time.
+    // Assuming a 60 Hz framerate.
+    const turningThreshold = maxAngularVelocity / 60;
+
+    final deltaAngle = directionalAngle(bearing - heading);
+
+    final angularVelocity = deltaAngle.abs() < turningThreshold
+        ? 0
+        : deltaAngle > 0
+            ? maxAngularVelocity
+            : -maxAngularVelocity;
+
     final angularImpulse =
         (angularVelocity - body.angularVelocity) * body.inertia;
     body.applyAngularImpulse(angularImpulse);
@@ -146,8 +182,8 @@ class PlayerBody extends PositionBodyComponent {
   void spin() {
     // How much to rotate the bearing
     // 20 means that you have to click 20 times for a full 360° turn
-    final deltaBearing = pi2 / 20;
-    bearing = (bearing + deltaBearing) % pi2;
+    final deltaBearing = counterclockwise ? pi2 / 20 : -pi2 / 20;
+    bearing = normalizeAngle(bearing + deltaBearing);
   }
 }
 
