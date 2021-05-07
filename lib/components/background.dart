@@ -9,7 +9,8 @@ import 'package:toilet_racer/game/level.dart';
 
 class Background extends SpriteComponent with HasGameRef {
   final Level level;
-  double scale;
+  double _imageScale;
+  double worldScale;
 
   Background(this.level) {
     assert(level.image != null);
@@ -18,30 +19,44 @@ class Background extends SpriteComponent with HasGameRef {
 
   /// Calculates the corresponding screen coordinates from image pixel coordinates.
   Vector2 getImageToScreen(Vector2 imageCoordinates) {
-    return imageCoordinates * scale + absoluteTopLeftPosition;
+    return imageCoordinates * _imageScale + absoluteTopLeftPosition;
   }
 
   @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
+  void onGameResize(Vector2 screenSize) {
+    super.onGameResize(screenSize);
 
     final minScreenSide =
-        math.min(gameSize.toSize().width, gameSize.toSize().height) -
+        math.min(screenSize.toSize().width, screenSize.toSize().height) -
             kGameScreenMargin;
 
-    /// Enlarge track to fill display size, but not more than Track.maxSize.
+    // Enlarge track to fill display size, but not more than Track.maxSize.
     final trackSize = minScreenSide > Track.maxSizeOnScreen
         ? Track.maxSizeOnScreen
         : minScreenSide;
 
-    /// The track of the level that is rendered on the screen.
+    // The track of the level that is rendered on the screen.
     final trackScreenZone = Rect.fromCenter(
-        center: gameSize.toOffset() * 0.5, width: trackSize, height: trackSize);
+        center: screenSize.toOffset() * 0.5,
+        width: trackSize,
+        height: trackSize);
 
-    scale = trackScreenZone.width / level.track.zone.width;
-    size = sprite.srcSize * scale;
+    // The scale factor the image has to be scaled with
+    // to fit the track into the track track zone on the screen.
+    _imageScale = trackScreenZone.width / level.track.zone.width;
 
-    final offset = trackScreenZone.topLeft - level.track.zone.topLeft * scale;
+    // Apply the scale to the background image
+    size = sprite.srcSize * _imageScale;
+
+    // Move the image so that the track lies in the track zone of the screen.
+    final offset =
+        trackScreenZone.topLeft - level.track.zone.topLeft * _imageScale;
     position = Vector2(offset.dx, offset.dy);
+
+    // Use the size of the first designed level as reference size for scaling the world coordinates.
+    // Using this scale factor instead of the imageScale to scale the worlds viewport
+    // ensures that the players have the same size and physics in all levels.
+    // In other words the size of the background image has no influence on the player's size and movement.
+    worldScale = trackScreenZone.width / Level.toilet0.track.zone.width;
   }
 }

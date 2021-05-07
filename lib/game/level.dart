@@ -68,8 +68,10 @@ class Level {
           outerCenter: Vector2(767, 1405),
           outerRadii: Radius.elliptical(320, 360)));
 
-  static Level toilet2 = Level(
-      filePath: 'level/toilet2.webp',
+  /// The first designed reference level.
+  /// The size of this levels track is used to calculate the world scaling factor.
+  static Level toilet0 = Level(
+      filePath: 'level/toilet0.webp',
       startPosition: Vector2(362, 906),
       track: EllipseTrack(
           innerCenter: Vector2(366, 765),
