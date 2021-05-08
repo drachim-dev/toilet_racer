@@ -50,7 +50,8 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     if (player != null) {
-      await addChild(player);
+      // TODO: Component gets removed but body does not. Uncomment once fixed.
+      // await addChild(player);
     }
     return super.onLoad();
   }
