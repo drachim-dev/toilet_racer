@@ -58,14 +58,14 @@ class _MyAppState extends State<MyApp> {
         child: GameWidget(
           game: _game,
           overlayBuilderMap: {
-            kStartMenu: (_, RaceGame game) => StartMenu(game.startGame),
+            kStartMenu: (_, RaceGame game) => StartMenu(game.startGameWithHelp),
             kOverlayUi: (_, RaceGame game) => OverlayUi(),
             kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
                   onCountDownFinished: game.startGame,
                 ),
             kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                   game.showStartMenu,
-                  game.startGame,
+                  game.startGameWithHelp,
                   game.score,
                 ),
           },

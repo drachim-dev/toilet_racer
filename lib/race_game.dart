@@ -40,7 +40,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   bool debugMode = kDebugMode;
 
   bool _musicEnabled = true;
-  bool _firstLaunch = true;
+  bool _gameHelpShown = false;
   bool _collisionDetected = false;
 
   Background background;
@@ -52,6 +52,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   Iterator<GameHelp> gameHelper;
 
   int get score => _timerService?.seconds?.value ?? 0;
+
+  double get _currentHighscore =>
+      _prefService.getDouble(kPrefKeyHighscore) ?? 0;
 
   RaceGame({this.gameOverCallback})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
@@ -76,27 +79,29 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _init() {
     _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
-    // TODO: Remove true
-    _firstLaunch =
-        true ?? _prefService.getBool(kPrefKeyIsFirstLaunch) ?? _firstLaunch;
 
     if (_musicEnabled) {
       _audioService.playBgMusic();
     }
   }
 
-  void startGame() async {
+// Init and show game help
+  void startGameWithHelp() async {
     _removeOverlays();
 
-    // Init and show game help
-    if (_firstLaunch) {
+    if (_currentHighscore < 5) {
       await _initGameHelp();
       await add(gameHelper.current);
+      _gameHelpShown = true;
     } else {
-      await _addGameComponents();
-      _swapMenuOverlay(kOverlayUi);
-      _timerService.start();
+      startGame();
     }
+  }
+
+  void startGame() async {
+    await _addGameComponents();
+    _swapMenuOverlay(kOverlayUi);
+    _timerService.start();
   }
 
   Future<void> _initGameHelp() async {
@@ -140,7 +145,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     final player = await Fly().onLoad();
     // 10% chance to move clockwise (ghost mode) if the user has some experience (score > 20)
-    final clockwise = _currentHighscore() > 20.0 && random.nextInt(10) == 0;
+    final clockwise = _currentHighscore > 20.0 && random.nextInt(10) == 0;
     await add(_playerBody = PlayerBody(
         player, background.getImageToScreen(level.startPosition),
         counterclockwise: !clockwise));
@@ -170,14 +175,14 @@ class RaceGame extends Forge2DGame with TapDetector {
   @override
   void onTapDown(TapDownDetails details) {
     // Iterate over GameHelpers on firstLaunch
-    if (_firstLaunch) {
+    if (_gameHelpShown) {
       remove(gameHelper.current);
       if (gameHelper.moveNext()) {
         add(gameHelper.current);
         return;
       }
-      _prefService.setBool(kPrefKeyIsFirstLaunch, _firstLaunch = false);
       _swapMenuOverlay(kCountDownOverlay);
+      _gameHelpShown = false;
       return;
     }
 
@@ -205,7 +210,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   /// Updates score and achievement status async in background.
   void _updateScoreAndAchievements() async {
-    updateLocalScore();
+    _updateLocalScore();
 
     final _gameService = locator<GameService>();
 
@@ -228,14 +233,12 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   /// Saves highscore in shared preferences to enable some features based on the user experience.
-  void updateLocalScore() {
+  void _updateLocalScore() {
     final score = _timerService.seconds.value.toDouble();
-    if (score > _currentHighscore()) {
+    if (score > _currentHighscore) {
       _prefService.setDouble(kPrefKeyHighscore, score);
     }
   }
-
-  double _currentHighscore() => _prefService.getDouble(kPrefKeyHighscore) ?? 0;
 
   void showStartMenu() => _swapMenuOverlay(kStartMenu);
 
