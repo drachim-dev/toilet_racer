@@ -34,6 +34,10 @@ final toiletTheme = ThemeData(
         fontSize: 72,
         shadows: shadows,
       ),
+      headline4: TextStyle(
+        fontSize: 36,
+        shadows: shadows,
+      ),
     ).apply(
       displayColor: Colors.orangeAccent,
     ),
