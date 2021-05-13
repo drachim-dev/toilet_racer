@@ -118,7 +118,8 @@ class RaceGame extends Forge2DGame with TapDetector {
       GameHelp(
           boundary: middleBoundary,
           rightArrow: true,
-          helpText: 'Tap anywhere\nto turn',
+          helpText: 'Tap to turn',
+          imagePath: 'gesture_tap.png',
           player: _playerBody),
       GameHelp(
         boundary: middleBoundary,

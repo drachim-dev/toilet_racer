@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class GameHelp extends PositionComponent with HasGameRef {
   final bool darken, bottomArrow, topArrow, leftArrow, rightArrow;
   final String helpText;
   final GamePosition textPosition;
+  final String imagePath;
 
   final PlayerBody player;
 
@@ -43,12 +45,28 @@ class GameHelp extends PositionComponent with HasGameRef {
     this.leftArrow = false,
     this.rightArrow = false,
     this.helpText,
+    this.imagePath,
     this.textPosition = GamePosition.TOP,
     this.player,
   });
 
   @override
   Future<void> onLoad() async {
+    // darken background
+    if (darken) {
+      await addChild(DarkOverlay());
+    }
+
+    if (imagePath != null) {
+      final image = await Flame.images.load(imagePath);
+      final component = SpriteComponent.fromImage(Vector2(192, 192), image)
+        ..position = Vector2(_gameSize.x / 2 - kGameScreenMargin,
+            _gameSize.y - kGameScreenMargin)
+        ..anchor = Anchor.centerLeft
+        ..angle = -pi / 6;
+      await addChild(component);
+    }
+
     if (player != null) {
       // TODO: Component gets removed but body does not. Uncomment once fixed.
       // await addChild(player);
@@ -59,11 +77,6 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void render(Canvas c) {
     super.render(c);
-
-    // darken background
-    if (darken) {
-      c.drawColor(Colors.black26, BlendMode.darken);
-    }
 
     if (bottomArrow || topArrow) {
       // calculate middle y position
@@ -94,24 +107,20 @@ class GameHelp extends PositionComponent with HasGameRef {
 
     // draw hint text
     if (helpText.isNotEmpty) {
-      Anchor anchor;
       Vector2 position;
       switch (textPosition) {
         case GamePosition.TOP:
-          position = Vector2(_gameSize.x / 2, kGameScreenMargin);
-          anchor = Anchor.topCenter;
+          position = Vector2(_gameSize.x / 2, _gameSize.y / 6);
           break;
         case GamePosition.CENTER:
           position = Vector2(_gameSize.x / 2, _gameSize.y / 2);
-          anchor = Anchor.center;
           break;
         case GamePosition.BOTTOM:
-          position = Vector2(_gameSize.x / 2, _gameSize.y - kGameScreenMargin);
-          anchor = Anchor.bottomCenter;
+          position = Vector2(_gameSize.x / 2, _gameSize.y / 6 * 5);
           break;
       }
 
-      _textConfig.render(c, helpText, position, anchor: anchor);
+      _textConfig.render(c, helpText, position, anchor: Anchor.center);
     }
   }
 
@@ -198,3 +207,12 @@ class GameHelp extends PositionComponent with HasGameRef {
 }
 
 enum GamePosition { TOP, CENTER, BOTTOM }
+
+class DarkOverlay extends PositionComponent {
+  @override
+  void render(Canvas c) {
+    super.render(c);
+
+    c.drawColor(Colors.black54, BlendMode.darken);
+  }
+}
