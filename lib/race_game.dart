@@ -138,8 +138,8 @@ class RaceGame extends Forge2DGame with TapDetector {
     Boundary innerBoundary, outerBoundary;
 
     final player = await Fly().onLoad();
-    // 10% chance to move clockwise
-    final clockwise = random.nextInt(10) == 0;
+    // 10% chance to move clockwise (ghost mode) if the user has some experience (score > 20)
+    final clockwise = _currentHighscore() > 20.0 && random.nextInt(10) == 0;
     await add(_playerBody = PlayerBody(
         player, background.getImageToScreen(level.startPosition),
         counterclockwise: !clockwise));
@@ -204,6 +204,8 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   /// Updates score and achievement status async in background.
   void _updateScoreAndAchievements() async {
+    updateLocalScore();
+
     final _gameService = locator<GameService>();
 
     if (_gameService.signedIn) {
@@ -223,6 +225,16 @@ class RaceGame extends Forge2DGame with TapDetector {
           .forEach((id) => _gameService.incrementAchievement(id));
     }
   }
+
+  /// Saves highscore in shared preferences to enable some features based on the user experience.
+  void updateLocalScore() {
+    final score = _timerService.seconds.value.toDouble();
+    if (score > _currentHighscore()) {
+      _prefService.setDouble(kPrefKeyHighscore, score);
+    }
+  }
+
+  double _currentHighscore() => _prefService.getDouble(kPrefKeyHighscore) ?? 0;
 
   void showStartMenu() => _swapMenuOverlay(kStartMenu);
 

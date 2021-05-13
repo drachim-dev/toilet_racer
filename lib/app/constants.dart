@@ -19,6 +19,7 @@ const String kGameOverMenu = 'GAME_OVER_MENU';
 const String kPrefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
 const String kPrefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';
 const String kPrefKeyIsFirstLaunch = 'PREF_KEY_IS_FIRST_LAUNCH';
+const String kPrefKeyHighscore = 'PREF_KEY_HIGHSCORE';
 
 // audio
 const String kAudioPath = 'assets/audio/';
