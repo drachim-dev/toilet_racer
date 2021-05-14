@@ -58,7 +58,7 @@ class _StartMenuState extends State<StartMenu>
           controller: _controller,
         ),
         Padding(
-          padding: const EdgeInsets.all(kStartMenuMargin),
+          padding: const EdgeInsets.all(kMenuScreenMargin),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,

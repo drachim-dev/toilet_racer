@@ -30,7 +30,9 @@ dependencies:
   games_services: ^1.0.0
   get_it: ^5.0.6
   google_mobile_ads: ^0.12.0
+  flutter_linkify: ^5.0.2
   shared_preferences: ^2.0.5
+  url_launcher: ^6.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
