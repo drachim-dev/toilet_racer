@@ -56,23 +56,38 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: toiletTheme,
       home: Material(
-        child: GameWidget(
-          game: _game,
-          overlayBuilderMap: {
-            kStartMenu: (_, RaceGame game) =>
-                StartMenu(game.startGameWithHelp, game.showCreditsMenu),
-            kCreditsMenu: (_, RaceGame game) => CreditsMenu(game.showStartMenu),
-            kOverlayUi: (_, RaceGame game) => OverlayUi(),
-            kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
-                  onCountDownFinished: game.startGame,
-                ),
-            kGameOverMenu: (_, RaceGame game) => GameOverMenu(
-                  game.showStartMenu,
-                  game.startGameWithHelp,
-                  game.score,
-                ),
+        child: WillPopScope(
+          onWillPop: () {
+            final startMenuShown = _game.overlays.isActive(kStartMenu);
+            final gameRunning = _game.overlays.isActive(kOverlayUi);
+
+            // Exit to homescreen when in game or in startMenu
+            if (startMenuShown || gameRunning) {
+              return Future.value(true);
+            } else {
+              _game.showStartMenu();
+              return Future.value(false);
+            }
           },
-          initialActiveOverlays: const [kStartMenu],
+          child: GameWidget(
+            game: _game,
+            overlayBuilderMap: {
+              kStartMenu: (_, RaceGame game) =>
+                  StartMenu(game.startGameWithHelp, game.showCreditsMenu),
+              kCreditsMenu: (_, RaceGame game) =>
+                  CreditsMenu(game.showStartMenu),
+              kOverlayUi: (_, RaceGame game) => OverlayUi(),
+              kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
+                    onCountDownFinished: game.startGame,
+                  ),
+              kGameOverMenu: (_, RaceGame game) => GameOverMenu(
+                    game.showStartMenu,
+                    game.startGameWithHelp,
+                    game.score,
+                  ),
+            },
+            initialActiveOverlays: const [kStartMenu],
+          ),
         ),
       ),
     );
