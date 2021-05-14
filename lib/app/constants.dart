@@ -1,12 +1,12 @@
 const String kTitle = 'Toilet Racer';
 
-// game size
+// margins
 const double kGameScreenMargin = 48.0;
+const double kMenuScreenMargin = 32.0;
 
 // start menu
 const String kStartMenu = 'START_MENU';
 const String kCreditsMenu = 'CREDITS_MENU';
-const double kStartMenuMargin = 32.0;
 
 // overlay ui
 const String kOverlayUi = 'OVERLAY_UI';

@@ -23,7 +23,7 @@ class GameOverMenu extends StatelessWidget {
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
       child: Container(
-        padding: const EdgeInsets.all(kStartMenuMargin),
+        padding: const EdgeInsets.all(kMenuScreenMargin),
         color: Colors.orangeAccent.withOpacity(0.2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

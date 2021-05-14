@@ -1,75 +1,85 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CreditsMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
 
   const CreditsMenu(this.onBackToMenuPressed);
 
-  static final List _creditList = [
-    'About',
-    Credit(title: 'XYZ', url: 'XYZ.com'),
-    'Images',
-    'Music',
-  ];
-
   @override
   Widget build(BuildContext context) {
     final menuStyle = Theme.of(context).textTheme.headline4;
 
-    final sectionStyle = Theme.of(context).textTheme.headline3;
-    final textStyle = Theme.of(context).textTheme.headline4;
+    final sectionStyle = Theme.of(context).textTheme.headline4;
+    final textStyle = Theme.of(context).textTheme.headline5;
+    final urlStyle = Theme.of(context)
+        .textTheme
+        .headline6
+        .copyWith(decoration: TextDecoration.underline);
 
     final blur = 10.0;
+    final sectionSpacing = 24.0;
+    final itemSpacing = sectionSpacing / 2;
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
       child: Container(
         color: Colors.orangeAccent.withOpacity(0.2),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              padding: const EdgeInsets.all(kStartMenuMargin),
-              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.all(kMenuScreenMargin),
               child: TextButton(
                 onPressed: onBackToMenuPressed,
                 child: Text('< back', style: menuStyle),
               ),
             ),
-            ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: kStartMenuMargin),
+            ListView(
+              padding: const EdgeInsets.all(kMenuScreenMargin),
               shrinkWrap: true,
-              itemBuilder: (context, index) {
-                final item = _creditList[index];
-
-                if (item is String) {
-                  return Text(
-                    item,
-                    style: sectionStyle,
-                  );
-                }
-
-                if (item is Credit) {
-                  return Text(
-                    item.title + item.url,
-                    style: textStyle,
-                  );
-                }
-
-                return Container();
-              },
-              itemCount: _creditList.length,
+              physics: ScrollPhysics(),
+              children: [
+                Text('Authors', style: sectionStyle),
+                Text('Dr. Jan Achim', style: textStyle),
+                SizedBox(height: itemSpacing),
+                Text('Dr. Jan Manni', style: textStyle),
+                SizedBox(height: sectionSpacing),
+                Text('Images', style: sectionStyle),
+                Text('Poop Vectors by Vecteezy', style: textStyle),
+                Linkify(
+                  onOpen: _onOpen,
+                  text: 'https://vecteezy.com/free-vector/poop',
+                  style: urlStyle,
+                  linkStyle: urlStyle,
+                ),
+                SizedBox(height: sectionSpacing),
+                Text('Music & Sound', style: sectionStyle),
+                Text('Background music by Kevin MacLeod (Impact Moderato)',
+                    style: textStyle),
+                SizedBox(height: itemSpacing),
+                Text('Fart sound effect', style: textStyle),
+                Linkify(
+                  onOpen: _onOpen,
+                  text: 'https://zapsplat.com/music/short-wet-bold-fart',
+                  style: urlStyle,
+                  linkStyle: urlStyle,
+                ),
+                SizedBox(height: sectionSpacing),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () => showLicense(context),
+                    child: Text('Show licenses >', style: sectionStyle),
+                  ),
+                ),
+              ],
             ),
-            TextButton(
-              onPressed: () => showLicense(context),
-              child: Text(
-                'Show Licenses',
-                style: textStyle,
-              ),
-            )
           ],
         ),
       ),
@@ -77,7 +87,7 @@ class CreditsMenu extends StatelessWidget {
   }
 
   void showLicense(BuildContext context) {
-    final iconSize = Theme.of(context).iconTheme.size;
+    final iconSize = Theme.of(context).iconTheme.size ?? 48.0;
 
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (BuildContext context) => LicensePage(
@@ -89,6 +99,14 @@ class CreditsMenu extends StatelessWidget {
         ),
       ),
     ));
+  }
+
+  Future<void> _onOpen(LinkableElement link) async {
+    if (await canLaunch(link.url)) {
+      await launch(link.url);
+    } else {
+      throw 'Could not launch $link';
+    }
   }
 }
 
