@@ -6,7 +6,7 @@ import 'package:flame/flame.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class Track {
-  static const maxSizeOnScreen = 600.0;
+  static const maxSizeOnScreen = 400.0;
 
   /// The zone in the image that contains the relevant track for the level.
   Rect get zone;
