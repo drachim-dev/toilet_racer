@@ -232,7 +232,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// Saves highscore in shared preferences to enable some features based on the user experience.
   void _updateLocalScore() {
     final score = _timerService.seconds.value.toDouble();
-    if (score > _prefService.getDouble(kPrefKeyHighscore) ?? 0) {
+    if (score > (_prefService.getDouble(kPrefKeyHighscore) ?? 0)) {
       _prefService.setDouble(kPrefKeyHighscore, score);
     }
   }
