@@ -14,6 +14,7 @@ import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/game_help.dart';
 import 'package:toilet_racer/components/player_body.dart';
+import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
@@ -34,7 +35,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   final AsyncCallback gameOverCallback;
 
-  final Random random = Random();
+  final RaceGameMode _gameMode = RaceGameMode();
 
   @override
   bool debugMode = kDebugMode;
@@ -52,9 +53,6 @@ class RaceGame extends Forge2DGame with TapDetector {
   Iterator<GameHelp> gameHelper;
 
   int get score => _timerService?.seconds?.value ?? 0;
-
-  double get _currentHighscore =>
-      _prefService.getDouble(kPrefKeyHighscore) ?? 0;
 
   RaceGame({this.gameOverCallback})
       : super(scale: defaultScale, gravity: Vector2(0, 0)) {
@@ -85,11 +83,11 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
   }
 
-// Init and show game help
+  /// Init and show game help
   void startGameWithHelp() async {
     _removeOverlays();
 
-    if (_currentHighscore < 5) {
+    if (_gameMode.inHelpMode()) {
       await _initGameHelp();
       await add(gameHelper.current);
       _gameHelpShown = true;
@@ -143,12 +141,11 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
 
-    final player = await Fly().onLoad();
-    // 10% chance to move clockwise (ghost mode) if the user has some experience (score > 20)
-    final clockwise = _currentHighscore > 20.0 && random.nextInt(10) == 0;
+    final ghostMode = _gameMode.inGhostMode();
+    final player = ghostMode ? Larva() : Fly();
     await add(_playerBody = PlayerBody(
-        player, background.getImageToScreen(level.startPosition),
-        counterclockwise: !clockwise));
+        await player.onLoad(), background.getImageToScreen(level.startPosition),
+        counterclockwise: !ghostMode));
 
     await add(outerBoundary = Boundary(level.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
@@ -235,7 +232,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// Saves highscore in shared preferences to enable some features based on the user experience.
   void _updateLocalScore() {
     final score = _timerService.seconds.value.toDouble();
-    if (score > _currentHighscore) {
+    if (score > _prefService.getDouble(kPrefKeyHighscore) ?? 0) {
       _prefService.setDouble(kPrefKeyHighscore, score);
     }
   }
