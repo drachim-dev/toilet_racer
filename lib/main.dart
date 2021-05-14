@@ -8,6 +8,7 @@ import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/countdown_overlay.dart';
+import 'package:toilet_racer/views/credits_menu.dart';
 import 'package:toilet_racer/views/game_over_menu.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
@@ -58,7 +59,9 @@ class _MyAppState extends State<MyApp> {
         child: GameWidget(
           game: _game,
           overlayBuilderMap: {
-            kStartMenu: (_, RaceGame game) => StartMenu(game.startGameWithHelp),
+            kStartMenu: (_, RaceGame game) =>
+                StartMenu(game.startGameWithHelp, game.showCreditsMenu),
+            kCreditsMenu: (_, RaceGame game) => CreditsMenu(game.showStartMenu),
             kOverlayUi: (_, RaceGame game) => OverlayUi(),
             kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
                   onCountDownFinished: game.startGame,

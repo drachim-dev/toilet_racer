@@ -5,6 +5,7 @@ const double kGameScreenMargin = 48.0;
 
 // start menu
 const String kStartMenu = 'START_MENU';
+const String kCreditsMenu = 'CREDITS_MENU';
 const double kStartMenuMargin = 32.0;
 
 // overlay ui

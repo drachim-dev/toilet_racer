@@ -124,7 +124,7 @@ class RaceGame extends Forge2DGame with TapDetector {
           boundary: middleBoundary,
           rightArrow: true,
           helpText: 'Tap to turn',
-          imagePath: 'gesture_tap.png',
+          imagePath: 'icons/ic_gesture_tap.png',
           player: _playerBody),
       GameHelp(
         boundary: middleBoundary,
@@ -241,6 +241,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void showStartMenu() => _swapMenuOverlay(kStartMenu);
+  void showCreditsMenu() => _swapMenuOverlay(kCreditsMenu);
 
   /// Removes all active overlays
   void _removeOverlays() {

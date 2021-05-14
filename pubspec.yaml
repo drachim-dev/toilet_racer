@@ -58,10 +58,11 @@ flutter:
     - assets/audio/
     - assets/animations/
     - assets/images/
+    - assets/images/icons/
+    - assets/images/level/
     - assets/images/player/
     - assets/images/player/fly/
     - assets/images/player/larva/
-    - assets/images/level/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

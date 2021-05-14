@@ -5,9 +5,9 @@ import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
-  final VoidCallback onPlayPressed;
+  final VoidCallback onPlayPressed, onCreditsPressed;
 
-  const StartMenu(this.onPlayPressed);
+  const StartMenu(this.onPlayPressed, this.onCreditsPressed);
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -17,6 +17,7 @@ class _StartMenuState extends State<StartMenu>
     with SingleTickerProviderStateMixin {
   final GameService _gameService = locator<GameService>();
   AnimationController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -78,8 +79,8 @@ class _StartMenuState extends State<StartMenu>
                     ),
                     SizedBox(height: spacing),
                     TextButton(
-                      onPressed: () {},
-                      child: Text('LEVELS', style: buttonStyle),
+                      onPressed: widget.onCreditsPressed,
+                      child: Text('CREDITS', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
@@ -100,33 +101,6 @@ class _StartMenuState extends State<StartMenu>
             ],
           ),
         ),
-        // Positioned.fill(
-        //   // width: MediaQuery.of(context).size.width,
-        //   // height: MediaQuery.of(context).size.height,
-        //   child: FittedBox(
-        //     fit: BoxFit.cover,
-        //     child: SizedBox(
-        //       height: 200,
-        //       width: 200,
-        //       child: Stack(children: [
-        //         Positioned.fill(
-        //           child: Placeholder(
-        //             color: Colors.green,
-        //           ),
-        //         ),
-        //         Positioned(
-        //           top: 75,
-        //           left: 50,
-        //           height: 100,
-        //           width: 100,
-        //           child: Placeholder(
-        //             color: Colors.red,
-        //           ),
-        //         ),
-        //       ]),
-        //     ),
-        //   ),
-        // )
       ],
     );
   }
