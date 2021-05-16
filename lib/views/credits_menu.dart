@@ -51,9 +51,6 @@ class CreditsMenu extends StatelessWidget {
                 children: [
                   Text('Authors', style: sectionStyle),
                   Text('Dr. Jan Achim', style: textStyle),
-                  Text('Dr. Jan Achim', style: textStyle),
-                  Text('Dr. Jan Achim', style: textStyle),
-                  Text('Dr. Jan Achim', style: textStyle),
                   SizedBox(height: itemSpacing),
                   Text('Dr. Jan Manni', style: textStyle),
                   SizedBox(height: sectionSpacing),
