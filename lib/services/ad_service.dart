@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/ad_manager.dart';
@@ -12,7 +13,7 @@ abstract class AdService {
   void load();
 
   /// May show an ad or [force] to show an ad
-  Future<void> mayShow({bool force = false});
+  Future<void> mayShow({bool force = false, VoidCallback onAdClosed});
 }
 
 class MobileAdService implements AdService {
@@ -20,6 +21,8 @@ class MobileAdService implements AdService {
 
   final int _interval = kDefaultAdInterval;
   int _counter = 0;
+
+  VoidCallback _onAdClosed = () {};
 
   InterstitialAd _interstitialAd;
 
@@ -55,6 +58,7 @@ class MobileAdService implements AdService {
           ad.dispose();
           _interstitialAd = null;
           load();
+          _onAdClosed();
           print('$NativeAd onAdClosed.');
         },
         onApplicationExit: (Ad ad) => print('$NativeAd onApplicationExit.'),
@@ -65,7 +69,9 @@ class MobileAdService implements AdService {
   /// Shows an ad every [_interval] times according to [_counter]
   /// or [force] to show an ad.
   @override
-  Future<void> mayShow({bool force = false}) async {
+  Future<void> mayShow({bool force = false, VoidCallback onAdClosed}) async {
+    _onAdClosed = onAdClosed;
+
     await _prefService.setInt(kPrefKeyAdIntervalCounter, ++_counter);
 
     if (force || _counter % _interval == 0) {
@@ -88,5 +94,5 @@ class WebAdService implements AdService {
   void load() {}
 
   @override
-  Future<void> mayShow({bool force = false}) async {}
+  Future<void> mayShow({bool force = false, VoidCallback onAdClosed}) async {}
 }

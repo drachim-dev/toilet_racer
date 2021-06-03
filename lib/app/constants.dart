@@ -17,13 +17,13 @@ const String kCountDownOverlay = 'COUNTDOWN_OVERLAY';
 const String kGameOverMenu = 'GAME_OVER_MENU';
 
 // preferences
-const String kPrefKeySoundEffectsEnabled = 'PREF_KEY_SOUND_EFFECTS_ENABLED';
-const String kPrefKeyMusicEnabled = 'PREF_KEY_MUSIC_ENABLED';
+const String kPrefKeyAudioEnabled = 'PREF_KEY_AUDIO_ENABLED';
 const String kPrefKeyHighscore = 'PREF_KEY_HIGHSCORE';
 
 // audio
 const String kAudioPath = 'assets/audio/';
-const String kAudioBackgroundPath = 'background.mp3';
+const String kAudioBackgroundPath = 'the-game.mp3';
+const String kAudioMenuBackgroundPath = 'the-game-menu.mp3';
 const double kAudioBackgroundVolume = 0.4;
 const String kAudioToiletDropSound = 'fart.mp3';
 const double kAudioDropVolume = 0.6;

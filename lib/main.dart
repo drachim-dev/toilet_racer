@@ -6,6 +6,7 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/ad_service.dart';
+import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/countdown_overlay.dart';
 import 'package:toilet_racer/views/credits_menu.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AdService _adService = locator<AdService>();
+  final MobileAudioService _audioService = locator<MobileAudioService>();
 
   RaceGame _game;
 
@@ -93,5 +95,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  Future<void> _onGameOver() => _adService?.mayShow();
+  Future<void> _onGameOver() => _adService?.mayShow(
+      onAdClosed: () => _audioService.playBackgroundMusic(menu: true));
 }

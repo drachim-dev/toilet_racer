@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/audio_service.dart';
@@ -11,8 +10,7 @@ class OverlayUi extends StatefulWidget {
 }
 
 class _OverlayUiState extends State<OverlayUi> {
-  final SharedPreferences _prefService = locator<SharedPreferences>();
-  final AudioService _audioService = locator<AudioService>();
+  final MobileAudioService _audioService = locator<MobileAudioService>();
   final TimerService _timerService = locator<TimerService>();
 
   bool _musicEnabled;
@@ -21,7 +19,7 @@ class _OverlayUiState extends State<OverlayUi> {
   void initState() {
     super.initState();
 
-    _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? true;
+    _musicEnabled = _audioService.isAudioEnabled();
   }
 
   @override
@@ -53,8 +51,7 @@ class _OverlayUiState extends State<OverlayUi> {
 
   void _toggleMusic() {
     setState(() => _musicEnabled = !_musicEnabled);
-
-    _prefService.setBool(kPrefKeyMusicEnabled, _musicEnabled);
-    _musicEnabled ? _audioService.playBgMusic() : _audioService.pause();
+    _audioService.setAudioEnabled(_musicEnabled);
+    _audioService.playBackgroundMusic(menu: false);
   }
 }

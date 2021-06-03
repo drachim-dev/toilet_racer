@@ -28,7 +28,7 @@ typedef AsyncCallback = Future<void> Function();
 class RaceGame extends Forge2DGame with TapDetector {
   static const double defaultScale = 4.0;
 
-  final AudioService _audioService = locator<AudioService>();
+  final MobileAudioService _audioService = locator<MobileAudioService>();
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final TimerService _timerService = locator<TimerService>();
 
@@ -39,7 +39,6 @@ class RaceGame extends Forge2DGame with TapDetector {
   @override
   bool debugMode = kDebugMode;
 
-  bool _musicEnabled = true;
   bool _gameHelpShown = false;
   bool _collisionDetected = false;
 
@@ -75,11 +74,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void _init() {
-    _musicEnabled = _prefService.getBool(kPrefKeyMusicEnabled) ?? _musicEnabled;
-
-    if (_musicEnabled) {
-      _audioService.playBgMusic();
-    }
+    _audioService.playBackgroundMusic(menu: true);
   }
 
   /// Init and show game help
@@ -96,6 +91,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void startGame() async {
+    _audioService.playBackgroundMusic(menu: false);
     await _addGameComponents();
     _swapMenuOverlay(kOverlayUi);
     _timerService.start();
@@ -202,6 +198,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     await gameOverCallback();
 
     _swapMenuOverlay(kGameOverMenu);
+    _audioService.playBackgroundMusic(menu: true);
   }
 
   /// Updates score and achievement status async in background.
