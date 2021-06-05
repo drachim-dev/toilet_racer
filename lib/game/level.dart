@@ -59,15 +59,6 @@ class EllipseTrack extends Track {
 }
 
 class Level {
-  static Level toilet1 = Level(
-      filePath: 'level/toilet1.webp',
-      startPosition: Vector2(767, 1695),
-      track: EllipseTrack(
-          innerCenter: Vector2(767, 1415),
-          innerRadii: Radius.elliptical(200, 210),
-          outerCenter: Vector2(767, 1405),
-          outerRadii: Radius.elliptical(320, 360)));
-
   /// The first designed reference level.
   /// The size of this levels track is used to calculate the world scaling factor.
   static Level toilet0 = Level(
@@ -78,6 +69,24 @@ class Level {
           innerRadii: Radius.elliptical(100, 105),
           outerCenter: Vector2(366, 755),
           outerRadii: Radius.elliptical(160, 190)));
+
+  static Level toilet1 = Level(
+      filePath: 'level/toilet1.webp',
+      startPosition: Vector2(767, 1695),
+      track: EllipseTrack(
+          innerCenter: Vector2(767, 1415),
+          innerRadii: Radius.elliptical(200, 210),
+          outerCenter: Vector2(767, 1405),
+          outerRadii: Radius.elliptical(320, 360)));
+
+  static Level donut1 = Level(
+      filePath: 'level/donut1.webp',
+      startPosition: Vector2(500, 915),
+      track: EllipseTrack(
+          innerCenter: Vector2(505, 800),
+          innerRadii: Radius.elliptical(75, 70),
+          outerCenter: Vector2(500, 795),
+          outerRadii: Radius.elliptical(185, 185)));
 
   final String filePath;
   final Track track;

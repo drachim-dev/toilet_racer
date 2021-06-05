@@ -59,9 +59,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   @override
   Future<void> onLoad() async {
-    level = Level.toilet1;
-    await level.onLoad();
-    await add(background = Background(level));
+    await initLevel();
   }
 
   @override
@@ -75,6 +73,17 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _init() {
     _audioService.playBackgroundMusic(menu: true);
+  }
+
+  Future<void> initLevel() async {
+    if (components.contains(background)) {
+      remove(background);
+    }
+
+    final surpriseLevel = _gameMode.inSurpriseLevel();
+    level = surpriseLevel ? Level.donut1 : Level.toilet1;
+    await level.onLoad();
+    await add(background = Background(level));
   }
 
   /// Init and show game help
@@ -135,6 +144,8 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
+
+    await initLevel();
 
     final ghostMode = _gameMode.inGhostMode();
     final player = ghostMode ? Larva() : Fly();

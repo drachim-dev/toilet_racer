@@ -13,11 +13,15 @@ class RaceGameMode {
   double get _currentHighscore =>
       _prefService.getDouble(kPrefKeyHighscore) ?? 0;
 
+  bool inHelpMode() {
+    return _currentHighscore < 5;
+  }
+
   bool inGhostMode() {
     return _currentHighscore > 20.0 && _random.nextInt(10) == 0;
   }
 
-  bool inHelpMode() {
-    return _currentHighscore < 5;
+  bool inSurpriseLevel() {
+    return _currentHighscore > 20.0 && _random.nextInt(20) == 0;
   }
 }
