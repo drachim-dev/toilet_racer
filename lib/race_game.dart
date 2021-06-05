@@ -197,8 +197,11 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     await gameOverCallback();
 
-    _swapMenuOverlay(kGameOverMenu);
+    // Short delay to prevent possible game start before ad is shown
+    await Future.delayed(Duration(milliseconds: 150));
+
     _audioService.playBackgroundMusic(menu: true);
+    _swapMenuOverlay(kGameOverMenu);
   }
 
   /// Updates score and achievement status async in background.
