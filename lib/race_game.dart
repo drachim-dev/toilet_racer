@@ -100,7 +100,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void startGame() async {
-    _audioService.playBackgroundMusic(menu: false);
+    await _audioService.playBackgroundMusic(menu: false);
     await _addGameComponents();
     _swapMenuOverlay(kOverlayUi);
     _timerService.start();
@@ -211,7 +211,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     // Short delay to prevent possible game start before ad is shown
     await Future.delayed(Duration(milliseconds: 150));
 
-    _audioService.playBackgroundMusic(menu: true);
+    await _audioService.playBackgroundMusic(menu: true);
     _swapMenuOverlay(kGameOverMenu);
   }
 

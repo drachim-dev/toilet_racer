@@ -1,4 +1,7 @@
+import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -17,14 +20,18 @@ abstract class AudioService {
 
 class MobileAudioService implements AudioService {
   final SharedPreferences _prefService = locator<SharedPreferences>();
+  // Use custom Bgm instance with fixedPlayer instead of FlameAudio.bgm to prevent MediaPlayerNative error.
+  final Bgm _bgm = Bgm(audioCache: AudioCache(fixedPlayer: AudioPlayer()));
 
   @override
   Future<MobileAudioService> init() async {
-    FlameAudio.bgm.initialize();
+    _bgm.initialize();
+    _bgm.audioCache.prefix = kAudioPath;
+
     FlameAudio.audioCache.prefix = kAudioPath;
 
     // preload bg audio
-    await FlameAudio.bgm.audioCache
+    await _bgm.audioCache
         .loadAll([kAudioBackgroundPath, kAudioMenuBackgroundPath]);
 
     // preload audio
@@ -35,10 +42,9 @@ class MobileAudioService implements AudioService {
   }
 
   @override
-  void playBackgroundMusic({bool menu = true}) {
+  Future<void> playBackgroundMusic({bool menu = true}) async {
     if (isAudioEnabled()) {
-      FlameAudio.bgm.play(
-          menu ? kAudioMenuBackgroundPath : kAudioBackgroundPath,
+      await _bgm.play(menu ? kAudioMenuBackgroundPath : kAudioBackgroundPath,
           volume: kAudioBackgroundVolume);
     }
   }
@@ -54,7 +60,7 @@ class MobileAudioService implements AudioService {
   @override
   void setAudioEnabled(bool enabled) {
     _prefService.setBool(kPrefKeyAudioEnabled, enabled);
-    FlameAudio.bgm.stop();
+    _bgm.stop();
   }
 
   @override
