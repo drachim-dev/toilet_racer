@@ -67,6 +67,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     super.onResize(size);
 
     if (background != null) {
+      // TODO: Fix scaling
       // viewport.scale = defaultScale * background.worldScale;
     }
   }
