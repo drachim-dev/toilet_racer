@@ -17,7 +17,10 @@ import 'package:toilet_racer/views/start_menu.dart';
 import 'app/theme.dart';
 
 Future<void> main() async {
-  await Flame.init(orientation: DeviceOrientation.portraitUp);
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  await Flame.device.fullScreen();
+  await Flame.device.setOrientation(DeviceOrientation.portraitUp);
 
   setupLocator();
   await locator.allReady();

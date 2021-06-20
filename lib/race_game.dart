@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flame/components.dart' hide Timer;
+import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -53,7 +53,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   int get score => _timerService?.seconds?.value ?? 0;
 
   RaceGame({this.gameOverCallback})
-      : super(scale: defaultScale, gravity: Vector2(0, 0)) {
+      : super(zoom: defaultScale, gravity: Vector2(0, 0)) {
     _init();
   }
 
@@ -67,7 +67,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     super.onResize(size);
 
     if (background != null) {
-      viewport.scale = defaultScale * background.worldScale;
+      // viewport.scale = defaultScale * background.worldScale;
     }
   }
 
@@ -176,7 +176,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   @override
-  void onTapDown(TapDownDetails details) {
+  void onTapDown(TapDownInfo details) {
     // Iterate over GameHelpers on firstLaunch
     if (_gameHelpShown) {
       remove(gameHelper.current);

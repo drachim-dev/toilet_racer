@@ -17,10 +17,10 @@ class Boundary extends BodyComponent {
 
     final shape = ChainShape()
       ..createLoop(_vertices
-          .map((vertex) => viewport.getScreenToWorld(vertex))
+          .map((vertex) => gameRef.screenToWorld(vertex))
           .toList());
 
-    final fixtureDef = FixtureDef()..shape = shape;
+    final fixtureDef = FixtureDef(shape);
     final bodyDef = BodyDef()..userData = this;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }

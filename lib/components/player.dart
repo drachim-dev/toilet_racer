@@ -1,6 +1,5 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:toilet_racer/components/removable_sprite_animation_component.dart';
 
 class Fly extends Player {
   static const maxVelocity = 100;
@@ -20,9 +19,9 @@ class Fly extends Player {
     final spriteAnimation =
         SpriteAnimation.spriteList(sprites, stepTime: maxAnimationStepTime);
 
-    _spriteAnimationComponent = RemovableSpriteAnimationComponent(
-        Player.scaleSpriteSize(spriteAnimation.getSprite().originalSize),
-        spriteAnimation);
+    _spriteAnimationComponent = SpriteAnimationComponent(
+        size: Player.scaleSpriteSize(spriteAnimation.getSprite().originalSize),
+        animation: spriteAnimation);
     return this;
   }
 
@@ -57,10 +56,12 @@ class Larva extends Player {
     final sprites = await Player.loadSprites(filePaths);
     final spriteAnimation =
         SpriteAnimation.spriteList(sprites, stepTime: maxAnimationStepTime);
-    _spriteAnimationComponent = RemovableSpriteAnimationComponent(
-        Player.scaleSpriteSize(spriteAnimation.getSprite().originalSize,
-            newWidth: 17),
-        spriteAnimation);
+    _spriteAnimationComponent = SpriteAnimationComponent(
+        size: Player.scaleSpriteSize(
+          spriteAnimation.getSprite().originalSize,
+          newWidth: 17,
+        ),
+        animation: spriteAnimation);
     return this;
   }
 

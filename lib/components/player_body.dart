@@ -77,8 +77,7 @@ class PlayerBody extends PositionBodyComponent {
       ..radius = 2;
 
     // The fixture describes the material properties
-    final fixtureDef = FixtureDef()
-      ..shape = shape
+    final fixtureDef = FixtureDef(shape)
       // Dichte: compute the density based on our given mass and radius
       // we do this, so we can safely adjust the radius
       // without changing the forces applied to the player
@@ -91,8 +90,8 @@ class PlayerBody extends PositionBodyComponent {
     final bodyDef = BodyDef()
       // To be able to determine object in collision
       ..userData = this
-      ..type = BodyType.DYNAMIC
-      ..position = viewport.getScreenToWorld(startPosition)
+      ..type = BodyType.dynamic
+      ..position = gameRef.screenToWorld(startPosition)
       // heading and bearing are the same at start
       ..angle = bearing
       ..linearVelocity = Vector2.zero()
@@ -109,7 +108,7 @@ class PlayerBody extends PositionBodyComponent {
 
     // draw lines to show heading and bearing
     final length = radius * 3;
-    final heading = body.getAngle();
+    final heading = body.angle;
     final headingPointer = pointer(heading, length, true);
     final bearingPointer = pointer(bearing, length, true);
     c.drawLine(
@@ -136,7 +135,7 @@ class PlayerBody extends PositionBodyComponent {
 
     time += dt;
 
-    final heading = normalizeAngle(body.getAngle());
+    final heading = normalizeAngle(body.angle);
 
     // 1. Set new linear velocity of the player in direction of heading
     // See http://fooplot.com/#W3sidHlwZSI6MCwiZXEiOiIoLSh4LzYwLTEpXigyKSsxKSo5MCsxMCIsImNvbG9yIjoiIzAwMDAwMCJ9LHsidHlwZSI6MTAwMCwid2luZG93IjpbIi0yLjA3MjMwNzY5MjMwNzY5MjQiLCI4MCIsIi00Ljk2NTAwMDAwMDAwMDAwMSIsIjExMCJdfV0-

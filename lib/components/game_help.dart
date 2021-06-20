@@ -11,11 +11,12 @@ import 'package:toilet_racer/components/player_body.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class GameHelp extends PositionComponent with HasGameRef {
-  static final TextConfig _textConfig = TextConfig(
-    fontSize: 56.0,
-    color: Colors.white,
-    fontFamily: 'NerkoOne',
-    textAlign: TextAlign.center,
+  static final TextPaint textPaint = TextPaint(
+    config: TextPaintConfig(
+      fontSize: 56.0,
+      color: Colors.white,
+      fontFamily: 'NerkoOne',
+    ),
   );
 
   static final Paint _paint = Paint()
@@ -59,11 +60,12 @@ class GameHelp extends PositionComponent with HasGameRef {
 
     if (imagePath != null) {
       final image = await Flame.images.load(imagePath);
-      final component = SpriteComponent.fromImage(Vector2(192, 192), image)
-        ..position = Vector2(_gameSize.x / 2 - kGameScreenMargin,
-            _gameSize.y - kGameScreenMargin)
-        ..anchor = Anchor.centerLeft
-        ..angle = -pi / 6;
+      final component =
+          SpriteComponent.fromImage(image, size: Vector2(192, 192))
+            ..position = Vector2(_gameSize.x / 2 - kGameScreenMargin,
+                _gameSize.y - kGameScreenMargin)
+            ..anchor = Anchor.centerLeft
+            ..angle = -pi / 6;
       await addChild(component);
     }
 
@@ -120,7 +122,7 @@ class GameHelp extends PositionComponent with HasGameRef {
           break;
       }
 
-      _textConfig.render(c, helpText, position, anchor: Anchor.center);
+      textPaint.render(c, helpText, position, anchor: Anchor.center);
     }
   }
 
