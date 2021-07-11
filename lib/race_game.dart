@@ -78,7 +78,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   Future<void> initLevel() async {
     if (components.contains(background)) {
-      remove(background);
+      background.remove();
     }
 
     final surpriseLevel = _gameMode.inSurpriseLevel();
@@ -180,7 +180,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   void onTapDown(TapDownInfo details) {
     // Iterate over GameHelpers on firstLaunch
     if (_gameHelpShown) {
-      remove(gameHelper.current);
+      gameHelper.current.remove();
       if (gameHelper.moveNext()) {
         add(gameHelper.current);
         return;
@@ -204,7 +204,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void _onGameOver() async {
-    gameComponents.forEach((c) => remove(c));
+    gameComponents.forEach((c) => c.remove());
     removeContactCallback(contactCallback);
 
     await gameOverCallback();
