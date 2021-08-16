@@ -26,7 +26,7 @@ dependencies:
 
   flame: 1.0.0-releasecandidate.13
   flame_audio: 1.0.0-rc.1
-  flame_forge2d: 0.8.0-releasecandidate.13
+  flame_forge2d: 0.8.1-releasecandidate.13
   games_services: ^1.0.0
   get_it: ^5.0.6
   google_mobile_ads: ^0.12.0

@@ -26,7 +26,7 @@ import 'game/level.dart';
 typedef AsyncCallback = Future<void> Function();
 
 class RaceGame extends Forge2DGame with TapDetector {
-  static const double defaultScale = 4.0;
+  static const double defaultScale = 1;
 
   final MobileAudioService _audioService = locator<MobileAudioService>();
   final SharedPreferences _prefService = locator<SharedPreferences>();
@@ -68,6 +68,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     if (background != null) {
       // TODO: Fix scaling
+      // camera.zoom = defaultScale * background.worldScale;
       // viewport.scale = defaultScale * background.worldScale;
     }
   }
