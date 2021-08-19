@@ -3,11 +3,12 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/game/level.dart';
 
-class Background extends SpriteComponent with HasGameRef {
+class Background extends SpriteComponent with HasGameRef<Forge2DGame> {
   final Level level;
   double _imageScale;
   double worldScale;
@@ -15,6 +16,7 @@ class Background extends SpriteComponent with HasGameRef {
   Background(this.level) {
     assert(level.image != null);
     sprite = Sprite(level.image);
+    isHud = true;
   }
 
   /// Calculates the corresponding screen coordinates from image pixel coordinates.
@@ -23,8 +25,10 @@ class Background extends SpriteComponent with HasGameRef {
   }
 
   @override
-  void onGameResize(Vector2 screenSize) {
-    super.onGameResize(screenSize);
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+
+    final screenSize = gameRef.viewport.effectiveSize.clone();
 
     final minScreenSide =
         math.min(screenSize.toSize().width, screenSize.toSize().height) -

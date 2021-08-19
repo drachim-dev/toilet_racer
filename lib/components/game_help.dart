@@ -36,7 +36,7 @@ class GameHelp extends PositionComponent with HasGameRef {
 
   final PlayerBody player;
 
-  Vector2 _gameSize;
+  Vector2 _screenSize;
 
   GameHelp({
     this.boundary,
@@ -49,7 +49,9 @@ class GameHelp extends PositionComponent with HasGameRef {
     this.imagePath,
     this.textPosition = GamePosition.TOP,
     this.player,
-  });
+  }) {
+    isHud = true;
+  }
 
   @override
   Future<void> onLoad() async {
@@ -62,8 +64,8 @@ class GameHelp extends PositionComponent with HasGameRef {
       final image = await Flame.images.load(imagePath);
       final component =
           SpriteComponent.fromImage(image, size: Vector2(192, 192))
-            ..position = Vector2(_gameSize.x / 2 - kGameScreenMargin,
-                _gameSize.y - kGameScreenMargin)
+            ..position = Vector2(_screenSize.x / 2 - kGameScreenMargin,
+                _screenSize.y - kGameScreenMargin)
             ..anchor = Anchor.centerLeft
             ..angle = -pi / 6;
       await addChild(component);
@@ -112,13 +114,13 @@ class GameHelp extends PositionComponent with HasGameRef {
       Vector2 position;
       switch (textPosition) {
         case GamePosition.TOP:
-          position = Vector2(_gameSize.x / 2, _gameSize.y / 6);
+          position = Vector2(_screenSize.x / 2, _screenSize.y / 6);
           break;
         case GamePosition.CENTER:
-          position = Vector2(_gameSize.x / 2, _gameSize.y / 2);
+          position = Vector2(_screenSize.x / 2, _screenSize.y / 2);
           break;
         case GamePosition.BOTTOM:
-          position = Vector2(_gameSize.x / 2, _gameSize.y / 6 * 5);
+          position = Vector2(_screenSize.x / 2, _screenSize.y / 6 * 5);
           break;
       }
 
@@ -196,7 +198,7 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void update(double dt) {
     super.update(dt);
-    if (_gameSize == null) {
+    if (_screenSize == null) {
       return;
     }
   }
@@ -204,7 +206,7 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
-    _gameSize = gameSize;
+    _screenSize = gameRef.viewport.effectiveSize.clone();
   }
 }
 
