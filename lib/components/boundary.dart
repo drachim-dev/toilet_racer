@@ -9,6 +9,13 @@ class Boundary extends BodyComponent {
   Boundary(this._vertices);
 
   @override
+  Future<void> onLoad() {
+    debugMode = gameRef.debugMode;
+    
+    return super.onLoad();
+  }
+
+  @override
   Body createBody() {
     paint = Paint()
       ..style = PaintingStyle.stroke
