@@ -55,11 +55,6 @@ class GameHelp extends PositionComponent with HasGameRef {
 
   @override
   Future<void> onLoad() async {
-    // darken background
-    if (darken) {
-      await addChild(DarkOverlay());
-    }
-
     if (imagePath != null) {
       final image = await Flame.images.load(imagePath);
       final component =
@@ -72,8 +67,7 @@ class GameHelp extends PositionComponent with HasGameRef {
     }
 
     if (player != null) {
-      // TODO: Component gets removed but body does not. Uncomment once fixed.
-      // await addChild(player);
+      await addChild(player);
     }
     return super.onLoad();
   }
@@ -81,6 +75,11 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void render(Canvas c) {
     super.render(c);
+
+    // darken background
+    if (darken) {
+      c.drawColor(Colors.black54, BlendMode.darken);
+    }
 
     if (bottomArrow || topArrow) {
       // calculate middle y position
@@ -212,11 +211,3 @@ class GameHelp extends PositionComponent with HasGameRef {
 
 enum GamePosition { TOP, CENTER, BOTTOM }
 
-class DarkOverlay extends PositionComponent {
-  @override
-  void render(Canvas c) {
-    super.render(c);
-
-    c.drawColor(Colors.black54, BlendMode.darken);
-  }
-}
