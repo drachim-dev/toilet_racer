@@ -9,6 +9,13 @@ class Boundary extends BodyComponent {
   Boundary(this._vertices);
 
   @override
+  Future<void> onLoad() {
+    debugMode = gameRef.debugMode;
+    
+    return super.onLoad();
+  }
+
+  @override
   Body createBody() {
     paint = Paint()
       ..style = PaintingStyle.stroke
@@ -17,10 +24,10 @@ class Boundary extends BodyComponent {
 
     final shape = ChainShape()
       ..createLoop(_vertices
-          .map((vertex) => viewport.getScreenToWorld(vertex))
+          .map((vertex) => gameRef.screenToWorld(vertex))
           .toList());
 
-    final fixtureDef = FixtureDef()..shape = shape;
+    final fixtureDef = FixtureDef(shape);
     final bodyDef = BodyDef()..userData = this;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }

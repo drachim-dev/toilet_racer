@@ -11,11 +11,12 @@ import 'package:toilet_racer/components/player_body.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class GameHelp extends PositionComponent with HasGameRef {
-  static final TextConfig _textConfig = TextConfig(
-    fontSize: 56.0,
-    color: Colors.white,
-    fontFamily: 'NerkoOne',
-    textAlign: TextAlign.center,
+  static final TextPaint textPaint = TextPaint(
+    config: TextPaintConfig(
+      fontSize: 56.0,
+      color: Colors.white,
+      fontFamily: 'NerkoOne',
+    ),
   );
 
   static final Paint _paint = Paint()
@@ -35,7 +36,7 @@ class GameHelp extends PositionComponent with HasGameRef {
 
   final PlayerBody player;
 
-  Vector2 _gameSize;
+  Vector2 _screenSize;
 
   GameHelp({
     this.boundary,
@@ -48,28 +49,25 @@ class GameHelp extends PositionComponent with HasGameRef {
     this.imagePath,
     this.textPosition = GamePosition.TOP,
     this.player,
-  });
+  }) {
+    isHud = true;
+  }
 
   @override
   Future<void> onLoad() async {
-    // darken background
-    if (darken) {
-      await addChild(DarkOverlay());
-    }
-
     if (imagePath != null) {
       final image = await Flame.images.load(imagePath);
-      final component = SpriteComponent.fromImage(Vector2(192, 192), image)
-        ..position = Vector2(_gameSize.x / 2 - kGameScreenMargin,
-            _gameSize.y - kGameScreenMargin)
-        ..anchor = Anchor.centerLeft
-        ..angle = -pi / 6;
+      final component =
+          SpriteComponent.fromImage(image, size: Vector2(192, 192))
+            ..position = Vector2(_screenSize.x / 2 - kGameScreenMargin,
+                _screenSize.y - kGameScreenMargin)
+            ..anchor = Anchor.centerLeft
+            ..angle = -pi / 6;
       await addChild(component);
     }
 
     if (player != null) {
-      // TODO: Component gets removed but body does not. Uncomment once fixed.
-      // await addChild(player);
+      await addChild(player);
     }
     return super.onLoad();
   }
@@ -77,6 +75,11 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void render(Canvas c) {
     super.render(c);
+
+    // darken background
+    if (darken) {
+      c.drawColor(Colors.black54, BlendMode.darken);
+    }
 
     if (bottomArrow || topArrow) {
       // calculate middle y position
@@ -110,17 +113,17 @@ class GameHelp extends PositionComponent with HasGameRef {
       Vector2 position;
       switch (textPosition) {
         case GamePosition.TOP:
-          position = Vector2(_gameSize.x / 2, _gameSize.y / 6);
+          position = Vector2(_screenSize.x / 2, _screenSize.y / 6);
           break;
         case GamePosition.CENTER:
-          position = Vector2(_gameSize.x / 2, _gameSize.y / 2);
+          position = Vector2(_screenSize.x / 2, _screenSize.y / 2);
           break;
         case GamePosition.BOTTOM:
-          position = Vector2(_gameSize.x / 2, _gameSize.y / 6 * 5);
+          position = Vector2(_screenSize.x / 2, _screenSize.y / 6 * 5);
           break;
       }
 
-      _textConfig.render(c, helpText, position, anchor: Anchor.center);
+      textPaint.render(c, helpText, position, anchor: Anchor.center);
     }
   }
 
@@ -194,7 +197,7 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void update(double dt) {
     super.update(dt);
-    if (_gameSize == null) {
+    if (_screenSize == null) {
       return;
     }
   }
@@ -202,17 +205,9 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
-    _gameSize = gameSize;
+    _screenSize = gameRef.viewport.effectiveSize.clone();
   }
 }
 
 enum GamePosition { TOP, CENTER, BOTTOM }
 
-class DarkOverlay extends PositionComponent {
-  @override
-  void render(Canvas c) {
-    super.render(c);
-
-    c.drawColor(Colors.black54, BlendMode.darken);
-  }
-}

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flame/components.dart' hide Timer;
+import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -26,6 +26,7 @@ import 'game/level.dart';
 typedef AsyncCallback = Future<void> Function();
 
 class RaceGame extends Forge2DGame with TapDetector {
+  /// This is the default world scaling factor that was used in an older version of forge.
   static const double defaultScale = 4.0;
 
   final MobileAudioService _audioService = locator<MobileAudioService>();
@@ -52,8 +53,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   int get score => _timerService?.seconds?.value ?? 0;
 
-  RaceGame({this.gameOverCallback})
-      : super(scale: defaultScale, gravity: Vector2(0, 0)) {
+  RaceGame({this.gameOverCallback}) : super(gravity: Vector2.zero()) {
     _init();
   }
 
@@ -63,11 +63,11 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   @override
-  void onResize(Vector2 size) {
-    super.onResize(size);
+  void onResize(Vector2 canvasSize) {
+    super.onResize(canvasSize);
 
     if (background != null) {
-      viewport.scale = defaultScale * background.worldScale;
+      camera.zoom = defaultScale * background.worldScale;
     }
   }
 
@@ -77,7 +77,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   Future<void> initLevel() async {
     if (components.contains(background)) {
-      remove(background);
+      background.remove();
     }
 
     final surpriseLevel = _gameMode.inSurpriseLevel();
@@ -176,10 +176,10 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   @override
-  void onTapDown(TapDownDetails details) {
+  void onTapDown(TapDownInfo details) {
     // Iterate over GameHelpers on firstLaunch
     if (_gameHelpShown) {
-      remove(gameHelper.current);
+      gameHelper.current.remove();
       if (gameHelper.moveNext()) {
         add(gameHelper.current);
         return;
@@ -203,7 +203,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void _onGameOver() async {
-    gameComponents.forEach((c) => remove(c));
+    gameComponents.forEach((c) => c.remove());
     removeContactCallback(contactCallback);
 
     await gameOverCallback();
