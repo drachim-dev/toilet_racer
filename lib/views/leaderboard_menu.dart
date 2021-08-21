@@ -1,9 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:toilet_racer/app/constants.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LeaderboardMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
@@ -76,17 +74,4 @@ class LeaderboardMenu extends StatelessWidget {
     ));
   }
 
-  Future<void> _onOpen(LinkableElement link) async {
-    if (await canLaunch(link.url)) {
-      await launch(link.url);
-    } else {
-      throw 'Could not launch $link';
-    }
-  }
-}
-
-class Credit {
-  final String title, url;
-
-  const Credit({this.title, this.url});
 }

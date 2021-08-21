@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
-import 'package:toilet_racer/app/locator.dart';
-import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
@@ -16,7 +14,6 @@ class StartMenu extends StatefulWidget {
 
 class _StartMenuState extends State<StartMenu>
     with SingleTickerProviderStateMixin {
-  final GameService _gameService = locator<GameService>();
   AnimationController _controller;
 
   @override

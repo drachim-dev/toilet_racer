@@ -4,10 +4,11 @@ import 'package:toilet_racer/app/locator.dart';
 
 class GameService {
   final SharedPreferences _prefService = locator<SharedPreferences>();
-  
+
   void getHighscores() {}
 
   Future<void> submitScore(double score) {
+    // TODO: submit score to firebase?
     _updateLocalScore(score);
   }
 
