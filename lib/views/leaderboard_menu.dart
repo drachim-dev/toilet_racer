@@ -2,24 +2,29 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/app/locator.dart';
+import 'package:toilet_racer/services/game_service.dart';
 
 class LeaderboardMenu extends StatelessWidget {
+  final GameService _gameService = locator<GameService>();
+
   final VoidCallback onBackToMenuPressed;
 
-  const LeaderboardMenu(this.onBackToMenuPressed);
+  LeaderboardMenu(this.onBackToMenuPressed);
 
   @override
   Widget build(BuildContext context) {
     final menuStyle = Theme.of(context).textTheme.headline4;
 
     final titleStyle = Theme.of(context).textTheme.headline3;
-    final textStyle = Theme.of(context).textTheme.headline4;
+    final textStyle = Theme.of(context).textTheme.headline2;
 
     final blur = 10.0;
     final sectionSpacing = 24.0;
     final itemSpacing = sectionSpacing / 2;
 
-    final leaders = <String>['Achim', 'Manni', 'Seb'];
+    final localLeader = Leader('Your Score', _gameService.getLocalHighscore());
+    final leaders = <Leader>[localLeader];
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
@@ -48,8 +53,9 @@ class LeaderboardMenu extends StatelessWidget {
                     right: kMenuScreenMargin,
                     bottom: kMenuScreenMargin / 2),
                 itemCount: leaders.length,
-                itemBuilder: (_, int index) =>
-                    Center(child: Text(leaders[index], style: textStyle)),
+                itemBuilder: (_, int index) => Center(
+                    child: Text(leaders[index].score.toString(),
+                        style: textStyle)),
                 separatorBuilder: (_, __) => SizedBox(height: itemSpacing),
               ),
             ),
@@ -73,5 +79,11 @@ class LeaderboardMenu extends StatelessWidget {
       ),
     ));
   }
+}
 
+class Leader {
+  final String name;
+  final double score;
+
+  Leader(this.name, this.score);
 }

@@ -5,7 +5,13 @@ import 'package:toilet_racer/app/locator.dart';
 class GameService {
   final SharedPreferences _prefService = locator<SharedPreferences>();
 
-  void getHighscores() {}
+  void getHighscores() {
+    // TODO: get scores from firebase?
+  }
+
+  double getLocalHighscore() {
+    return _prefService.getDouble(kPrefKeyHighscore) ?? 0;
+  }
 
   Future<void> submitScore(double score) {
     // TODO: submit score to firebase?
@@ -14,7 +20,7 @@ class GameService {
 
   /// Saves highscore in shared preferences to enable some features based on the user experience.
   void _updateLocalScore(double score) {
-    if (score > (_prefService.getDouble(kPrefKeyHighscore) ?? 0)) {
+    if (score > (getLocalHighscore())) {
       _prefService.setDouble(kPrefKeyHighscore, score);
     }
   }
