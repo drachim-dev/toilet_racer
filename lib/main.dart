@@ -76,8 +76,10 @@ class _MyAppState extends State<MyApp> {
           child: GameWidget(
             game: _game,
             overlayBuilderMap: {
-              kStartMenu: (_, RaceGame game) =>
-                  StartMenu(game.startGameWithHelp, game.showCreditsMenu, game.showLeaderboardMenu),
+              kStartMenu: (_, RaceGame game) => StartMenu(
+                  game.startGameWithHelp,
+                  game.showCreditsMenu,
+                  game.showLeaderboardMenu),
               kCreditsMenu: (_, RaceGame game) =>
                   CreditsMenu(game.showStartMenu),
               kLeaderboardMenu: (_, RaceGame game) =>
