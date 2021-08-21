@@ -36,9 +36,9 @@ class _OverlayUiState extends State<OverlayUi> {
           ),
           ValueListenableBuilder(
             valueListenable: _timerService.seconds,
-            builder: (_, int value, Widget child) => Expanded(
+            builder: (_, double value, Widget child) => Expanded(
                 child: Text(
-              '$value',
+              value.toString(),
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             )),

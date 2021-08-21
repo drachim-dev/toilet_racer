@@ -6,9 +6,11 @@ import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/position_body_component.dart';
 import 'package:flutter/material.dart' show Colors;
-import 'package:toilet_racer/components/player.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector2;
 import 'package:flutter/material.dart' as material;
+import 'package:toilet_racer/app/locator.dart';
+import 'package:toilet_racer/components/player.dart';
+import 'package:toilet_racer/services/timer_service.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector2;
 
 import 'boundary.dart';
 
@@ -53,6 +55,8 @@ class PlayerBody extends PositionBodyComponent {
   double bearing;
 
   final bool preview;
+
+  final TimerService _timerService = locator<TimerService>();
 
   PlayerBody(this.player, this.startPosition,
       {this.preview = false, this.counterclockwise = true})
@@ -130,6 +134,7 @@ class PlayerBody extends PositionBodyComponent {
     super.update(dt);
 
     if (preview) return;
+    _timerService.update(dt);
 
     player.update(velocity: body.linearVelocity.length);
 

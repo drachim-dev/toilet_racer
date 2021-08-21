@@ -49,7 +49,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   PlayerBody _playerBody;
   Iterator<GameHelp> gameHelper;
 
-  int get score => _timerService?.seconds?.value ?? 0;
+  double get score => _timerService?.seconds?.value ?? 0;
 
   RaceGame({this.gameOverCallback}) : super(gravity: Vector2.zero()) {
     _init();
@@ -218,7 +218,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     final _gameService = locator<GameService>();
 
     // submit score
-    final score = _timerService.seconds.value.toDouble();
+    final score = _timerService.seconds.value;
     await _gameService.submitScore(score);
   }
 
