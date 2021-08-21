@@ -6,7 +6,6 @@ import 'package:flame/gestures.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/background.dart';
@@ -30,7 +29,6 @@ class RaceGame extends Forge2DGame with TapDetector {
   static const double defaultScale = 4.0;
 
   final MobileAudioService _audioService = locator<MobileAudioService>();
-  final SharedPreferences _prefService = locator<SharedPreferences>();
   final TimerService _timerService = locator<TimerService>();
 
   final AsyncCallback gameOverCallback;
@@ -217,38 +215,16 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   /// Updates score and achievement status async in background.
   void _updateScoreAndAchievements() async {
-    _updateLocalScore();
-
     final _gameService = locator<GameService>();
 
-    if (_gameService.signedIn) {
-      // submit score
-      await _gameService.submitScore(
-          kAndroidLeaderBoard, _timerService.seconds.value);
-
-      // update duration achievement
-      kDurationAchievements.forEach((duration, id) {
-        if (_timerService.seconds.value > duration) {
-          _gameService.unlockAchievement(id);
-        }
-      });
-
-      // update play count
-      kPlayCountAchievements
-          .forEach((id) => _gameService.incrementAchievement(id));
-    }
-  }
-
-  /// Saves highscore in shared preferences to enable some features based on the user experience.
-  void _updateLocalScore() {
+    // submit score
     final score = _timerService.seconds.value.toDouble();
-    if (score > (_prefService.getDouble(kPrefKeyHighscore) ?? 0)) {
-      _prefService.setDouble(kPrefKeyHighscore, score);
-    }
+    await _gameService.submitScore(score);
   }
 
   void showStartMenu() => _swapMenuOverlay(kStartMenu);
   void showCreditsMenu() => _swapMenuOverlay(kCreditsMenu);
+  void showLeaderboardMenu() => _swapMenuOverlay(kLeaderboardMenu);
 
   /// Removes all active overlays
   void _removeOverlays() {
@@ -263,4 +239,5 @@ class RaceGame extends Forge2DGame with TapDetector {
     _removeOverlays();
     overlays.add(overlayName);
   }
+
 }

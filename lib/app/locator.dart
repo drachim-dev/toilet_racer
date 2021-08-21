@@ -17,6 +17,6 @@ void setupLocator() {
   locator.registerSingletonAsync<AdService>(
       () => kIsWeb ? WebAdService().init() : MobileAdService().init(),
       dependsOn: [SharedPreferences]);
-  locator.registerSingleton<GameService>(GameService());
+  locator.registerLazySingleton<GameService>(() => GameService());
   locator.registerSingleton<TimerService>(TimerService());
 }

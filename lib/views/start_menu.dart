@@ -5,9 +5,10 @@ import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
-  final VoidCallback onPlayPressed, onCreditsPressed;
+  final VoidCallback onPlayPressed, onCreditsPressed, onLeaderboardPressed;
 
-  const StartMenu(this.onPlayPressed, this.onCreditsPressed);
+  const StartMenu(
+      this.onPlayPressed, this.onCreditsPressed, this.onLeaderboardPressed);
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -84,14 +85,8 @@ class _StartMenuState extends State<StartMenu>
                     ),
                     SizedBox(height: buttonSpacing),
                     TextButton(
-                      onPressed: () =>
-                          _gameService.showLeaderboards(kAndroidLeaderBoard),
+                      onPressed: widget.onLeaderboardPressed,
                       child: Text('SCORE', style: buttonStyle),
-                    ),
-                    SizedBox(height: buttonSpacing),
-                    TextButton(
-                      onPressed: _gameService.showAchievements,
-                      child: Text('AWARDS', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     SizedBox(height: spacing),

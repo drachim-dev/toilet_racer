@@ -7,10 +7,10 @@ import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
-import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/views/countdown_overlay.dart';
 import 'package:toilet_racer/views/credits_menu.dart';
 import 'package:toilet_racer/views/game_over_menu.dart';
+import 'package:toilet_racer/views/leaderboard_menu.dart';
 import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
@@ -18,7 +18,7 @@ import 'app/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Flame.device.fullScreen();
   await Flame.device.setOrientation(DeviceOrientation.portraitUp);
 
@@ -44,7 +44,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     _game = RaceGame(gameOverCallback: _onGameOver);
-    locator<GameService>().signIn();
 
     _adService.load();
   }
@@ -78,9 +77,11 @@ class _MyAppState extends State<MyApp> {
             game: _game,
             overlayBuilderMap: {
               kStartMenu: (_, RaceGame game) =>
-                  StartMenu(game.startGameWithHelp, game.showCreditsMenu),
+                  StartMenu(game.startGameWithHelp, game.showCreditsMenu, game.showLeaderboardMenu),
               kCreditsMenu: (_, RaceGame game) =>
                   CreditsMenu(game.showStartMenu),
+              kLeaderboardMenu: (_, RaceGame game) =>
+                  LeaderboardMenu(game.showStartMenu),
               kOverlayUi: (_, RaceGame game) => OverlayUi(),
               kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
                     onCountDownFinished: game.startGame,

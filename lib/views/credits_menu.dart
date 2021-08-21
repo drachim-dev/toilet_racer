@@ -14,6 +14,7 @@ class CreditsMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final menuStyle = Theme.of(context).textTheme.headline4;
 
+    final titleStyle = Theme.of(context).textTheme.headline3;
     final sectionStyle = Theme.of(context).textTheme.headline4;
     final textStyle = Theme.of(context).textTheme.headline5;
     final urlStyle = Theme.of(context)
@@ -30,10 +31,11 @@ class CreditsMenu extends StatelessWidget {
       child: Container(
         color: Colors.orangeAccent.withOpacity(0.2),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
+              alignment: Alignment.centerLeft,
               padding: const EdgeInsets.all(kMenuScreenMargin),
               child: TextButton(
                 onPressed: onBackToMenuPressed,
@@ -41,6 +43,8 @@ class CreditsMenu extends StatelessWidget {
                 child: Text('< back', style: menuStyle),
               ),
             ),
+            Text('Credits', style: titleStyle),
+            SizedBox(height: sectionSpacing),
             Expanded(
               child: ListView(
                 physics: ScrollPhysics(),
@@ -49,33 +53,40 @@ class CreditsMenu extends StatelessWidget {
                     right: kMenuScreenMargin,
                     bottom: kMenuScreenMargin / 2),
                 children: [
-                  Text('Authors', style: sectionStyle),
-                  Text('Dr. Jan Achim', style: textStyle),
+                  Center(child: Text('Authors', style: sectionStyle)),
+                  Center(child: Text('Dr. Jan Achim', style: textStyle)),
                   SizedBox(height: itemSpacing),
-                  Text('Dr. Jan Manni', style: textStyle),
+                  Center(child: Text('Dr. Jan Manni', style: textStyle)),
                   SizedBox(height: sectionSpacing),
-                  Text('Music', style: sectionStyle),
-                  Text('Background music by Dr. Jan Roberto', style: textStyle),
+                  Center(child: Text('Music', style: sectionStyle)),
+                  Center(
+                      child: Text('Background music by Dr. Jan Roberto',
+                          style: textStyle, textAlign: TextAlign.center)),
                   SizedBox(height: itemSpacing),
-                  Text('Fart sound effect', style: textStyle),
-                  Linkify(
-                    onOpen: _onOpen,
-                    text: 'https://zapsplat.com/music/short-wet-bold-fart',
-                    style: urlStyle,
-                    linkStyle: urlStyle,
+                  Center(child: Text('Fart sound effect', style: textStyle)),
+                  Center(
+                    child: Linkify(
+                      onOpen: _onOpen,
+                      text: 'https://zapsplat.com/music/short-wet-bold-fart',
+                      style: urlStyle,
+                      linkStyle: urlStyle,
+                    ),
                   ),
                   SizedBox(height: sectionSpacing),
-                  Text('Images', style: sectionStyle),
-                  Text('Poop Vectors by Vecteezy', style: textStyle),
-                  Linkify(
-                    onOpen: _onOpen,
-                    text: 'https://vecteezy.com/free-vector/poop',
-                    style: urlStyle,
-                    linkStyle: urlStyle,
+                  Center(child: Text('Images', style: sectionStyle)),
+                  Center(
+                      child:
+                          Text('Poop Vectors by Vecteezy', style: textStyle)),
+                  Center(
+                    child: Linkify(
+                      onOpen: _onOpen,
+                      text: 'https://vecteezy.com/free-vector/poop',
+                      style: urlStyle,
+                      linkStyle: urlStyle,
+                    ),
                   ),
                   SizedBox(height: sectionSpacing),
-                  Align(
-                    alignment: Alignment.centerLeft,
+                  Center(
                     child: TextButton(
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.only(left: 0)),

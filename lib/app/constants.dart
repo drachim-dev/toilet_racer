@@ -7,6 +7,7 @@ const double kMenuScreenMargin = 32.0;
 // start menu
 const String kStartMenu = 'START_MENU';
 const String kCreditsMenu = 'CREDITS_MENU';
+const String kLeaderboardMenu = 'LEADERBOARD_MENU';
 
 // overlay ui
 const String kOverlayUi = 'OVERLAY_UI';
@@ -29,18 +30,6 @@ const String kAudioToiletDropSound = 'fart.mp3';
 const double kAudioDropVolume = 0.6;
 
 // game services
-const String kAndroidLeaderBoard = 'CgkIiMD92MMXEAIQAw';
-
-const List<String> kPlayCountAchievements = [
-  'CgkIiMD92MMXEAIQBA',
-  'CgkIiMD92MMXEAIQAg',
-  'CgkIiMD92MMXEAIQCA'
-];
-const Map<int, String> kDurationAchievements = {
-  15: 'CgkIiMD92MMXEAIQBg',
-  30: 'CgkIiMD92MMXEAIQBQ',
-  40: 'CgkIiMD92MMXEAIQBw',
-};
 
 // ads
 const int kDefaultAdInterval = 5;
