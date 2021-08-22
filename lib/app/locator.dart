@@ -11,7 +11,7 @@ GetIt locator = GetIt.instance;
 void setupLocator() {
   locator.registerSingletonAsync<SharedPreferences>(
       () => SharedPreferences.getInstance());
-  locator.registerSingletonAsync<MobileAudioService>(
+  locator.registerSingletonAsync<AudioService>(
       () => kIsWeb ? WebAudioService().init() : MobileAudioService().init(),
       dependsOn: [SharedPreferences]);
   locator.registerSingletonAsync<AdService>(

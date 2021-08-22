@@ -35,7 +35,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final AdService _adService = locator<AdService>();
-  final MobileAudioService _audioService = locator<MobileAudioService>();
+  final AudioService _audioService = locator<AudioService>();
 
   RaceGame _game;
 

@@ -10,7 +10,7 @@ class OverlayUi extends StatefulWidget {
 }
 
 class _OverlayUiState extends State<OverlayUi> {
-  final MobileAudioService _audioService = locator<MobileAudioService>();
+  final AudioService _audioService = locator<AudioService>();
   final TimerService _timerService = locator<TimerService>();
 
   bool _musicEnabled;

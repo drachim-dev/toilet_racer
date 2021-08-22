@@ -28,7 +28,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// This is the default world scaling factor that was used in an older version of forge.
   static const double defaultScale = 4.0;
 
-  final MobileAudioService _audioService = locator<MobileAudioService>();
+  final AudioService _audioService = locator<AudioService>();
   final TimerService _timerService = locator<TimerService>();
 
   final AsyncCallback gameOverCallback;

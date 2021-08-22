@@ -1,6 +1,6 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flame_audio/bgm.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
@@ -8,9 +8,9 @@ import 'package:toilet_racer/app/locator.dart';
 abstract class AudioService {
   Future<AudioService> init();
 
-  void playBackgroundMusic({bool menu});
+  Future<void> playBackgroundMusic({bool menu});
 
-  void playDropSound(String path);
+  Future<void> playDropSound(String path);
 
   void setAudioEnabled(bool enabled);
 
@@ -50,9 +50,9 @@ class MobileAudioService implements AudioService {
 
   /// plays 'player drops off the road' sound effect
   @override
-  void playDropSound(String path) {
+  Future<void> playDropSound(String path) async {
     if (isAudioEnabled()) {
-      FlameAudio.play(path, volume: kAudioDropVolume);
+      await FlameAudio.play(path, volume: kAudioDropVolume);
     }
   }
 
@@ -77,10 +77,10 @@ class WebAudioService implements AudioService {
   }
 
   @override
-  void playBackgroundMusic({bool menu}) {}
+  Future<void> playBackgroundMusic({bool menu}) async {}
 
   @override
-  void playDropSound(String path) {}
+  Future<void> playDropSound(String path) async {}
 
   @override
   void setAudioEnabled(bool enabled) {}
