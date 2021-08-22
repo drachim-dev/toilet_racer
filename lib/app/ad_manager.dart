@@ -9,5 +9,5 @@ class AdManager {
   static const testDevice1 = String.fromEnvironment('ADMOB_TEST_DEVICE_ID_1');
   static const testDevice2 = String.fromEnvironment('ADMOB_TEST_DEVICE_ID_2');
 
-  static List<String> get testDeviceId => [testDevice1, testDevice2];
+  static List<String> get testDeviceIds => [testDevice1, testDevice2];
 }

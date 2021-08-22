@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+2
+version: 1.0.0+3
 
 environment:
   sdk: ">=2.11.0 <3.0.0"
@@ -27,11 +27,11 @@ dependencies:
   flame: 1.0.0-releasecandidate.13
   flame_audio: 1.0.0-rc.1
   flame_forge2d: 0.8.1-releasecandidate.13
-  get_it: ^5.0.6
-  google_mobile_ads: ^0.12.0
-  flutter_linkify: ^5.0.2
-  shared_preferences: ^2.0.5
-  url_launcher: ^6.0.3
+  get_it: ^7.2.0
+  google_mobile_ads: ^0.13.2
+  flutter_linkify: ^5.0.0
+  shared_preferences: ^2.0.0
+  url_launcher: ^6.0.0
 
 dev_dependencies:
   pedantic: 

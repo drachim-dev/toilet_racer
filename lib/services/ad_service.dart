@@ -5,6 +5,8 @@ import 'package:toilet_racer/app/ad_manager.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 
+const int maxFailedLoadAttempts = 3;
+
 abstract class AdService {
   Future<AdService> init();
 
@@ -25,10 +27,14 @@ class MobileAdService implements AdService {
   VoidCallback _onAdClosed = () {};
 
   InterstitialAd _interstitialAd;
+  int _numInterstitialLoadAttempts = 0;
 
   @override
   Future<AdService> init() async {
     await MobileAds.instance.initialize();
+    await MobileAds.instance.updateRequestConfiguration(
+        RequestConfiguration(testDeviceIds: AdManager.testDeviceIds));
+
     _counter = _prefService.getInt(kPrefKeyAdIntervalCounter) ?? _counter;
     return this;
   }
@@ -40,30 +46,49 @@ class MobileAdService implements AdService {
 
   @override
   void load() {
-    _interstitialAd ??= InterstitialAd(
-      adUnitId: AdManager.interstitialAdUnitId,
-      request: AdRequest(testDevices: AdManager.testDeviceId),
-      listener: AdListener(
-        onAdLoaded: (Ad ad) {
-          print('$NativeAd loaded.');
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          ad.dispose();
-          _interstitialAd = null;
-          load();
-          print('$NativeAd failedToLoad: $error');
-        },
-        onAdOpened: (Ad ad) => print('$NativeAd onAdOpened.'),
-        onAdClosed: (Ad ad) {
-          ad.dispose();
-          _interstitialAd = null;
-          load();
-          _onAdClosed();
-          print('$NativeAd onAdClosed.');
-        },
-        onApplicationExit: (Ad ad) => print('$NativeAd onApplicationExit.'),
-      ),
-    )..load();
+    InterstitialAd.load(
+        adUnitId: AdManager.interstitialAdUnitId,
+        request: AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (InterstitialAd ad) {
+            print('$ad loaded');
+            
+            _interstitialAd = ad;
+            _numInterstitialLoadAttempts = 0;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            print('InterstitialAd failed to load: $error.');
+            _numInterstitialLoadAttempts += 1;
+            _interstitialAd = null;
+            if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
+              load();
+            }
+          },
+        ));
+  }
+
+  void _showInterstitialAd() {
+    if (_interstitialAd == null) {
+      print('Warning: attempt to show interstitial before loaded.');
+      return;
+    }
+    _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (InterstitialAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _onAdClosed();
+        load();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        load();
+      },
+    );
+    _interstitialAd.show();
+    _interstitialAd = null;
   }
 
   /// Shows an ad every [_interval] times according to [_counter]
@@ -76,7 +101,7 @@ class MobileAdService implements AdService {
 
     if (force || _counter % _interval == 0) {
       _counter = 0;
-      return _interstitialAd?.show();
+      _showInterstitialAd();
     }
   }
 }
