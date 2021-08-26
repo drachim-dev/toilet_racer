@@ -54,16 +54,44 @@ class CreditsMenu extends StatelessWidget {
                     bottom: kMenuScreenMargin / 2),
                 children: [
                   Center(child: Text('Authors', style: sectionStyle)),
-                  Center(child: Text('Dr. Jan Achim', style: textStyle)),
+                  Center(child: Text('Dr. Achim', style: textStyle)),
+                  Center(
+                    child: Linkify(
+                      onOpen: _onOpen,
+                      text: 'https://github.com/drachim-dev',
+                      style: urlStyle,
+                      linkStyle: urlStyle,
+                    ),
+                  ),
                   SizedBox(height: itemSpacing),
-                  Center(child: Text('Dr. Jan Manni', style: textStyle)),
+                  Center(child: Text('Dr. Manni', style: textStyle)),
+                  Center(
+                    child: Linkify(
+                      onOpen: _onOpen,
+                      text: 'https://github.com/PMudra',
+                      style: urlStyle,
+                      linkStyle: urlStyle,
+                    ),
+                  ),
                   SizedBox(height: sectionSpacing),
                   Center(child: Text('Music', style: sectionStyle)),
                   Center(
-                      child: Text('Background music by Dr. Jan Roberto',
+                      child: Text('„Toilet Racer“',
                           style: textStyle, textAlign: TextAlign.center)),
+                  Center(
+                      child: Text('Composed by Roberto Risorto',
+                          style: textStyle, textAlign: TextAlign.center)),
+                  Center(
+                    child: Linkify(
+                      onOpen: _onOpen,
+                      text: 'https://instagram.com/robertorisorto/',
+                      style: urlStyle,
+                      linkStyle: urlStyle,
+                    ),
+                  ),
                   SizedBox(height: itemSpacing),
-                  Center(child: Text('Fart sound effect', style: textStyle)),
+                  Center(
+                      child: Text('„Short wet bold fart“', style: textStyle)),
                   Center(
                     child: Linkify(
                       onOpen: _onOpen,
