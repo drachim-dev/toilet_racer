@@ -15,6 +15,7 @@ final toiletTheme = ThemeData(
       headline4: _getTextStyleWithShadow(36),
       headline5: _getTextStyleWithShadow(24),
       headline6: _getTextStyleWithShadow(16),
+      button: _getTextStyleWithShadow(24)
     ).apply(
       displayColor: Colors.orangeAccent,
     ),

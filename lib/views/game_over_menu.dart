@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:toilet_racer/app/constants.dart';
 
 class GameOverMenu extends StatelessWidget {
@@ -29,7 +30,6 @@ class GameOverMenu extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
                   child: Padding(
@@ -49,6 +49,12 @@ class GameOverMenu extends StatelessWidget {
               ],
             ),
             Text(score.toString(), style: titleStyle),
+            TextButton.icon(
+              icon: Icon(Icons.share, color: backgroundColor),
+              label: Text('Share'),
+              onPressed: () => Share.share(
+                  'I lasted $score seconds. How long can you last?\nhttps://play.google.com/store/apps/details?id=dr.achim.toilet_racer'),
+            ),
             Divider(thickness: dividerHeight, color: backgroundColor),
             SizedBox(height: spacing),
             FittedBox(
