@@ -1,16 +1,28 @@
-# toilet_racer
+# <img src="screenshots/header.png" width="768"/>
 
-A new Flutter project.
+# Toilet Racer
 
-## Getting Started
+<b>Turn your bathroom into a magical sanctuary and become the toilet ninja!</b> 💩🧻
 
-This project is a starting point for a Flutter application.
+Are you always so bored while defecating? Put an end to the stink.
 
-A few resources to get you started if this is your first Flutter project:
+Turn your bathroom into a magical sanctuary and become the toilet ninja! 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Just don't fall off the toilet, it's dirty! How long can you last?
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+
+<p float="left">
+  <img src="screenshots/start_menu.png" width="260" />
+  <img src="screenshots/in_game_fly.png" width="260" /> 
+  <img src="screenshots/score_menu.png" width="260" /> 
+</p>
+
+
+## Download
+
+[![playstore badge][]][playstore link]
+
+
+[playstore badge]: https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png
+[playstore link]: https://play.google.com/store/apps/details?id=dr.achim.toilet_racer
