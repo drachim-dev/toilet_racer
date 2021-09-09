@@ -204,12 +204,13 @@ class RaceGame extends Forge2DGame with TapDetector {
     gameComponents.forEach((c) => c.remove());
     removeContactCallback(contactCallback);
 
+    // Start menu background music before gameOverCallback because ads should be able to stop music again.
+    await _audioService.playBackgroundMusic(menu: true);
     await gameOverCallback();
 
     // Short delay to prevent possible game start before ad is shown
     await Future.delayed(Duration(milliseconds: 150));
 
-    await _audioService.playBackgroundMusic(menu: true);
     _swapMenuOverlay(kGameOverMenu);
   }
 
@@ -239,5 +240,4 @@ class RaceGame extends Forge2DGame with TapDetector {
     _removeOverlays();
     overlays.add(overlayName);
   }
-
 }

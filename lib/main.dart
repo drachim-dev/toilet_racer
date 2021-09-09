@@ -102,5 +102,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _onGameOver() => _adService?.mayShow(
-      onAdClosed: () => _audioService.playBackgroundMusic(menu: true));
+      onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
+      onAdShown: () => _audioService.stopBackgroundMusic());
 }

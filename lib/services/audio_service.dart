@@ -14,6 +14,8 @@ abstract class AudioService {
 
   void setAudioEnabled(bool enabled);
 
+  void stopBackgroundMusic();
+
   bool isAudioEnabled();
 }
 
@@ -59,6 +61,11 @@ class MobileAudioService implements AudioService {
   @override
   void setAudioEnabled(bool enabled) {
     _prefService.setBool(kPrefKeyAudioEnabled, enabled);
+    stopBackgroundMusic();
+  }
+
+  @override
+  void stopBackgroundMusic() {
     _bgm.stop();
   }
 
@@ -89,4 +96,7 @@ class WebAudioService implements AudioService {
   bool isAudioEnabled() {
     return true;
   }
+
+  @override
+  void stopBackgroundMusic() {}
 }

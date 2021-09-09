@@ -15,7 +15,8 @@ abstract class AdService {
   void load();
 
   /// May show an ad or [force] to show an ad
-  Future<void> mayShow({bool force = false, VoidCallback onAdClosed});
+  Future<void> mayShow(
+      {bool force = false, VoidCallback onAdClosed, VoidCallback onAdShown});
 }
 
 class MobileAdService implements AdService {
@@ -25,6 +26,7 @@ class MobileAdService implements AdService {
   int _counter = 0;
 
   VoidCallback _onAdClosed = () {};
+  VoidCallback _onAdShown = () {};
 
   InterstitialAd _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
@@ -52,7 +54,7 @@ class MobileAdService implements AdService {
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
             print('$ad loaded');
-            
+
             _interstitialAd = ad;
             _numInterstitialLoadAttempts = 0;
           },
@@ -73,8 +75,10 @@ class MobileAdService implements AdService {
       return;
     }
     _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (InterstitialAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (InterstitialAd ad) {
+        print('ad onAdShowedFullScreenContent.');
+        _onAdShown();
+      },
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
@@ -94,8 +98,12 @@ class MobileAdService implements AdService {
   /// Shows an ad every [_interval] times according to [_counter]
   /// or [force] to show an ad.
   @override
-  Future<void> mayShow({bool force = false, VoidCallback onAdClosed}) async {
+  Future<void> mayShow(
+      {bool force = false,
+      VoidCallback onAdClosed,
+      VoidCallback onAdShown}) async {
     _onAdClosed = onAdClosed;
+    _onAdShown = onAdShown;
 
     await _prefService.setInt(kPrefKeyAdIntervalCounter, ++_counter);
 
@@ -119,5 +127,8 @@ class WebAdService implements AdService {
   void load() {}
 
   @override
-  Future<void> mayShow({bool force = false, VoidCallback onAdClosed}) async {}
+  Future<void> mayShow(
+      {bool force = false,
+      VoidCallback onAdClosed,
+      VoidCallback onAdShown}) async {}
 }
