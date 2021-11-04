@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -87,6 +88,54 @@ class Level {
           innerRadii: Radius.elliptical(75, 70),
           outerCenter: Vector2(500, 795),
           outerRadii: Radius.elliptical(185, 185)));
+
+  static Level floatingPool = Level(
+      filePath: 'level/floating_pool.webp',
+      startPosition: Vector2(966, 1675),
+      track: EllipseTrack(
+          innerCenter: Vector2(1000, 1368),
+          innerRadii: Radius.elliptical(198, 198),
+          outerCenter: Vector2(996, 1368),
+          outerRadii: Radius.elliptical(455, 455)));
+
+  static Level footBath = Level(
+      filePath: 'level/foot_bath.webp',
+      startPosition: Vector2(780, 1786),
+      track: EllipseTrack(
+          innerCenter: Vector2(798, 1337),
+          innerRadii: Radius.elliptical(365, 365),
+          outerCenter: Vector2(818, 1352),
+          outerRadii: Radius.elliptical(560, 560)));
+
+  static Level vinyl = Level(
+      filePath: 'level/vinyl.webp',
+      startPosition: Vector2(934, 1209),
+      track: EllipseTrack(
+          innerCenter: Vector2(934, 938),
+          innerRadii: Radius.elliptical(139, 139),
+          outerCenter: Vector2(934, 938),
+          outerRadii: Radius.elliptical(375, 375)));
+
+  static Level friedEgg = Level(
+      filePath: 'level/fried_egg.webp',
+      startPosition: Vector2(380, 1838),
+      track: EllipseTrack(
+          innerCenter: Vector2(437, 1591),
+          innerRadii: Radius.elliptical(146, 155),
+          outerCenter: Vector2(417, 1615),
+          outerRadii: Radius.elliptical(310, 320)));
+
+  static List<Level> levels = [
+    toilet1,
+    donut1,
+    floatingPool,
+    footBath,
+    friedEgg
+  ];
+
+  static Level getSurpriseLevel() {
+    return levels[Random().nextInt(levels.length)];
+  }
 
   final String filePath;
   final Track track;
