@@ -19,8 +19,8 @@ class Boundary extends BodyComponent {
   Body createBody() {
     paint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.white.withAlpha(200)
-      ..strokeWidth = 2;
+      ..color = Colors.white.withAlpha(150)
+      ..strokeWidth = 1.5;
 
     final shape = ChainShape()
       ..createLoop(_vertices

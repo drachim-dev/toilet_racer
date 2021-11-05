@@ -134,6 +134,24 @@ class Level {
           outerCenter: Vector2(690, 1120),
           outerRadii: Radius.elliptical(525, 465)));
 
+  static Level candles = Level(
+      filePath: 'level/candles.webp',
+      startPosition: Vector2(710, 1241),
+      track: EllipseTrack(
+          innerCenter: Vector2(715, 1108),
+          innerRadii: Radius.elliptical(66, 60),
+          outerCenter: Vector2(719, 1112),
+          outerRadii: Radius.elliptical(218, 218)));
+
+  static Level coffee = Level(
+      filePath: 'level/coffee.webp',
+      startPosition: Vector2(684, 1670),
+      track: EllipseTrack(
+          innerCenter: Vector2(688, 1269),
+          innerRadii: Radius.elliptical(325, 325),
+          outerCenter: Vector2(691, 1271),
+          outerRadii: Radius.elliptical(471, 471)));
+
   static List<Level> levels = [
     toilet1,
     donut1,
@@ -141,7 +159,9 @@ class Level {
     footBath,
     vinyl,
     friedEgg,
-    abstractEye
+    abstractEye,
+    candles,
+    coffee
   ];
 
   static Level getSurpriseLevel() {
