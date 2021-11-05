@@ -125,13 +125,23 @@ class Level {
           outerCenter: Vector2(417, 1615),
           outerRadii: Radius.elliptical(310, 320)));
 
+  static Level abstractEye = Level(
+      filePath: 'level/abstract_eye.webp',
+      startPosition: Vector2(667, 1422),
+      track: EllipseTrack(
+          innerCenter: Vector2(695, 1040),
+          innerRadii: Radius.elliptical(235, 235),
+          outerCenter: Vector2(690, 1120),
+          outerRadii: Radius.elliptical(525, 465)));
+
   static List<Level> levels = [
     toilet1,
     donut1,
     floatingPool,
     footBath,
     vinyl,
-    friedEgg
+    friedEgg,
+    abstractEye
   ];
 
   static Level getSurpriseLevel() {

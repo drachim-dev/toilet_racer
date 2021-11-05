@@ -79,7 +79,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
 
     final surpriseLevel = _gameMode.inSurpriseLevel();
-    level = surpriseLevel ? Level.getSurpriseLevel() : Level.toilet1;
+    level = surpriseLevel ? Level.getSurpriseLevel() : Level.abstractEye;
     await level.onLoad();
     await add(background = Background(level));
   }
