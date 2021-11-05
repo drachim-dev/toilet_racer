@@ -130,6 +130,7 @@ class Level {
     donut1,
     floatingPool,
     footBath,
+    vinyl,
     friedEgg
   ];
 
