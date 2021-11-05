@@ -26,7 +26,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
+            ${{ github.actor }} commited:
+            ${{ github.event.commits[0].message }}
             
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            Changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
