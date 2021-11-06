@@ -14,8 +14,10 @@ class Fly extends Player {
 
   @override
   Future<Player> onLoad() async {
-    final sprites = await Player.loadSprites(
-        ['player/fly/fly_1@2x.png', 'player/fly/fly_2@2x.png']);
+    final filePaths = Iterable<int>.generate(2)
+        .map((index) => 'player/fly/movement/fly_move$index.png')
+        .toList();
+    final sprites = await Player.loadSprites(filePaths);
     final spriteAnimation =
         SpriteAnimation.spriteList(sprites, stepTime: maxAnimationStepTime);
 
@@ -50,8 +52,99 @@ class Larva extends Player {
   Future<Player> onLoad() async {
     final filePaths = Iterable<int>.generate(8)
         .map((index) => index + 2)
-        .map((index) => index.toString().padLeft(3, '0'))
-        .map((index) => 'player/larva/__lava_move_$index.png')
+        .map((index) => 'player/larva/movement/larva_move$index.png')
+        .toList();
+    final sprites = await Player.loadSprites(filePaths);
+    final spriteAnimation =
+        SpriteAnimation.spriteList(sprites, stepTime: maxAnimationStepTime);
+    _spriteAnimationComponent = SpriteAnimationComponent(
+        size: Player.scaleSpriteSize(
+          spriteAnimation.getSprite().originalSize,
+          newWidth: 17,
+        ),
+        animation: spriteAnimation);
+    return this;
+  }
+
+  @override
+  void update({double velocity}) {
+    _spriteAnimationComponent.animation.stepTime = Player.calculateStepTime(
+        velocity: velocity,
+        maxVelocity: maxVelocity,
+        minAnimationStepTime: minAnimationStepTime,
+        maxAnimationStepTime: maxAnimationStepTime);
+  }
+
+  double calculateStepTime({
+    double velocity,
+  }) {
+    return velocity *
+            ((minAnimationStepTime - maxAnimationStepTime) / maxVelocity) +
+        maxAnimationStepTime;
+  }
+}
+
+class Frog extends Player {
+  static const maxVelocity = 100;
+
+  static const minAnimationStepTime = 0.02;
+  static const maxAnimationStepTime = 0.1;
+
+  SpriteAnimationComponent _spriteAnimationComponent;
+
+  @override
+  PositionComponent get positionComponent => _spriteAnimationComponent;
+
+  @override
+  Future<Player> onLoad() async {
+    final filePaths = Iterable<int>.generate(7)
+        .map((index) => 'player/frog/movement/frog_move$index.png')
+        .toList();
+    final sprites = await Player.loadSprites(filePaths);
+    final spriteAnimation =
+        SpriteAnimation.spriteList(sprites, stepTime: maxAnimationStepTime);
+    _spriteAnimationComponent = SpriteAnimationComponent(
+        size: Player.scaleSpriteSize(
+          spriteAnimation.getSprite().originalSize,
+          newWidth: 17,
+        ),
+        animation: spriteAnimation);
+    return this;
+  }
+
+  @override
+  void update({double velocity}) {
+    _spriteAnimationComponent.animation.stepTime = Player.calculateStepTime(
+        velocity: velocity,
+        maxVelocity: maxVelocity,
+        minAnimationStepTime: minAnimationStepTime,
+        maxAnimationStepTime: maxAnimationStepTime);
+  }
+
+  double calculateStepTime({
+    double velocity,
+  }) {
+    return velocity *
+            ((minAnimationStepTime - maxAnimationStepTime) / maxVelocity) +
+        maxAnimationStepTime;
+  }
+}
+
+class Alien extends Player {
+  static const maxVelocity = 100;
+
+  static const minAnimationStepTime = 0.02;
+  static const maxAnimationStepTime = 0.1;
+
+  SpriteAnimationComponent _spriteAnimationComponent;
+
+  @override
+  PositionComponent get positionComponent => _spriteAnimationComponent;
+
+  @override
+  Future<Player> onLoad() async {
+    final filePaths = Iterable<int>.generate(9)
+        .map((index) => 'player/alien/movement/alien_move$index.png')
         .toList();
     final sprites = await Player.loadSprites(filePaths);
     final spriteAnimation =
