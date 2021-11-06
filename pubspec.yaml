@@ -52,13 +52,51 @@ flutter:
   assets:
     - assets/audio/
     - assets/animations/
+    
     - assets/images/
     - assets/images/icons/
     - assets/images/level/
     - assets/images/player/
-    - assets/images/player/fly/
-    - assets/images/player/larva/
 
+    - assets/images/player/alien/
+    - assets/images/player/alien/movement/
+    - assets/images/player/alien/portrait/
+
+    - assets/images/player/bee/
+    - assets/images/player/bee/movement/
+    - assets/images/player/bee/portrait/
+
+    - assets/images/player/bug_beetle/
+    - assets/images/player/bug_beetle/movement/
+    - assets/images/player/bug_beetle/portrait/
+
+    - assets/images/player/fly/
+    - assets/images/player/fly/movement/
+    - assets/images/player/fly/portrait/
+
+    - assets/images/player/frog/
+    - assets/images/player/frog/movement/
+    - assets/images/player/frog/portrait/
+
+    - assets/images/player/larva/
+    - assets/images/player/larva/movement/
+    - assets/images/player/larva/portrait/
+
+    - assets/images/player/mosquito_larva1/
+    - assets/images/player/mosquito_larva1/movement/
+    - assets/images/player/mosquito_larva1/portrait/
+
+    - assets/images/player/mosquito_larva2/
+    - assets/images/player/mosquito_larva2/movement/
+    - assets/images/player/mosquito_larva2/portrait/
+
+    - assets/images/player/snake/
+    - assets/images/player/snake/movement/
+    - assets/images/player/snake/portrait/
+
+    - assets/images/player/stink_bug/
+    - assets/images/player/stink_bug/movement/
+    - assets/images/player/stink_bug/portrait/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
