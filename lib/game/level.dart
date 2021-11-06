@@ -152,6 +152,15 @@ class Level {
           outerCenter: Vector2(691, 1271),
           outerRadii: Radius.elliptical(471, 471)));
 
+  static Level toiletPaper = Level(
+      filePath: 'level/toilet_paper.webp',
+      startPosition: Vector2(725, 1330),
+      track: EllipseTrack(
+          innerCenter: Vector2(730, 1162),
+          innerRadii: Radius.elliptical(93, 98),
+          outerCenter: Vector2(730, 1155),
+          outerRadii: Radius.elliptical(220, 260)));
+
   static List<Level> levels = [
     toilet1,
     donut1,
@@ -161,7 +170,8 @@ class Level {
     friedEgg,
     abstractEye,
     candles,
-    coffee
+    coffee,
+    toiletPaper
   ];
 
   static Level getSurpriseLevel() {
