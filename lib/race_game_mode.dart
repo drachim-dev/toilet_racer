@@ -22,6 +22,6 @@ class RaceGameMode {
   }
 
   bool inSurpriseLevel() {
-    return _currentHighscore > 20.0 && _random.nextInt(20) == 0;
+    return _currentHighscore > 20.0 && _random.nextInt(5) == 0;
   }
 }
