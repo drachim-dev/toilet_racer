@@ -3,10 +3,13 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
-  final VoidCallback onPlayPressed, onCreditsPressed, onLeaderboardPressed;
+  final VoidCallback onContinueGamePressed,
+      onStartRandomGamePressed,
+      onCreditsPressed,
+      onLeaderboardPressed;
 
-  const StartMenu(
-      this.onPlayPressed, this.onCreditsPressed, this.onLeaderboardPressed);
+  const StartMenu(this.onContinueGamePressed, this.onStartRandomGamePressed,
+      this.onCreditsPressed, this.onLeaderboardPressed);
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -39,6 +42,7 @@ class _StartMenuState extends State<StartMenu>
     final titleStyle =
         Theme.of(context).textTheme.headline1.copyWith(color: Colors.brown);
     final buttonStyle = Theme.of(context).textTheme.headline2;
+    final iconSize = Theme.of(context).textTheme.headline3.fontSize;
 
     const spacing = 72.0;
     const buttonSpacing = 36.0;
@@ -70,20 +74,21 @@ class _StartMenuState extends State<StartMenu>
                     Text(kTitle, style: titleStyle),
                     SizedBox(height: spacing),
                     TextButton(
-                      onPressed: _startGame,
+                      onPressed: _continueGame,
                       child: Text('PLAY',
                           style: buttonStyle.copyWith(
                               fontSize: titleStyle.fontSize)),
                     ),
                     SizedBox(height: spacing),
+                    TextButton.icon(
+                      icon: Icon(Icons.casino_outlined, size: iconSize),
+                      onPressed: _startRandomGame,
+                      label: Text('RANDOM', style: buttonStyle),
+                    ),
+                    SizedBox(height: spacing),
                     TextButton(
                       onPressed: widget.onCreditsPressed,
                       child: Text('CREDITS', style: buttonStyle),
-                    ),
-                    SizedBox(height: buttonSpacing),
-                    TextButton(
-                      onPressed: widget.onLeaderboardPressed,
-                      child: Text('SCORE', style: buttonStyle),
                     ),
                     SizedBox(height: buttonSpacing),
                     SizedBox(height: spacing),
@@ -97,8 +102,13 @@ class _StartMenuState extends State<StartMenu>
     );
   }
 
-  Future<void> _startGame() async {
+  Future<void> _continueGame() async {
     await _controller.forward();
-    widget.onPlayPressed();
+    widget.onContinueGamePressed();
+  }
+
+  Future<void> _startRandomGame() async {
+    await _controller.forward();
+    widget.onStartRandomGamePressed();
   }
 }

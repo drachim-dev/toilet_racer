@@ -77,7 +77,8 @@ class _MyAppState extends State<MyApp> {
             game: _game,
             overlayBuilderMap: {
               kStartMenu: (_, RaceGame game) => StartMenu(
-                  game.startGameWithHelp,
+                  game.continueGame,
+                  game.startRandomGame,
                   game.showCreditsMenu,
                   game.showLeaderboardMenu),
               kCreditsMenu: (_, RaceGame game) =>
@@ -90,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                   ),
               kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                     game.showStartMenu,
-                    game.startGameWithHelp,
+                    game.startRandomGame,
                     game.score,
                   ),
             },
