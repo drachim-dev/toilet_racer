@@ -33,7 +33,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   final AsyncCallback gameOverCallback;
 
-  final RaceGameMode _gameMode = RaceGameMode();
+  final GameMode _gameMode = RandomGameMode();
 
   @override
   bool debugMode = kDebugMode;
@@ -78,17 +78,30 @@ class RaceGame extends Forge2DGame with TapDetector {
       background.remove();
     }
 
-    final surpriseLevel = _gameMode.inSurpriseLevel();
-    level = surpriseLevel ? Level.getSurpriseLevel() : Level.toilet1;
+    level = _gameMode.getLevel();
     await level.onLoad();
     await add(background = Background(level));
   }
 
-  /// Init and show game help
-  void startGameWithHelp() async {
+  /// Continue game progress
+  /// TODO: Not implemented yet
+  void continueGame() async {
     _removeOverlays();
 
-    if (_gameMode.inHelpMode()) {
+    if (_gameMode.helpNeeded()) {
+      await _initGameHelp();
+      await add(gameHelper.current);
+      _gameHelpShown = true;
+    } else {
+      startGame();
+    }
+  }
+
+  /// Init and show game help
+  void startRandomGame() async {
+    _removeOverlays();
+
+    if (_gameMode.helpNeeded()) {
       await _initGameHelp();
       await add(gameHelper.current);
       _gameHelpShown = true;
@@ -145,8 +158,8 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     await initLevel();
 
-    final ghostMode = _gameMode.inGhostMode();
-    final player = ghostMode ? Larva() : Fly();
+    final ghostMode = _gameMode.ghostMode();
+    final player = _gameMode.getPlayer();
     await add(_playerBody = PlayerBody(
         await player.onLoad(), background.getImageToScreen(level.startPosition),
         counterclockwise: !ghostMode));

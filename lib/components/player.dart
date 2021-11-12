@@ -1,11 +1,35 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 
-class Fly extends Player {
-  static const maxVelocity = 100;
+enum PlayerIdentifier { fly, larva, frog, alien }
 
+extension PlayerIdentifierExtension on PlayerIdentifier {
+
+  Player get player {
+    switch (this) {
+      case PlayerIdentifier.fly:
+        return Fly();
+        break;
+      case PlayerIdentifier.larva:
+        return Larva();
+        break;
+      case PlayerIdentifier.frog:
+        return Frog();
+        break;
+      case PlayerIdentifier.alien:
+        return Alien();
+        break;
+      default:
+        return null;
+    }
+  }
+}
+
+class Fly extends Player {
   static const minAnimationStepTime = 0.01;
   static const maxAnimationStepTime = 0.15;
+
+  Fly() : super(acceleration: 1.2);
 
   SpriteAnimationComponent _spriteAnimationComponent;
 
@@ -38,8 +62,6 @@ class Fly extends Player {
 }
 
 class Larva extends Player {
-  static const maxVelocity = 100;
-
   static const minAnimationStepTime = 0.02;
   static const maxAnimationStepTime = 0.1;
 
@@ -85,8 +107,6 @@ class Larva extends Player {
 }
 
 class Frog extends Player {
-  static const maxVelocity = 100;
-
   static const minAnimationStepTime = 0.02;
   static const maxAnimationStepTime = 0.1;
 
@@ -131,8 +151,6 @@ class Frog extends Player {
 }
 
 class Alien extends Player {
-  static const maxVelocity = 100;
-
   static const minAnimationStepTime = 0.02;
   static const maxAnimationStepTime = 0.1;
 
@@ -177,7 +195,13 @@ class Alien extends Player {
 }
 
 abstract class Player {
+
   PositionComponent get positionComponent;
+
+  final int maxVelocity;
+  final double acceleration;
+
+  Player({this.maxVelocity = 100, this.acceleration = 1.0});
 
   Future<Player> onLoad();
 
