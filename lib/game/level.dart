@@ -80,6 +80,33 @@ class Level {
           outerCenter: Vector2(767, 1405),
           outerRadii: Radius.elliptical(320, 360)));
 
+  static Level toiletPaper = Level(
+      filePath: 'level/toilet_paper.webp',
+      startPosition: Vector2(725, 1330),
+      track: EllipseTrack(
+          innerCenter: Vector2(730, 1162),
+          innerRadii: Radius.elliptical(93, 98),
+          outerCenter: Vector2(730, 1155),
+          outerRadii: Radius.elliptical(220, 260)));
+
+  static Level toiletTrain = Level(
+      filePath: 'level/toilet_train.webp',
+      startPosition: Vector2(715, 1725),
+      track: EllipseTrack(
+          innerCenter: Vector2(715, 1520),
+          innerRadii: Radius.elliptical(145, 165),
+          outerCenter: Vector2(715, 1520),
+          outerRadii: Radius.elliptical(245, 256)));
+
+  static Level toiletRed = Level(
+      filePath: 'level/toilet_red.webp',
+      startPosition: Vector2(784, 1943),
+      track: EllipseTrack(
+          innerCenter: Vector2(784, 1632),
+          innerRadii: Radius.elliptical(194, 238),
+          outerCenter: Vector2(784, 1648),
+          outerRadii: Radius.elliptical(320, 380)));
+
   static Level donut1 = Level(
       filePath: 'level/donut1.webp',
       startPosition: Vector2(500, 915),
@@ -152,17 +179,11 @@ class Level {
           outerCenter: Vector2(691, 1271),
           outerRadii: Radius.elliptical(471, 471)));
 
-  static Level toiletPaper = Level(
-      filePath: 'level/toilet_paper.webp',
-      startPosition: Vector2(725, 1330),
-      track: EllipseTrack(
-          innerCenter: Vector2(730, 1162),
-          innerRadii: Radius.elliptical(93, 98),
-          outerCenter: Vector2(730, 1155),
-          outerRadii: Radius.elliptical(220, 260)));
-
   static List<Level> levels = [
     toilet1,
+    toiletPaper,
+    toiletTrain,
+    toiletRed,
     donut1,
     floatingPool,
     footBath,
@@ -171,7 +192,6 @@ class Level {
     abstractEye,
     candles,
     coffee,
-    toiletPaper
   ];
 
   static Level getSurpriseLevel() {
