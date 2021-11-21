@@ -5,7 +5,8 @@ import 'package:share/share.dart';
 import 'package:toilet_racer/app/constants.dart';
 
 class GameOverMenu extends StatelessWidget {
-  final VoidCallback onBackToMenuPressed, onPlayPressed;
+  final VoidCallback onBackToMenuPressed;
+  final VoidCallback onPlayPressed;
   final double score;
 
   const GameOverMenu(this.onBackToMenuPressed, this.onPlayPressed, this.score);

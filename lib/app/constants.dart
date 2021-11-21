@@ -31,6 +31,10 @@ const double kAudioDropVolume = 0.6;
 
 // game services
 
+// career
+const String kCareerLastUnlockedLevel = 'PREF_KEY_CAREER_LAST_UNLOCKED_LEVEL';
+const int kCareerLastUnlockedLevelDefault = 0;
+
 // ads
 const int kDefaultAdInterval = 5;
 const String kPrefKeyAdIntervalCounter = 'PREF_KEY_AD_INTERVAL_COUNTER';

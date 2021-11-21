@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 
 class StartMenu extends StatefulWidget {
-  final VoidCallback onContinueGamePressed,
-      onStartRandomGamePressed,
-      onCreditsPressed,
-      onLeaderboardPressed;
+  final VoidCallback onCreditsPressed, onLeaderboardPressed;
 
-  const StartMenu(this.onContinueGamePressed, this.onStartRandomGamePressed,
-      this.onCreditsPressed, this.onLeaderboardPressed);
+  final void Function({@required GameModeIdentifier gameModeIdentifier})
+      onStartGamePressed;
+
+  const StartMenu(this.onStartGamePressed, this.onCreditsPressed,
+      this.onLeaderboardPressed);
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -74,7 +75,7 @@ class _StartMenuState extends State<StartMenu>
                     Text(kTitle, style: titleStyle),
                     SizedBox(height: spacing),
                     TextButton(
-                      onPressed: _continueGame,
+                      onPressed: () => _startGame(GameModeIdentifier.career),
                       child: Text('PLAY',
                           style: buttonStyle.copyWith(
                               fontSize: titleStyle.fontSize)),
@@ -82,7 +83,7 @@ class _StartMenuState extends State<StartMenu>
                     SizedBox(height: spacing),
                     TextButton.icon(
                       icon: Icon(Icons.casino_outlined, size: iconSize),
-                      onPressed: _startRandomGame,
+                      onPressed: () => _startGame(GameModeIdentifier.random),
                       label: Text('RANDOM', style: buttonStyle),
                     ),
                     SizedBox(height: spacing),
@@ -102,13 +103,8 @@ class _StartMenuState extends State<StartMenu>
     );
   }
 
-  Future<void> _continueGame() async {
+  Future<void> _startGame(GameModeIdentifier gameModeIdentifier) async {
     await _controller.forward();
-    widget.onContinueGamePressed();
-  }
-
-  Future<void> _startRandomGame() async {
-    await _controller.forward();
-    widget.onStartRandomGamePressed();
+    widget.onStartGamePressed(gameModeIdentifier: gameModeIdentifier);
   }
 }
