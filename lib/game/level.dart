@@ -209,7 +209,7 @@ class Level {
 
   Level(
       {this.status = LevelStatus.locked,
-      this.goal = 4,
+      this.goal = 25,
       @required this.filePath,
       @required this.track,
       @required this.startPosition})
