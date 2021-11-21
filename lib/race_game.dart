@@ -33,7 +33,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   final AsyncCallback gameOverCallback;
 
-  final GameMode _gameMode = RandomGameMode();
+  GameMode _gameMode;
 
   @override
   bool debugMode = kDebugMode;
@@ -42,7 +42,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   bool _collisionDetected = false;
 
   Background background;
-  Level level;
+  Level currentLevel = Level.toilet1;
   BoundaryContactCallback contactCallback;
 
   Set<Component> gameComponents;
@@ -51,13 +51,12 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   double get score => _timerService?.seconds?.value ?? 0;
 
-  RaceGame({this.gameOverCallback}) : super(gravity: Vector2.zero()) {
-    _init();
-  }
+  RaceGame({this.gameOverCallback}) : super(gravity: Vector2.zero());
 
   @override
   Future<void> onLoad() async {
-    await initLevel();
+    await _audioService.playBackgroundMusic(menu: true);
+    await initLevel(currentLevel);
   }
 
   @override
@@ -69,37 +68,26 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
   }
 
-  void _init() {
-    _audioService.playBackgroundMusic(menu: true);
-  }
-
-  Future<void> initLevel() async {
+  Future<void> initLevel(Level level) async {
     if (components.contains(background)) {
       background.remove();
     }
 
-    level = _gameMode.getLevel();
     await level.onLoad();
     await add(background = Background(level));
   }
 
-  /// Continue game progress
-  /// TODO: Not implemented yet
-  void continueGame() async {
-    _removeOverlays();
-
-    if (_gameMode.helpNeeded()) {
-      await _initGameHelp();
-      await add(gameHelper.current);
-      _gameHelpShown = true;
-    } else {
-      startGame();
-    }
-  }
-
   /// Init and show game help
-  void startRandomGame() async {
+  Future<void> prepareStartGame({GameModeIdentifier gameModeIdentifier}) async {
     _removeOverlays();
+
+    if (gameModeIdentifier != null) {
+      _gameMode = gameModeIdentifier.gameMode(null);
+    }
+
+    if (_gameMode == null) {
+      throw '_gameMode has not been initialized.';
+    }
 
     if (_gameMode.helpNeeded()) {
       await _initGameHelp();
@@ -119,17 +107,17 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   Future<void> _initGameHelp() async {
     final middleBoundary = getMiddleVertices(
-      level.track.outerBoundary
+      currentLevel.track.outerBoundary
           .map((e) => background.getImageToScreen(e))
           .toList(),
-      level.track.innerBoundary
+      currentLevel.track.innerBoundary
           .map((e) => background.getImageToScreen(e))
           .toList(),
     );
 
     final player = await Fly().onLoad();
     final _playerBody = PlayerBody(
-        player, background.getImageToScreen(level.startPosition),
+        player, background.getImageToScreen(currentLevel.startPosition),
         preview: true);
 
     gameHelper = [
@@ -156,18 +144,19 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
 
-    await initLevel();
+    currentLevel = _gameMode.getLevel();
+    await initLevel(currentLevel);
 
     final ghostMode = _gameMode.ghostMode();
     final player = _gameMode.getPlayer();
-    await add(_playerBody = PlayerBody(
-        await player.onLoad(), background.getImageToScreen(level.startPosition),
+    await add(_playerBody = PlayerBody(await player.onLoad(),
+        background.getImageToScreen(currentLevel.startPosition),
         counterclockwise: !ghostMode));
 
-    await add(outerBoundary = Boundary(level.track.outerBoundary
+    await add(outerBoundary = Boundary(currentLevel.track.outerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
         .toList()));
-    await add(innerBoundary = Boundary(level.track.innerBoundary
+    await add(innerBoundary = Boundary(currentLevel.track.innerBoundary
         .map((vertex) => background.getImageToScreen(vertex))
         .toList()));
 
@@ -230,9 +219,11 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// Updates score and achievement status async in background.
   void _updateScoreAndAchievements() async {
     final _gameService = locator<GameService>();
+    final score = _timerService.seconds.value;
+
+    _gameMode.updateScoreAndAchievements(score);
 
     // submit score
-    final score = _timerService.seconds.value;
     await _gameService.submitScore(score);
   }
 

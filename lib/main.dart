@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
+import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/views/countdown_overlay.dart';
@@ -77,8 +78,7 @@ class _MyAppState extends State<MyApp> {
             game: _game,
             overlayBuilderMap: {
               kStartMenu: (_, RaceGame game) => StartMenu(
-                  game.continueGame,
-                  game.startRandomGame,
+                  game.prepareStartGame,
                   game.showCreditsMenu,
                   game.showLeaderboardMenu),
               kCreditsMenu: (_, RaceGame game) =>
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                   ),
               kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                     game.showStartMenu,
-                    game.startRandomGame,
+                    game.prepareStartGame,
                     game.score,
                   ),
             },

@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
@@ -63,6 +62,7 @@ class Level {
   /// The first designed reference level.
   /// The size of this levels track is used to calculate the world scaling factor.
   static Level toilet0 = Level(
+      status: LevelStatus.hidden,
       filePath: 'level/toilet0.webp',
       startPosition: Vector2(362, 906),
       track: EllipseTrack(
@@ -72,6 +72,7 @@ class Level {
           outerRadii: Radius.elliptical(160, 190)));
 
   static Level toilet1 = Level(
+      status: LevelStatus.unlocked,
       filePath: 'level/toilet1.webp',
       startPosition: Vector2(767, 1695),
       track: EllipseTrack(
@@ -179,7 +180,7 @@ class Level {
           outerCenter: Vector2(691, 1271),
           outerRadii: Radius.elliptical(471, 471)));
 
-  static List<Level> levels = [
+  static List<Level> allLevels = [
     toilet1,
     toiletPaper,
     toiletTrain,
@@ -193,10 +194,10 @@ class Level {
     candles,
     coffee,
   ];
+  LevelStatus status;
 
-  static Level getSurpriseLevel() {
-    return levels[Random().nextInt(levels.length)];
-  }
+  /// Minimum score required to win the level
+  final double goal;
 
   final String filePath;
   final Track track;
@@ -207,14 +208,30 @@ class Level {
   Image image;
 
   Level(
-      {@required this.filePath,
+      {this.status = LevelStatus.locked,
+      this.goal = 4,
+      @required this.filePath,
       @required this.track,
       @required this.startPosition})
-      : assert(filePath != null),
+      : assert(status != null),
+        assert(goal != null),
+        assert(filePath != null),
         assert(track != null),
         assert(startPosition != null);
 
   Future<void> onLoad() async {
     image = await Flame.images.load(filePath);
   }
+}
+
+enum LevelStatus { hidden, locked, unlocked, won }
+
+extension LevelExtension on Level {
+  bool get isHidden => status == LevelStatus.hidden;
+
+/* 
+  TODO: Not used yet
+  bool get isLocked => status == LevelStatus.locked;
+  bool get isUnlocked => status == LevelStatus.unlocked;
+  bool get hasWon => status == LevelStatus.won; */
 }

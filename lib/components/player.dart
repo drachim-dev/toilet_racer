@@ -4,7 +4,6 @@ import 'package:flame/flame.dart';
 enum PlayerIdentifier { fly, larva, frog, alien }
 
 extension PlayerIdentifierExtension on PlayerIdentifier {
-
   Player get player {
     switch (this) {
       case PlayerIdentifier.fly:
@@ -195,7 +194,6 @@ class Alien extends Player {
 }
 
 abstract class Player {
-
   PositionComponent get positionComponent;
 
   final int maxVelocity;
