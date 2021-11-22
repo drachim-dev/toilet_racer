@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/app/theme.dart';
 import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
+import 'package:toilet_racer/widgets/shadow_icon.dart';
 
 class StartMenu extends StatefulWidget {
   final VoidCallback onCreditsPressed, onLeaderboardPressed;
@@ -40,13 +42,17 @@ class _StartMenuState extends State<StartMenu>
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle =
-        Theme.of(context).textTheme.headline1.copyWith(color: Colors.brown);
-    final buttonStyle = Theme.of(context).textTheme.headline2;
-    final iconSize = Theme.of(context).textTheme.headline3.fontSize;
+    final theme = Theme.of(context);
 
-    const spacing = 72.0;
-    const buttonSpacing = 36.0;
+    final titleStyle = theme.textTheme.headline1.copyWith(color: Colors.brown);
+    final buttonStyle = theme.textTheme.headline2;
+
+    final iconColor = secondaryColor;
+    final shadowColor = primaryColor;
+    final iconSize = buttonStyle.fontSize - 8;
+    final iconPadding = EdgeInsets.only(right: 16);
+
+    const spacing = 86.0;
 
     final bottomImage = Image.asset(
       'assets/animations/toilet_no-lid.webp',
@@ -63,35 +69,51 @@ class _StartMenuState extends State<StartMenu>
         Padding(
           padding: const EdgeInsets.all(kMenuScreenMargin),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                   child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: spacing),
                     Text(kTitle, style: titleStyle),
-                    SizedBox(height: spacing),
-                    TextButton(
+                    SizedBox(height: spacing * 3),
+                    ElevatedButton.icon(
+                      icon: ShadowIcon(
+                        Icons.play_circle_outline_outlined,
+                        size: iconSize,
+                        color: iconColor,
+                        shadowColor: shadowColor,
+                        padding: iconPadding,
+                      ),
                       onPressed: () => _startGame(GameModeIdentifier.career),
-                      child: Text('PLAY',
-                          style: buttonStyle.copyWith(
-                              fontSize: titleStyle.fontSize)),
+                      label: Text('PLAY', style: buttonStyle),
                     ),
                     SizedBox(height: spacing),
-                    TextButton.icon(
-                      icon: Icon(Icons.casino_outlined, size: iconSize),
+                    ElevatedButton.icon(
+                      icon: ShadowIcon(
+                        Icons.casino_outlined,
+                        size: iconSize,
+                        color: iconColor,
+                        shadowColor: shadowColor,
+                        padding: iconPadding,
+                      ),
                       onPressed: () => _startGame(GameModeIdentifier.random),
-                      label: Text('RANDOM', style: buttonStyle),
+                      label: Text('Shuffle', style: buttonStyle),
                     ),
                     SizedBox(height: spacing),
-                    TextButton(
+                    ElevatedButton.icon(
+                      icon: ShadowIcon(
+                        Icons.help_outline_outlined,
+                        size: iconSize,
+                        color: iconColor,
+                        shadowColor: shadowColor,
+                        padding: iconPadding,
+                      ),
                       onPressed: widget.onCreditsPressed,
-                      child: Text('CREDITS', style: buttonStyle),
+                      label: Text('Credits', style: buttonStyle),
                     ),
-                    SizedBox(height: buttonSpacing),
                     SizedBox(height: spacing),
                   ],
                 ),

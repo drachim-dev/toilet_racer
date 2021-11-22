@@ -2,10 +2,16 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-const outlineColor = Colors.brown;
+const primaryColor = Colors.brown;
+const secondaryColor = Colors.orangeAccent;
+
+final colorScheme = ColorScheme.dark(
+  primary: primaryColor,
+  secondary: secondaryColor,
+);
 
 final toiletTheme = ThemeData(
-    accentColor: Colors.orangeAccent,
+    colorScheme: colorScheme,
     brightness: Brightness.dark,
     fontFamily: 'NerkoOne',
     textTheme: TextTheme(
@@ -15,14 +21,19 @@ final toiletTheme = ThemeData(
       headline4: _getTextStyleWithShadow(36),
       headline5: _getTextStyleWithShadow(24),
       headline6: _getTextStyleWithShadow(16),
-      button: _getTextStyleWithShadow(24)
-    ).apply(
-      displayColor: Colors.orangeAccent,
-    ),
+      button: _getTextStyleWithShadow(24),
+    ).apply(displayColor: secondaryColor),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        primary: Colors.orangeAccent,
+        primary: secondaryColor,
       ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+          primary: Colors.orange[100].withOpacity(0.25),
+          elevation: 0,
+          onPrimary: Colors.white,
+          shadowColor: Colors.orange[100].withOpacity(0.25)),
     ));
 
 TextStyle _getTextStyleWithShadow(double fontSize) {
@@ -32,19 +43,19 @@ TextStyle _getTextStyleWithShadow(double fontSize) {
     Shadow(
         // bottomLeft
         offset: Offset(-shadowWidth, -shadowWidth),
-        color: outlineColor),
+        color: primaryColor),
     Shadow(
         // bottomRight
         offset: Offset(shadowWidth, -shadowWidth),
-        color: outlineColor),
+        color: primaryColor),
     Shadow(
         // topRight
         offset: Offset(shadowWidth, shadowWidth),
-        color: outlineColor),
+        color: primaryColor),
     Shadow(
         // topLeft
         offset: Offset(-shadowWidth, shadowWidth),
-        color: outlineColor),
+        color: primaryColor),
   ];
 
   return TextStyle(fontSize: fontSize, shadows: shadows);
