@@ -13,9 +13,8 @@ class GameOverMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final buttonStyle = Theme.of(context).textTheme.headline2;
-    final titleStyle = buttonStyle.copyWith(
-        fontSize: Theme.of(context).textTheme.headline1.fontSize, height: 1);
+    final titleStyle = Theme.of(context).textTheme.headline2;
+    final buttonStyle = Theme.of(context).textTheme.headline3;
     final dividerHeight = 5.0;
     final blur = 10.0;
     final backgroundColor = buttonStyle.color;

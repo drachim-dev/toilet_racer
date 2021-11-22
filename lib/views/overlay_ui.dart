@@ -29,8 +29,9 @@ class _OverlayUiState extends State<OverlayUi> {
       child: Row(
         children: [
           IconButton(
-            icon:
-                _musicEnabled ? Icon(Icons.volume_up) : Icon(Icons.volume_off),
+            icon: _musicEnabled
+                ? Icon(Icons.volume_up, color: Colors.white)
+                : Icon(Icons.volume_off, color: Colors.white),
             iconSize: kOverlayIconSize,
             onPressed: () => _toggleMusic(),
           ),

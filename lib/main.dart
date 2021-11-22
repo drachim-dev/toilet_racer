@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
-import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/views/countdown_overlay.dart';
