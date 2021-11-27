@@ -92,6 +92,7 @@ class _MyAppState extends State<MyApp> {
                     game.showStartMenu,
                     game.prepareStartGame,
                     game.score,
+                    game.gameMode.canPlayNext()
                   ),
             },
             initialActiveOverlays: const [kStartMenu],

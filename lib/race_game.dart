@@ -33,7 +33,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   final AsyncCallback gameOverCallback;
 
-  GameMode _gameMode;
+  GameMode gameMode;
 
   @override
   bool debugMode = kDebugMode;
@@ -82,14 +82,14 @@ class RaceGame extends Forge2DGame with TapDetector {
     _removeOverlays();
 
     if (gameModeIdentifier != null) {
-      _gameMode = gameModeIdentifier.gameMode(null);
+      gameMode = gameModeIdentifier.gameMode(null);
     }
 
-    if (_gameMode == null) {
+    if (gameMode == null) {
       throw '_gameMode has not been initialized.';
     }
 
-    if (_gameMode.helpNeeded()) {
+    if (gameMode.helpNeeded()) {
       await _initGameHelp();
       await add(gameHelper.current);
       _gameHelpShown = true;
@@ -133,6 +133,12 @@ class RaceGame extends Forge2DGame with TapDetector {
         topArrow: true,
         helpText: 'Stay on the\ntoilet',
       ),
+      if (gameMode.isCareer)
+        GameHelp(
+          helpText:
+              'Survive at\nleast ${currentLevel.goal.formatDecimal(2)} sec',
+          textPosition: GamePosition.CENTER,
+        ),
       GameHelp(
         helpText: 'Tap to begin',
         textPosition: GamePosition.CENTER,
@@ -144,11 +150,11 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
 
-    currentLevel = _gameMode.getLevel();
+    currentLevel = gameMode.getLevel();
     await initLevel(currentLevel);
 
-    final ghostMode = _gameMode.ghostMode();
-    final player = _gameMode.getPlayer();
+    final ghostMode = gameMode.ghostMode();
+    final player = gameMode.getPlayer();
     await add(_playerBody = PlayerBody(await player.onLoad(),
         background.getImageToScreen(currentLevel.startPosition),
         counterclockwise: !ghostMode));
@@ -221,7 +227,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     final _gameService = locator<GameService>();
     final score = _timerService.seconds.value;
 
-    _gameMode.updateScoreAndAchievements(score);
+    gameMode.updateScoreAndAchievements(score);
 
     // submit score
     await _gameService.submitScore(score);

@@ -8,8 +8,10 @@ class GameOverMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
   final VoidCallback onPlayPressed;
   final double score;
+  final bool canPlayNext;
 
-  const GameOverMenu(this.onBackToMenuPressed, this.onPlayPressed, this.score);
+  const GameOverMenu(
+      this.onBackToMenuPressed, this.onPlayPressed, this.score, this.canPlayNext);
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,10 @@ class GameOverMenu extends StatelessWidget {
                   SizedBox(height: spacing),
                   TextButton(
                     onPressed: onPlayPressed,
-                    child: Text('TRY AGAIN', style: buttonStyle),
+                    child: Text(
+                      canPlayNext ? 'NEXT LEVEL' : 'TRY AGAIN',
+                      style: buttonStyle,
+                    ),
                   ),
                 ],
               ),
