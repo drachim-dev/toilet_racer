@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/app/theme.dart';
 import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
@@ -21,6 +23,8 @@ class StartMenu extends StatefulWidget {
 class _StartMenuState extends State<StartMenu>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
+
+  final SharedPreferences _prefService = locator<SharedPreferences>();
 
   @override
   void initState() {
@@ -88,7 +92,8 @@ class _StartMenuState extends State<StartMenu>
                         padding: iconPadding,
                       ),
                       onPressed: () => _startGame(GameModeIdentifier.career),
-                      label: Text('PLAY', style: buttonStyle),
+                      label: Text(hasCareerProgress ? 'Continue' : 'PLAY',
+                          style: buttonStyle),
                     ),
                     SizedBox(height: spacing),
                     ElevatedButton.icon(
@@ -128,5 +133,11 @@ class _StartMenuState extends State<StartMenu>
   Future<void> _startGame(GameModeIdentifier gameModeIdentifier) async {
     await _controller.forward();
     widget.onStartGamePressed(gameModeIdentifier: gameModeIdentifier);
+  }
+
+  bool get hasCareerProgress {
+    final lastUnlockedLevel = _prefService.getInt(kCareerLastUnlockedLevel) ??
+        kCareerLastUnlockedLevelDefault;
+    return lastUnlockedLevel > kCareerLastUnlockedLevelDefault;
   }
 }

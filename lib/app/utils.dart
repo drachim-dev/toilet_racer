@@ -1,4 +1,5 @@
 import 'package:flame/extensions.dart';
+import 'package:intl/intl.dart';
 
 /// calculates the middle vertices between [first] and [second]
 /// [first] and [second] must be of equal size
@@ -14,4 +15,14 @@ List<Vector2> getMiddleVertices(List<Vector2> first, List<Vector2> second) {
     middle[i].scale(0.5);
   }
   return middle;
+}
+
+extension DoubleExtension on double {
+  String formatDecimal(double maxFractionDigits) {
+    final formatter = NumberFormat()
+      ..minimumFractionDigits = 0
+      ..maximumFractionDigits = 2;
+
+    return formatter.format(maxFractionDigits);
+  }
 }

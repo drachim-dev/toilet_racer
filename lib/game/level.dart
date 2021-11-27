@@ -228,10 +228,10 @@ enum LevelStatus { hidden, locked, unlocked, won }
 
 extension LevelExtension on Level {
   bool get isHidden => status == LevelStatus.hidden;
-
+  bool get hasWon => status == LevelStatus.won;
+}
 /* 
   TODO: Not used yet
   bool get isLocked => status == LevelStatus.locked;
   bool get isUnlocked => status == LevelStatus.unlocked;
-  bool get hasWon => status == LevelStatus.won; */
-}
+   */

@@ -38,6 +38,7 @@ abstract class GameMode {
 
   bool helpNeeded();
   bool ghostMode() => false;
+  bool canPlayNext() => false;
 
   Level getLevel();
   Player getPlayer();
@@ -63,26 +64,48 @@ class CareerGameMode extends GameMode {
   /// Returns the next unlocked [Level].
   @override
   Level getLevel() {
+    // Move to next level; If there is no next, reset to first level
+    if (levels.current.hasWon && !levels.moveNext()) {
+      levels = Level.allLevels.iterator..moveNext();
+    }
+
     return levels.current;
   }
 
   @override
-  Player getPlayer() {
-    final playerIdentifier = PlayerIdentifier.fly;
-    return playerIdentifier.player;
-  }
+  Player getPlayer() => PlayerIdentifier.fly.player;
 
   @override
   bool helpNeeded() => _currentHighscore < 5;
 
   @override
-  void updateScoreAndAchievements(double score) {
-    // Set level as won and unlock next level
-    if (score >= levels.current.goal) {
-      levels.moveNext();
+  bool canPlayNext() {
 
-      final levelIndex = Level.allLevels.indexOf(levels.current);
-      _prefService.setInt(kCareerLastUnlockedLevel, levelIndex);
+    final nextLevelIndex = Level.allLevels.indexOf(levels.current) + 1;
+    final lastUnlockedLevelIndex =
+        _prefService.getInt(kCareerLastUnlockedLevel) ??
+            kCareerLastUnlockedLevelDefault;
+
+    return lastUnlockedLevelIndex >= nextLevelIndex ||
+        levels.current == Level.allLevels.last;
+  }
+
+  @override
+  void updateScoreAndAchievements(double score) {
+    if (score >= levels.current.goal) {
+      // Set level to won
+      levels.current.status = LevelStatus.won;
+
+      final nextLevelIndex = Level.allLevels.indexOf(levels.current) + 1;
+      final lastUnlockedLevelIndex =
+          _prefService.getInt(kCareerLastUnlockedLevel) ??
+              kCareerLastUnlockedLevelDefault;
+
+      // Update last unlocked level index
+      if (nextLevelIndex > lastUnlockedLevelIndex &&
+          levels.current != Level.allLevels.last) {
+        _prefService.setInt(kCareerLastUnlockedLevel, nextLevelIndex);
+      }
     }
   }
 }
@@ -99,10 +122,11 @@ class RandomGameMode extends GameMode {
   /// Returns a random unlocked [Level].
   @override
   Level getLevel() {
-    final levelIndex = _prefService.getInt(kCareerLastUnlockedLevel) ??
+    final unlockedLevelIndex = _prefService.getInt(kCareerLastUnlockedLevel) ??
         kCareerLastUnlockedLevelDefault;
 
-    final unlockedLevels = Level.allLevels.take(levelIndex + 1).toList();
+    final unlockedLevels =
+        Level.allLevels.take(unlockedLevelIndex + 1).toList();
     final randomIndex = Random().nextInt(unlockedLevels.length);
     return unlockedLevels[randomIndex];
   }
