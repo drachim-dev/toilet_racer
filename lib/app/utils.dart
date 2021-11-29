@@ -18,11 +18,11 @@ List<Vector2> getMiddleVertices(List<Vector2> first, List<Vector2> second) {
 }
 
 extension DoubleExtension on double {
-  String formatDecimal(double maxFractionDigits) {
+  String formatDecimal(int maxFractionDigits) {
     final formatter = NumberFormat()
       ..minimumFractionDigits = 0
       ..maximumFractionDigits = 2;
 
-    return formatter.format(maxFractionDigits);
+    return formatter.format(this);
   }
 }
