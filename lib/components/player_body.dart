@@ -10,7 +10,6 @@ import 'package:flutter/material.dart' as material;
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/player.dart';
 import 'package:toilet_racer/services/timer_service.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector2;
 
 import 'boundary.dart';
 

@@ -2,11 +2,11 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/game/level.dart';
+import 'package:toilet_racer/game/track.dart';
 
 class Background extends SpriteComponent with HasGameRef<Forge2DGame> {
   final Level level;

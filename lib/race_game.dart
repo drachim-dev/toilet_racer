@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart' hide Timer;
-import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
-import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -16,7 +14,6 @@ import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
-import 'package:vector_math/vector_math_64.dart';
 
 import 'app/utils.dart';
 import 'components/player.dart';
