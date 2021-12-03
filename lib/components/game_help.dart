@@ -1,14 +1,10 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/game.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/components/player_body.dart';
-import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class GameHelp extends PositionComponent with HasGameRef {
   static final TextPaint textPaint = TextPaint(
@@ -210,4 +206,3 @@ class GameHelp extends PositionComponent with HasGameRef {
 }
 
 enum GamePosition { TOP, CENTER, BOTTOM }
-
