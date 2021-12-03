@@ -61,6 +61,6 @@ class Background extends SpriteComponent with HasGameRef<Forge2DGame> {
     // Using this scale factor instead of the imageScale to scale the worlds viewport
     // ensures that the players have the same size and physics in all levels.
     // In other words the size of the background image has no influence on the player's size and movement.
-    worldScale = trackScreenZone.width / Level.toilet0.track.zone.width;
+    worldScale = trackScreenZone.width / Level.kReferenceWidth;
   }
 }

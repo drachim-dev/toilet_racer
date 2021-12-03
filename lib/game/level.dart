@@ -6,17 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:toilet_racer/game/track.dart';
 
 class Level {
-  /// The first designed reference level.
-  /// The size of this levels track is used to calculate the world scaling factor.
-  static Level toilet0 = Level(
-      status: LevelStatus.hidden,
-      filePath: 'level/toilet0.webp',
-      startPosition: Vector2(362, 906),
-      track: EllipseTrack(
-          innerCenter: Vector2(366, 765),
-          innerRadii: Radius.elliptical(100, 105),
-          outerCenter: Vector2(366, 755),
-          outerRadii: Radius.elliptical(160, 190)));
+  /// This is the reference width to calculate the world scaling factor.
+  static const double kReferenceWidth = 320.0;
 
   static Level toilet1 = Level(
       status: LevelStatus.unlocked,
