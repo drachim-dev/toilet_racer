@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
-import 'package:toilet_racer/components/player.dart';
-import 'package:toilet_racer/game/level.dart';
+import 'package:toilet_racer/models/level.dart';
+import 'package:toilet_racer/repos/level_repository.dart';
 
 import 'app/locator.dart';
 
-enum GameModeIdentifier { career, random }
+enum GameModeIdentifier { career, shuffle }
 
 extension GameModeIdentifierExtension on GameModeIdentifier {
   GameMode gameMode(int selectedLevel) {
@@ -15,13 +15,12 @@ extension GameModeIdentifierExtension on GameModeIdentifier {
 
     switch (this) {
       case GameModeIdentifier.career:
-        final levelIndex = selectedLevel ??
-            _prefService.getInt(kCareerLastUnlockedLevel) ??
-            kCareerLastUnlockedLevelDefault;
+        final levelIndex =
+            selectedLevel ?? _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
         return CareerGameMode(levelIndex);
         break;
-      case GameModeIdentifier.random:
-        return RandomGameMode();
+      case GameModeIdentifier.shuffle:
+        return ShuffleGameMode();
         break;
       default:
         return null;
@@ -31,118 +30,105 @@ extension GameModeIdentifierExtension on GameModeIdentifier {
 
 abstract class GameMode {
   final SharedPreferences _prefService = locator<SharedPreferences>();
+  final LevelRepository _levelRepository = locator<LevelRepository>();
 
   final GameModeIdentifier identifier;
 
   GameMode(this.identifier);
 
-  bool helpNeeded();
+  double get globalHighscore =>
+      _prefService.getDouble(kPrefKeyGlobalHighscore) ?? 0;
+
+  bool helpNeeded() => globalHighscore < 5;
   bool ghostMode() => false;
   bool canPlayNext() => false;
 
+  String getLevelHelpText() => null;
   Level getLevel();
-  Player getPlayer();
 
   void updateScoreAndAchievements(double score);
 }
 
 extension GameModeExtension on GameMode {
   bool get isCareer => identifier == GameModeIdentifier.career;
-  bool get isRandom => identifier == GameModeIdentifier.random;
+  bool get isShuffle => identifier == GameModeIdentifier.shuffle;
 }
 
 class CareerGameMode extends GameMode {
-  Iterator<Level> levels;
+  Iterator<Level> _levelsIterator;
 
-  CareerGameMode(int selectedLevelIndex)
-      : levels = Level.allLevels.skip(selectedLevelIndex).iterator..moveNext(),
-        super(GameModeIdentifier.career);
+  CareerGameMode(int selectedLevelIndex) : super(GameModeIdentifier.career) {
+    _levelsIterator = _levelRepository
+        .getAllLevels()
+        .skip(selectedLevelIndex)
+        .iterator
+      ..moveNext();
+  }
 
-  double get _currentHighscore =>
-      _prefService.getDouble(kPrefKeyHighscore) ?? 0;
+  @override
+  bool canPlayNext() {
+    final allLevels = _levelRepository.getAllLevels();
+    final nextLevelIndex =
+        allLevels.indexWhere((lvl) => lvl.id == _levelsIterator.current.id) + 1;
+
+    return nextLevelIndex < allLevels.length &&
+        allLevels[nextLevelIndex].status == LevelStatus.unlocked;
+  }
+
+  @override
+  String getLevelHelpText() => _levelsIterator.current.helpText;
 
   /// Returns the next unlocked [Level].
   @override
   Level getLevel() {
     // Move to next level; If there is no next, reset to first level
-    if (levels.current.hasWon && !levels.moveNext()) {
-      levels = Level.allLevels.iterator..moveNext();
+    if (_levelsIterator.current.hasWon && !_levelsIterator.moveNext()) {
+      _levelsIterator.moveNext();
     }
 
-    return levels.current;
-  }
-
-  @override
-  Player getPlayer() => PlayerIdentifier.fly.player;
-
-  @override
-  bool helpNeeded() => _currentHighscore < 5;
-
-  @override
-  bool canPlayNext() {
-
-    final nextLevelIndex = Level.allLevels.indexOf(levels.current) + 1;
-    final lastUnlockedLevelIndex =
-        _prefService.getInt(kCareerLastUnlockedLevel) ??
-            kCareerLastUnlockedLevelDefault;
-
-    return lastUnlockedLevelIndex >= nextLevelIndex ||
-        levels.current == Level.allLevels.last;
+    return _levelsIterator.current;
   }
 
   @override
   void updateScoreAndAchievements(double score) {
-    if (score >= levels.current.goal) {
-      // Set level to won
-      levels.current.status = LevelStatus.won;
+    if (score >= _levelsIterator.current.goal) {
+      final allLevels = _levelRepository.getAllLevels();
 
-      final nextLevelIndex = Level.allLevels.indexOf(levels.current) + 1;
-      final lastUnlockedLevelIndex =
-          _prefService.getInt(kCareerLastUnlockedLevel) ??
-              kCareerLastUnlockedLevelDefault;
+      // Set level to won
+      _levelsIterator.current.status = LevelStatus.won;
+
+      final nextLevelIndex =
+          allLevels.indexWhere((lvl) => lvl.id == _levelsIterator.current.id) +
+              1;
+      final unlockedLevelIndex =
+          _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
 
       // Update last unlocked level index
-      if (nextLevelIndex > lastUnlockedLevelIndex &&
-          levels.current != Level.allLevels.last) {
-        _prefService.setInt(kCareerLastUnlockedLevel, nextLevelIndex);
+      if (nextLevelIndex > unlockedLevelIndex &&
+          _levelsIterator.current != allLevels.last) {
+        _prefService.setInt(kPrefKeyUnlockedIndex, nextLevelIndex);
       }
     }
   }
 }
 
-class RandomGameMode extends GameMode {
-  RandomGameMode() : super(GameModeIdentifier.random);
-
-  double get _currentHighscore =>
-      _prefService.getDouble(kPrefKeyHighscore) ?? 0;
+class ShuffleGameMode extends GameMode {
+  ShuffleGameMode() : super(GameModeIdentifier.shuffle);
 
   @override
-  bool helpNeeded() => _currentHighscore < 5;
+  bool ghostMode() {
+    return globalHighscore > 20.0 && Random().nextInt(10) == 0;
+  }
 
   /// Returns a random unlocked [Level].
   @override
   Level getLevel() {
-    final unlockedLevelIndex = _prefService.getInt(kCareerLastUnlockedLevel) ??
-        kCareerLastUnlockedLevelDefault;
+    final unlockedLevelIndex = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
 
     final unlockedLevels =
-        Level.allLevels.take(unlockedLevelIndex + 1).toList();
+        _levelRepository.getAllLevels().take(unlockedLevelIndex + 1);
     final randomIndex = Random().nextInt(unlockedLevels.length);
-    return unlockedLevels[randomIndex];
-  }
-
-  @override
-  Player getPlayer() {
-    if (ghostMode()) return PlayerIdentifier.larva.player;
-
-    final allPlayers = PlayerIdentifier.values;
-    final randomIndex = Random().nextInt(allPlayers.length);
-    return allPlayers[randomIndex].player;
-  }
-
-  @override
-  bool ghostMode() {
-    return _currentHighscore > 20.0 && Random().nextInt(10) == 0;
+    return unlockedLevels.elementAt(randomIndex);
   }
 
   @override
