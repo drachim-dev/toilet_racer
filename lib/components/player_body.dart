@@ -8,7 +8,7 @@ import 'package:flame_forge2d/position_body_component.dart';
 import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/material.dart' as material;
 import 'package:toilet_racer/app/locator.dart';
-import 'package:toilet_racer/components/player.dart';
+import 'package:toilet_racer/components/player_component.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 
 import 'boundary.dart';
@@ -40,7 +40,7 @@ class PlayerBody extends PositionBodyComponent {
     return (angle % pi2 + pi2) % pi2;
   }
 
-  final Player player;
+  final PlayerComponent playerComponent;
 
   /// Total time that the player exists.
   /// This will be used to make the player faster.
@@ -57,11 +57,13 @@ class PlayerBody extends PositionBodyComponent {
 
   final TimerService _timerService = locator<TimerService>();
 
-  PlayerBody(this.player, this.startPosition,
+  PlayerBody(this.playerComponent, this.startPosition,
       {this.preview = false, this.counterclockwise = true})
-      : assert(player != null),
+      : assert(playerComponent != null),
         assert(startPosition != null),
-        super(player.positionComponent, player.positionComponent.size) {
+        super(
+            playerComponent.positionComponent,
+            playerComponent.positionComponent.size) {
     /// Player starts with bearing and heading
     /// in right direction when turning counterclockwise
     /// and in left direction when turning clockwise
@@ -135,7 +137,7 @@ class PlayerBody extends PositionBodyComponent {
     if (preview) return;
     _timerService.update(dt);
 
-    player.update(velocity: body.linearVelocity.length);
+    playerComponent.update(velocity: body.linearVelocity.length);
 
     time += dt;
 
@@ -144,8 +146,8 @@ class PlayerBody extends PositionBodyComponent {
     // 1. Set new linear velocity of the player in direction of heading
     // See http://fooplot.com/#W3sidHlwZSI6MCwiZXEiOiIoLSh4LzYwLTEpXigyKSsxKSo5MCsxMCIsImNvbG9yIjoiIzAwMDAwMCJ9LHsidHlwZSI6MTAwMCwid2luZG93IjpbIi0yLjA3MjMwNzY5MjMwNzY5MjQiLCI4MCIsIi00Ljk2NTAwMDAwMDAwMDAwMSIsIjExMCJdfV0-
 
-    const maxVelocity = 100.0;
-    const timeToMaxVelocity = 60.0;
+    final maxVelocity = playerComponent.player.maxVelocity;
+    final timeToMaxVelocity = 60 / playerComponent.player.acceleration;
     const startVelocity = 10.0;
 
     final absoluteVelocity = time > timeToMaxVelocity

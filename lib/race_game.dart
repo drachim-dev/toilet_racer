@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart' hide Timer;
+import 'package:flame/flame.dart';
 import 'package:flame/gestures.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
@@ -15,18 +16,19 @@ import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 
-import 'app/utils.dart';
-import 'components/player.dart';
-import 'game/level.dart';
+import 'components/player_component.dart';
+import 'models/level.dart';
+import 'repos/level_repository.dart';
 
 typedef AsyncCallback = Future<void> Function();
 
 class RaceGame extends Forge2DGame with TapDetector {
   /// This is the default world scaling factor that was used in an older version of forge.
-  static const double defaultScale = 4.0;
+  static const double _defaultScale = 4.0;
 
   final AudioService _audioService = locator<AudioService>();
   final TimerService _timerService = locator<TimerService>();
+  final LevelRepository _levelRepository = locator<LevelRepository>();
 
   final AsyncCallback gameOverCallback;
 
@@ -38,13 +40,13 @@ class RaceGame extends Forge2DGame with TapDetector {
   bool _gameHelpShown = false;
   bool _collisionDetected = false;
 
-  Background background;
-  Level currentLevel = Level.toilet1;
-  BoundaryContactCallback contactCallback;
+  Background _background;
+  Level _currentLevel;
+  BoundaryContactCallback _contactCallback;
 
-  Set<Component> gameComponents;
+  Set<Component> _gameComponents;
   PlayerBody _playerBody;
-  Iterator<GameHelp> gameHelper;
+  Iterator<GameHelp> _gameHelper;
 
   double get score => _timerService?.seconds?.value ?? 0;
 
@@ -53,25 +55,30 @@ class RaceGame extends Forge2DGame with TapDetector {
   @override
   Future<void> onLoad() async {
     await _audioService.playBackgroundMusic(menu: true);
-    await initLevel(currentLevel);
+    await _initLevel(_levelRepository.getAllLevels().first);
+    return super.onLoad();
   }
 
   @override
   void onResize(Vector2 canvasSize) {
     super.onResize(canvasSize);
 
-    if (background != null) {
-      camera.zoom = defaultScale * background.worldScale;
+    if (_background != null) {
+      camera.zoom = _defaultScale * _background.worldScale;
     }
   }
 
-  Future<void> initLevel(Level level) async {
-    if (components.contains(background)) {
-      background.remove();
+  Future<void> _initLevel(Level level) async {
+    _currentLevel = level;
+
+    if (components.contains(_background)) {
+      _background.remove();
     }
 
-    await level.onLoad();
-    await add(background = Background(level));
+    /// Should load image in onLoad() of component,
+    /// but somehow this leads to the gameRef beeing null sometimes.
+    final image = await Flame.images.load(level.map.filePath);
+    await add(_background = Background(level.map, image));
   }
 
   /// Init and show game help
@@ -86,9 +93,11 @@ class RaceGame extends Forge2DGame with TapDetector {
       throw '_gameMode has not been initialized.';
     }
 
-    if (gameMode.helpNeeded()) {
-      await _initGameHelp();
-      await add(gameHelper.current);
+    await _initLevel(gameMode.getLevel());
+    await _initGameHelper();
+
+    if (_gameHelper.moveNext()) {
+      await add(_gameHelper.current);
       _gameHelpShown = true;
     } else {
       startGame();
@@ -102,71 +111,78 @@ class RaceGame extends Forge2DGame with TapDetector {
     _timerService.start();
   }
 
-  Future<void> _initGameHelp() async {
-    final middleBoundary = getMiddleVertices(
-      currentLevel.track.outerBoundary
-          .map((e) => background.getImageToScreen(e))
-          .toList(),
-      currentLevel.track.innerBoundary
-          .map((e) => background.getImageToScreen(e))
-          .toList(),
-    );
+  Future<void> _initGameHelper() async {
+    final helper = <GameHelp>[];
+    if (gameMode.helpNeeded()) {
+      final middleBoundary = _currentLevel.map.track.middleBoundary
+          .map((e) => _background.getImageToScreen(e))
+          .toList();
 
-    final player = await Fly().onLoad();
-    final _playerBody = PlayerBody(
-        player, background.getImageToScreen(currentLevel.startPosition),
-        preview: true);
+      final player = await PlayerComponent(_currentLevel.player).onLoad();
+      final _playerBody = PlayerBody(
+          player, _background.getImageToScreen(_currentLevel.startPosition),
+          preview: true);
 
-    gameHelper = [
-      GameHelp(
+      final movementHelp = GameHelp(
           boundary: middleBoundary,
           rightArrow: true,
           helpText: 'Tap to turn',
           imagePath: 'icons/ic_gesture_tap.png',
-          player: _playerBody),
-      GameHelp(
+          player: _playerBody);
+
+      final gamePlayHelp = GameHelp(
         boundary: middleBoundary,
         bottomArrow: true,
         topArrow: true,
         helpText: 'Stay on the\ntoilet',
-      ),
-      if (gameMode.isCareer)
-        GameHelp(
-          helpText:
-              'Survive at\nleast ${currentLevel.goal.formatDecimal(2)} sec',
-          textPosition: GamePosition.CENTER,
-        ),
-      GameHelp(
+      );
+
+      helper.add(movementHelp);
+      helper.add(gamePlayHelp);
+    }
+
+    final levelHelpText = gameMode.getLevelHelpText();
+    if (levelHelpText != null) {
+      final goalHelp = GameHelp(
+        helpText: levelHelpText,
+        textPosition: GamePosition.CENTER,
+      );
+
+      helper.add(goalHelp);
+    }
+
+    if (helper.isNotEmpty) {
+      final tapToBegin = GameHelp(
         helpText: 'Tap to begin',
         textPosition: GamePosition.CENTER,
-      ),
-    ].iterator
-      ..moveNext();
+      );
+
+      helper.add(tapToBegin);
+    }
+
+    _gameHelper = helper.iterator;
   }
 
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
 
-    currentLevel = gameMode.getLevel();
-    await initLevel(currentLevel);
-
     final ghostMode = gameMode.ghostMode();
-    final player = gameMode.getPlayer();
+    final player = PlayerComponent(_currentLevel.player);
     await add(_playerBody = PlayerBody(await player.onLoad(),
-        background.getImageToScreen(currentLevel.startPosition),
+        _background.getImageToScreen(_currentLevel.startPosition),
         counterclockwise: !ghostMode));
 
-    await add(outerBoundary = Boundary(currentLevel.track.outerBoundary
-        .map((vertex) => background.getImageToScreen(vertex))
+    await add(outerBoundary = Boundary(_currentLevel.map.track.outerBoundary
+        .map((vertex) => _background.getImageToScreen(vertex))
         .toList()));
-    await add(innerBoundary = Boundary(currentLevel.track.innerBoundary
-        .map((vertex) => background.getImageToScreen(vertex))
+    await add(innerBoundary = Boundary(_currentLevel.map.track.innerBoundary
+        .map((vertex) => _background.getImageToScreen(vertex))
         .toList()));
 
     addContactCallback(
-        contactCallback = BoundaryContactCallback(_onCollisionDetected));
+        _contactCallback = BoundaryContactCallback(_onCollisionDetected));
 
-    gameComponents = {_playerBody, outerBoundary, innerBoundary};
+    _gameComponents = {_playerBody, outerBoundary, innerBoundary};
   }
 
   @override
@@ -182,9 +198,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   void onTapDown(TapDownInfo details) {
     // Iterate over GameHelpers on firstLaunch
     if (_gameHelpShown) {
-      gameHelper.current.remove();
-      if (gameHelper.moveNext()) {
-        add(gameHelper.current);
+      _gameHelper.current.remove();
+      if (_gameHelper.moveNext()) {
+        add(_gameHelper.current);
         return;
       }
       _swapMenuOverlay(kCountDownOverlay);
@@ -206,8 +222,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void _onGameOver() async {
-    gameComponents.forEach((c) => c.remove());
-    removeContactCallback(contactCallback);
+    _gameComponents.forEach((c) => c.remove());
+    removeContactCallback(_contactCallback);
 
     // Start menu background music before gameOverCallback because ads should be able to stop music again.
     await _audioService.playBackgroundMusic(menu: true);

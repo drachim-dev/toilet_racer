@@ -96,17 +96,18 @@ class _StartMenuState extends State<StartMenu>
                           style: buttonStyle),
                     ),
                     SizedBox(height: spacing),
-                    ElevatedButton.icon(
-                      icon: ShadowIcon(
-                        Icons.casino_outlined,
-                        size: iconSize,
-                        color: iconColor,
-                        shadowColor: shadowColor,
-                        padding: iconPadding,
+                    if (hasCareerProgress)
+                      ElevatedButton.icon(
+                        icon: ShadowIcon(
+                          Icons.casino_outlined,
+                          size: iconSize,
+                          color: iconColor,
+                          shadowColor: shadowColor,
+                          padding: iconPadding,
+                        ),
+                        onPressed: () => _startGame(GameModeIdentifier.shuffle),
+                        label: Text('Shuffle', style: buttonStyle),
                       ),
-                      onPressed: () => _startGame(GameModeIdentifier.random),
-                      label: Text('Shuffle', style: buttonStyle),
-                    ),
                     SizedBox(height: spacing),
                     ElevatedButton.icon(
                       icon: ShadowIcon(
@@ -136,8 +137,7 @@ class _StartMenuState extends State<StartMenu>
   }
 
   bool get hasCareerProgress {
-    final lastUnlockedLevel = _prefService.getInt(kCareerLastUnlockedLevel) ??
-        kCareerLastUnlockedLevelDefault;
-    return lastUnlockedLevel > kCareerLastUnlockedLevelDefault;
+    final lastUnlockedLevel = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    return lastUnlockedLevel > 0;
   }
 }

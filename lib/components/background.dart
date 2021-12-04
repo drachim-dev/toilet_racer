@@ -2,22 +2,27 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/forge2d_game.dart';
-import 'package:flutter/material.dart' hide Image;
 import 'package:toilet_racer/app/constants.dart';
-import 'package:toilet_racer/game/level.dart';
-import 'package:toilet_racer/game/track.dart';
+import 'package:toilet_racer/models/level.dart';
+import 'package:toilet_racer/models/map.dart';
+import 'package:toilet_racer/models/track.dart';
 
-class Background extends SpriteComponent with HasGameRef<Forge2DGame> {
-  final Level level;
+class Background extends SpriteComponent with HasGameRef {
+  final GameMap map;
   double _imageScale;
   double worldScale;
 
-  Background(this.level) {
-    assert(level.image != null);
-    sprite = Sprite(level.image);
+  Background(this.map, Image image) {
+    assert(map.filePath != null);
     isHud = true;
+    sprite = Sprite(image);
   }
+
+/*   @override
+  Future<void> onLoad() async {
+    sprite = await Sprite.load(map.filePath);
+    return super.onLoad();
+  } */
 
   /// Calculates the corresponding screen coordinates from image pixel coordinates.
   Vector2 getImageToScreen(Vector2 imageCoordinates) {
@@ -47,14 +52,14 @@ class Background extends SpriteComponent with HasGameRef<Forge2DGame> {
 
     // The scale factor the image has to be scaled with
     // to fit the track into the track track zone on the screen.
-    _imageScale = trackScreenZone.width / level.track.zone.width;
+    _imageScale = trackScreenZone.width / map.track.zone.width;
 
     // Apply the scale to the background image
     size = sprite.srcSize * _imageScale;
 
     // Move the image so that the track lies in the track zone of the screen.
     final offset =
-        trackScreenZone.topLeft - level.track.zone.topLeft * _imageScale;
+        trackScreenZone.topLeft - map.track.zone.topLeft * _imageScale;
     position = Vector2(offset.dx, offset.dy);
 
     // Use the size of the first designed level as reference size for scaling the world coordinates.

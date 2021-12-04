@@ -59,6 +59,7 @@ class GameHelp extends PositionComponent with HasGameRef {
                 _screenSize.y - kGameScreenMargin)
             ..anchor = Anchor.centerLeft
             ..angle = -pi / 6;
+
       await addChild(component);
     }
 

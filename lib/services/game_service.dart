@@ -10,7 +10,7 @@ class GameService {
   }
 
   double getLocalHighscore() {
-    return _prefService.getDouble(kPrefKeyHighscore) ?? 0;
+    return _prefService.getDouble(kPrefKeyGlobalHighscore) ?? 0;
   }
 
   Future<void> submitScore(double score) {
@@ -21,7 +21,7 @@ class GameService {
   /// Saves highscore in shared preferences to enable some features based on the user experience.
   void _updateLocalScore(double score) {
     if (score > (getLocalHighscore())) {
-      _prefService.setDouble(kPrefKeyHighscore, score);
+      _prefService.setDouble(kPrefKeyGlobalHighscore, score);
     }
   }
 }

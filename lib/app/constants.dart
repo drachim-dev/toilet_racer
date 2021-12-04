@@ -19,7 +19,8 @@ const String kGameOverMenu = 'GAME_OVER_MENU';
 
 // preferences
 const String kPrefKeyAudioEnabled = 'PREF_KEY_AUDIO_ENABLED';
-const String kPrefKeyHighscore = 'PREF_KEY_HIGHSCORE';
+const String kPrefKeyGlobalHighscore = 'PREF_KEY_GLOBAL_HIGHSCORE';
+const String kPrefKeyUnlockedIndex = 'PREF_KEY_UNLOCKED_INDEX';
 
 // audio
 const String kAudioPath = 'assets/audio/';
@@ -31,9 +32,11 @@ const double kAudioDropVolume = 0.6;
 
 // game services
 
-// career
-const String kCareerLastUnlockedLevel = 'PREF_KEY_CAREER_LAST_UNLOCKED_LEVEL';
-const int kCareerLastUnlockedLevelDefault = 0;
+// career mode
+const String kPrefKeyCareerShowHelp = 'PREF_KEY_CAREER_SHOW_HELP';
+
+// shuffle mode
+const String kPrefKeyShuffleShowHelp = 'PREF_KEY_SHUFFLE_SHOW_HELP';
 
 // ads
 const int kDefaultAdInterval = 5;
