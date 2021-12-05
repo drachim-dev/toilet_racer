@@ -8,13 +8,15 @@ import 'package:toilet_racer/views/flip_widget.dart';
 import 'package:toilet_racer/widgets/shadow_icon.dart';
 
 class StartMenu extends StatefulWidget {
-  final VoidCallback onCreditsPressed, onLeaderboardPressed;
+  final Future<void> Function(GameModeIdentifier identifier) onPlayPressed;
+  final VoidCallback onCreditsPressed;
+  final VoidCallback onLeaderboardPressed;
 
-  final void Function({@required GameModeIdentifier gameModeIdentifier})
-      onStartGamePressed;
-
-  const StartMenu(this.onStartGamePressed, this.onCreditsPressed,
-      this.onLeaderboardPressed);
+  const StartMenu({
+    @required this.onPlayPressed,
+    @required this.onCreditsPressed,
+    @required this.onLeaderboardPressed,
+  });
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -131,13 +133,13 @@ class _StartMenuState extends State<StartMenu>
     );
   }
 
-  Future<void> _startGame(GameModeIdentifier gameModeIdentifier) async {
+  Future<void> _startGame(GameModeIdentifier identifier) async {
     await _controller.forward();
-    widget.onStartGamePressed(gameModeIdentifier: gameModeIdentifier);
+    await widget.onPlayPressed(identifier);
   }
 
   bool get hasCareerProgress {
-    final lastUnlockedLevel = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
-    return lastUnlockedLevel > 0;
+    final unlockedLevelIndex = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    return unlockedLevelIndex > 0;
   }
 }

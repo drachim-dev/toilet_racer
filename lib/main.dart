@@ -15,6 +15,7 @@ import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
 import 'app/theme.dart';
+import 'race_game_mode.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -77,9 +78,12 @@ class _MyAppState extends State<MyApp> {
             game: _game,
             overlayBuilderMap: {
               kStartMenu: (_, RaceGame game) => StartMenu(
-                  game.prepareStartGame,
-                  game.showCreditsMenu,
-                  game.showLeaderboardMenu),
+                    onPlayPressed: (GameModeIdentifier gameModeIdentifier) =>
+                        game.prepareStartGame(
+                            gameModeIdentifier: gameModeIdentifier),
+                    onCreditsPressed: game.showCreditsMenu,
+                    onLeaderboardPressed: game.showLeaderboardMenu,
+                  ),
               kCreditsMenu: (_, RaceGame game) =>
                   CreditsMenu(game.showStartMenu),
               kLeaderboardMenu: (_, RaceGame game) =>
@@ -89,10 +93,12 @@ class _MyAppState extends State<MyApp> {
                     onCountDownFinished: game.startGame,
                   ),
               kGameOverMenu: (_, RaceGame game) => GameOverMenu(
-                    game.showStartMenu,
-                    game.prepareStartGame,
-                    game.score,
-                    game.gameMode.canPlayNext()
+                    onBackToMenuPressed: game.showStartMenu,
+                    onPlayPressed: (bool resetProgress) =>
+                        game.prepareStartGame(resetProgress: resetProgress),
+                    score: game.score,
+                    canPlayNext: game.gameMode.canPlayNext,
+                    hasCompletedGameMode: game.gameMode.hasCompleted,
                   ),
             },
             initialActiveOverlays: const [kStartMenu],

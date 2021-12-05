@@ -82,7 +82,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   /// Init and show game help
-  Future<void> prepareStartGame({GameModeIdentifier gameModeIdentifier}) async {
+  Future<void> prepareStartGame(
+      {GameModeIdentifier gameModeIdentifier,
+      bool resetProgress = false}) async {
     _removeOverlays();
 
     if (gameModeIdentifier != null) {
@@ -91,6 +93,10 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     if (gameMode == null) {
       throw '_gameMode has not been initialized.';
+    }
+
+    if (resetProgress) {
+      gameMode.resetProgress();
     }
 
     await _initLevel(gameMode.getLevel());
@@ -113,7 +119,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   Future<void> _initGameHelper() async {
     final helper = <GameHelp>[];
-    if (gameMode.helpNeeded()) {
+    if (gameMode.helpNeeded) {
       final middleBoundary = _currentLevel.map.track.middleBoundary
           .map((e) => _background.getImageToScreen(e))
           .toList();
@@ -141,10 +147,9 @@ class RaceGame extends Forge2DGame with TapDetector {
       helper.add(gamePlayHelp);
     }
 
-    final levelHelpText = gameMode.getLevelHelpText();
-    if (levelHelpText != null) {
+    if (gameMode.levelHelpText != null) {
       final goalHelp = GameHelp(
-        helpText: levelHelpText,
+        helpText: gameMode.levelHelpText,
         textPosition: GamePosition.CENTER,
       );
 
@@ -166,7 +171,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
 
-    final ghostMode = gameMode.ghostMode();
+    final ghostMode = gameMode.ghostMode;
     final player = PlayerComponent(_currentLevel.player);
     await add(_playerBody = PlayerBody(await player.onLoad(),
         _background.getImageToScreen(_currentLevel.startPosition),

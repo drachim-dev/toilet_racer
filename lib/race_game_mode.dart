@@ -39,14 +39,17 @@ abstract class GameMode {
   double get globalHighscore =>
       _prefService.getDouble(kPrefKeyGlobalHighscore) ?? 0;
 
-  bool helpNeeded() => globalHighscore < 5;
-  bool ghostMode() => false;
-  bool canPlayNext() => false;
+  bool get helpNeeded => globalHighscore < 5;
+  bool get ghostMode => false;
+  bool get canPlayNext => false;
+  bool get hasCompleted => false;
 
-  String getLevelHelpText() => null;
+  String get levelHelpText => null;
   Level getLevel();
 
   void updateScoreAndAchievements(double score);
+
+  void resetProgress() {}
 }
 
 extension GameModeExtension on GameMode {
@@ -58,6 +61,15 @@ class CareerGameMode extends GameMode {
   Iterator<Level> _levelsIterator;
 
   CareerGameMode(int selectedLevelIndex) : super(GameModeIdentifier.career) {
+  
+    if (hasCompleted) {
+      resetProgress();
+    } else {
+      _init(selectedLevelIndex);
+    }
+  }
+
+  void _init(int selectedLevelIndex) {
     _levelsIterator = _levelRepository
         .getAllLevels()
         .skip(selectedLevelIndex)
@@ -66,7 +78,7 @@ class CareerGameMode extends GameMode {
   }
 
   @override
-  bool canPlayNext() {
+  bool get canPlayNext {
     final allLevels = _levelRepository.getAllLevels();
     final nextLevelIndex =
         allLevels.indexWhere((lvl) => lvl.id == _levelsIterator.current.id) + 1;
@@ -76,7 +88,13 @@ class CareerGameMode extends GameMode {
   }
 
   @override
-  String getLevelHelpText() => _levelsIterator.current.helpText;
+  bool get hasCompleted {
+    final unlockedLevelIndexd = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    return unlockedLevelIndexd > _levelRepository.getAllLevels().length - 1;
+  }
+
+  @override
+  String get levelHelpText => _levelsIterator.current.helpText;
 
   /// Returns the next unlocked [Level].
   @override
@@ -110,13 +128,19 @@ class CareerGameMode extends GameMode {
       }
     }
   }
+
+  @override
+  void resetProgress() {
+    _prefService.setInt(kPrefKeyUnlockedIndex, 0);
+    _init(0);
+  }
 }
 
 class ShuffleGameMode extends GameMode {
   ShuffleGameMode() : super(GameModeIdentifier.shuffle);
 
   @override
-  bool ghostMode() {
+  bool get ghostMode {
     return globalHighscore > 20.0 && Random().nextInt(10) == 0;
   }
 
