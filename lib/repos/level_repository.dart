@@ -25,13 +25,13 @@ class LevelRepository {
             ? LevelStatus.unlocked
             : LevelStatus.locked;
 
-        // increase goal by 1 sec for each iteration
-        final goal = 25.0 + playerIndex;
+        // increase goal by 2.5 sec for each iteration
+        final goal = 15.0 + playerIndex * 2.5;
 
         // set help text for each first map
         var helpText;
         if (maps.first == map) {
-          helpText = 'Survive at\nleast ${goal.formatDecimal(2)} sec';
+          helpText = 'Survive\n${goal.formatDecimal(2)} sec';
         }
 
         var level = Level(

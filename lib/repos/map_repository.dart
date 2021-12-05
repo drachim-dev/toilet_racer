@@ -33,7 +33,7 @@ class MapRepository {
           outerRadii: Radius.elliptical(245, 256)));
 
   static final _toiletRed = GameMap(
-      name: 'Red meeting',
+      name: 'Red wedding',
       filePath: 'level/toilet_red.webp',
       track: EllipseTrack(
           innerCenter: Vector2(784, 1632),

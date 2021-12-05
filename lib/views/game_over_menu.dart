@@ -6,12 +6,17 @@ import 'package:toilet_racer/app/constants.dart';
 
 class GameOverMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
-  final VoidCallback onPlayPressed;
+  final Future<void> Function(bool resetProgress) onPlayPressed;
   final double score;
   final bool canPlayNext;
+  final bool hasCompletedGameMode;
 
   const GameOverMenu(
-      this.onBackToMenuPressed, this.onPlayPressed, this.score, this.canPlayNext);
+      {@required this.onBackToMenuPressed,
+      @required this.onPlayPressed,
+      @required this.score,
+      @required this.canPlayNext,
+      @required this.hasCompletedGameMode});
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +73,30 @@ class GameOverMenu extends StatelessWidget {
                     child: Text('HOME', style: buttonStyle),
                   ),
                   SizedBox(height: spacing),
-                  TextButton(
-                    onPressed: onPlayPressed,
-                    child: Text(
-                      canPlayNext ? 'NEXT LEVEL' : 'TRY AGAIN',
-                      style: buttonStyle,
-                    ),
-                  ),
+                  _buildPlayButton(buttonStyle),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  TextButton _buildPlayButton(TextStyle buttonStyle) {
+    final resetProgress = hasCompletedGameMode;
+
+    final buttonText = hasCompletedGameMode
+        ? 'RESTART'
+        : canPlayNext
+            ? 'NEXT LEVEL'
+            : 'TRY AGAIN';
+
+    return TextButton(
+      onPressed: () => onPlayPressed(resetProgress),
+      child: Text(
+        buttonText,
+        style: buttonStyle,
       ),
     );
   }
