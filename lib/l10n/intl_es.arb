@@ -1,0 +1,70 @@
+{
+  "@@locale": "es",
+  "commonAppTitle": "",
+  "@commonAppTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< volver",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "Quédate en el asiento",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "Sobrevivir %ss",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "Toque para empezar",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "Toque para girar",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "Autores",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "Compuesto por %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "Imágenes",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "Licencias >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "Música",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "Créditos",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "Menú",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "Sigue",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "Reiniciar",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "Compartir",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "Otra vez",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "Continuar",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "Créditos",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "Jugar",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "Aleatorio",
+  "@pageStartShuffleButtonText": {}
+}

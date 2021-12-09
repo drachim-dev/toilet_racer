@@ -2,6 +2,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/race_game.dart';
@@ -15,6 +16,7 @@ import 'package:toilet_racer/views/overlay_ui.dart';
 import 'package:toilet_racer/views/start_menu.dart';
 
 import 'app/theme.dart';
+import 'generated/l10n.dart';
 import 'race_game_mode.dart';
 
 Future<void> main() async {
@@ -60,6 +62,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: toiletTheme,
+      onGenerateTitle: (context) => S.of(context).commonAppTitle,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
       home: Material(
         child: WillPopScope(
           onWillPop: () {

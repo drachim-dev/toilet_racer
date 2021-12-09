@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   flame: 1.0.0-releasecandidate.13
   flame_audio: 1.0.0-rc.1
@@ -36,13 +38,19 @@ dependencies:
   url_launcher: ^6.0.0
 
 dev_dependencies:
-  pedantic: 
+  pedantic: null
   flutter_test:
     sdk: flutter
 
+flutter_intl:
+  enabled: true
+  class_name: S
+  main_locale: en
+  localizely:
+    project_id: e9988105-81df-45e9-aa57-4bbdf636d08e
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
   # The following line ensures that the Material Icons font is
@@ -53,7 +61,7 @@ flutter:
   assets:
     - assets/audio/
     - assets/animations/
-    
+
     - assets/images/
     - assets/images/icons/
     - assets/images/level/
@@ -101,14 +109,11 @@ flutter:
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   fonts:
     - family: NerkoOne
       fonts:
         - asset: assets/fonts/NerkoOne-Regular.ttf
-
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

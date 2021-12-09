@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/app/utils.dart';
+import 'package:toilet_racer/generated/l10n.dart';
 import 'package:toilet_racer/models/level.dart';
 
 import 'map_repository.dart';
@@ -31,7 +32,7 @@ class LevelRepository {
         // set help text for each first map
         var helpText;
         if (maps.first == map) {
-          helpText = 'Survive\n${goal.formatDecimal(2)} sec';
+          helpText = S.current.overlayHelpSurviveText(goal.formatDecimal(2));
         }
 
         var level = Level(

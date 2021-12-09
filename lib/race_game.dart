@@ -17,6 +17,7 @@ import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 
 import 'components/player_component.dart';
+import 'generated/l10n.dart';
 import 'models/level.dart';
 import 'repos/level_repository.dart';
 
@@ -132,7 +133,7 @@ class RaceGame extends Forge2DGame with TapDetector {
       final movementHelp = GameHelp(
           boundary: middleBoundary,
           rightArrow: true,
-          helpText: 'Tap to turn',
+          helpText: S.of(buildContext).overlayHelpTapToTurnText,
           imagePath: 'icons/ic_gesture_tap.png',
           player: _playerBody);
 
@@ -140,7 +141,7 @@ class RaceGame extends Forge2DGame with TapDetector {
         boundary: middleBoundary,
         bottomArrow: true,
         topArrow: true,
-        helpText: 'Stay on the\ntoilet',
+        helpText: S.of(buildContext).overlayHelpStayOnMapText,
       );
 
       helper.add(movementHelp);
@@ -158,7 +159,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     if (helper.isNotEmpty) {
       final tapToBegin = GameHelp(
-        helpText: 'Tap to begin',
+        helpText: S.of(buildContext).overlayHelpTapToStartText,
         textPosition: GamePosition.CENTER,
       );
 

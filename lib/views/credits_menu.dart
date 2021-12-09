@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CreditsMenu extends StatelessWidget {
@@ -40,10 +41,10 @@ class CreditsMenu extends StatelessWidget {
               child: TextButton(
                 onPressed: onBackToMenuPressed,
                 style: TextButton.styleFrom(padding: EdgeInsets.only(left: 0)),
-                child: Text('< back', style: menuStyle),
+                child: Text(S.of(context).commonBack, style: menuStyle),
               ),
             ),
-            Text('Credits', style: titleStyle),
+            Text(S.of(context).pageCreditsTitle, style: titleStyle),
             SizedBox(height: sectionSpacing),
             Expanded(
               child: ListView(
@@ -53,7 +54,7 @@ class CreditsMenu extends StatelessWidget {
                     right: kMenuScreenMargin,
                     bottom: kMenuScreenMargin / 2),
                 children: [
-                  Center(child: Text('Authors', style: sectionStyle)),
+                  Center(child: Text(S.of(context).pageCreditsAuthorsSectionText, style: sectionStyle)),
                   Center(child: Text('Dr. Achim', style: textStyle)),
                   Center(
                     child: Linkify(
@@ -74,12 +75,12 @@ class CreditsMenu extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: sectionSpacing),
-                  Center(child: Text('Music', style: sectionStyle)),
+                  Center(child: Text(S.of(context).pageCreditsMusicSectionText, style: sectionStyle)),
                   Center(
                       child: Text('„Toilet Racer“',
                           style: textStyle, textAlign: TextAlign.center)),
                   Center(
-                      child: Text('Composed by Roberto Risorto',
+                      child: Text(S.of(context).pageCreditsComposedBy('Roberto Risorto'),
                           style: textStyle, textAlign: TextAlign.center)),
                   Center(
                     child: Linkify(
@@ -101,7 +102,7 @@ class CreditsMenu extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: sectionSpacing),
-                  Center(child: Text('Images', style: sectionStyle)),
+                  Center(child: Text(S.of(context).pageCreditsImagesSectionText, style: sectionStyle)),
                   Center(
                       child:
                           Text('Poop Vectors by Vecteezy', style: textStyle)),
@@ -119,7 +120,7 @@ class CreditsMenu extends StatelessWidget {
                       style: TextButton.styleFrom(
                           padding: EdgeInsets.only(left: 0)),
                       onPressed: () => showLicense(context),
-                      child: Text('Show licenses >', style: sectionStyle),
+                      child: Text(S.of(context).pageCreditsLicensesButtonText, style: sectionStyle),
                     ),
                   ),
                 ],

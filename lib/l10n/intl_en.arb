@@ -1,0 +1,70 @@
+{
+  "@@locale": "en",
+  "commonAppTitle": "Toilet Racer",
+  "@commonAppTitle": {},
+  "commonAppUrl": "https://play.google.com/store/apps/details?id=dr.achim.toilet_racer",
+  "@commonAppUrl": {},
+  "commonBack": "< back",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "Stay on the toilet",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "Survive %s sec",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "Tap to begin",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "Tap to turn",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "Authors",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "Composed by %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "Images",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "Show licenses >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "Music",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "Credits",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "Home",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "Next level",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "Restart",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "Share",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "I lasted %s seconds. How long can you last?\\n%s",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "Try again",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "Continue",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "Credits",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "Play",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "Shuffle",
+  "@pageStartShuffleButtonText": {}
+}

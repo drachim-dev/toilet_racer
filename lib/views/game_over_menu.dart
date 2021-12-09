@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:toilet_racer/app/constants.dart';
+import 'package:toilet_racer/generated/l10n.dart';
 
 class GameOverMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
@@ -58,9 +59,11 @@ class GameOverMenu extends StatelessWidget {
             Text(score.toString(), style: titleStyle),
             TextButton.icon(
               icon: Icon(Icons.share, color: backgroundColor),
-              label: Text('Share'),
-              onPressed: () => Share.share(
-                  'I lasted $score seconds. How long can you last?\nhttps://play.google.com/store/apps/details?id=dr.achim.toilet_racer'),
+              label: Text(S.of(context).pageGameOverShareButtonText),
+              onPressed: () {
+                return Share.share(S.of(context).pageGameOverShareMessage(
+                    score, S.of(context).commonAppUrl));
+              },
             ),
             Divider(thickness: dividerHeight, color: backgroundColor),
             SizedBox(height: spacing),
@@ -70,10 +73,11 @@ class GameOverMenu extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: onBackToMenuPressed,
-                    child: Text('HOME', style: buttonStyle),
+                    child: Text(S.of(context).pageGameOverHomeButtonText,
+                        style: buttonStyle),
                   ),
                   SizedBox(height: spacing),
-                  _buildPlayButton(buttonStyle),
+                  _buildPlayButton(context, buttonStyle),
                 ],
               ),
             ),
@@ -83,14 +87,17 @@ class GameOverMenu extends StatelessWidget {
     );
   }
 
-  TextButton _buildPlayButton(TextStyle buttonStyle) {
+  TextButton _buildPlayButton(
+    BuildContext context,
+    TextStyle buttonStyle,
+  ) {
     final resetProgress = hasCompletedGameMode;
 
     final buttonText = hasCompletedGameMode
-        ? 'RESTART'
+        ? S.of(context).pageGameOverRestartButtonText
         : canPlayNext
-            ? 'NEXT LEVEL'
-            : 'TRY AGAIN';
+            ? S.of(context).pageGameOverNextButtonText
+            : S.of(context).pageGameOverTryAgainButtonText;
 
     return TextButton(
       onPressed: () => onPlayPressed(resetProgress),

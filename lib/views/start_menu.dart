@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/app/theme.dart';
+import 'package:toilet_racer/generated/l10n.dart';
 import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/views/flip_widget.dart';
 import 'package:toilet_racer/widgets/shadow_icon.dart';
@@ -86,17 +87,19 @@ class _StartMenuState extends State<StartMenu>
                     Text(kTitle, style: titleStyle),
                     SizedBox(height: spacing * 3),
                     ElevatedButton.icon(
-                      icon: ShadowIcon(
-                        Icons.play_circle_outline_outlined,
-                        size: iconSize,
-                        color: iconColor,
-                        shadowColor: shadowColor,
-                        padding: iconPadding,
-                      ),
-                      onPressed: () => _startGame(GameModeIdentifier.career),
-                      label: Text(hasCareerProgress ? 'Continue' : 'PLAY',
-                          style: buttonStyle),
-                    ),
+                        icon: ShadowIcon(
+                          Icons.play_circle_outline_outlined,
+                          size: iconSize,
+                          color: iconColor,
+                          shadowColor: shadowColor,
+                          padding: iconPadding,
+                        ),
+                        onPressed: () => _startGame(GameModeIdentifier.career),
+                        label: Text(
+                            hasCareerProgress
+                                ? S.of(context).pageStartContinueButtonText
+                                : S.of(context).pageStartPlayButtonText,
+                            style: buttonStyle)),
                     SizedBox(height: spacing),
                     if (hasCareerProgress)
                       ElevatedButton.icon(
@@ -108,7 +111,8 @@ class _StartMenuState extends State<StartMenu>
                           padding: iconPadding,
                         ),
                         onPressed: () => _startGame(GameModeIdentifier.shuffle),
-                        label: Text('Shuffle', style: buttonStyle),
+                        label: Text(S.of(context).pageStartShuffleButtonText,
+                            style: buttonStyle),
                       ),
                     SizedBox(height: spacing),
                     ElevatedButton.icon(
@@ -120,7 +124,8 @@ class _StartMenuState extends State<StartMenu>
                         padding: iconPadding,
                       ),
                       onPressed: widget.onCreditsPressed,
-                      label: Text('Credits', style: buttonStyle),
+                      label: Text(S.of(context).pageStartCreditsButtonText,
+                          style: buttonStyle),
                     ),
                     SizedBox(height: spacing),
                   ],

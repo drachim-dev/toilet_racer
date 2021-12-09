@@ -1,0 +1,70 @@
+{
+  "@@locale": "de",
+  "commonAppTitle": "",
+  "@commonAppTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< zurück",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "Bleib auf der Klobrille",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "Überlebe %s sek",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "Runde starten",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "Tippen zum Lenken",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "Autoren",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "Komponiert von %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "Bilder",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "Lizenzen >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "Musik",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "Credits",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "Menü",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "Weiter",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "Neue Karriere",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "Teilen",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "Nochmal versuchen",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "Fortsetzen",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "Credits",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "Start",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "Zufallsspiel",
+  "@pageStartShuffleButtonText": {}
+}
