@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/services/game_service.dart';
+import 'package:toilet_racer/generated/l10n.dart';
 
 class LeaderboardMenu extends StatelessWidget {
   final GameService _gameService = locator<GameService>();
@@ -70,7 +71,7 @@ class LeaderboardMenu extends StatelessWidget {
 
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (BuildContext context) => LicensePage(
-        applicationName: kTitle,
+        applicationName: S.of(context).appTitle,
         applicationIcon: Image.asset(
           'assets/images/icons/ic_launcher_round.png',
           width: iconSize,

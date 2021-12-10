@@ -27,13 +27,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "commonAppTitle" : MessageLookupByLibrary.simpleMessage(""),
+    "appDescription" : MessageLookupByLibrary.simpleMessage("Ist dir beim Stuhlgang auch immer langweilig? Mach Schluss mit dem Gestank.\nVerwandle deinen Schacht zu einem magischen Zufluchtsort und werde zum Toilet-Ninja 🥷🏼🧻\nFall nur nicht von der Toilette, es ist wirklich schmutzig! Wie lange hältst du durch?"),
+    "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Verwandle dein Badezimmer in einen magischen Zufluchtsort und werde zum Toilet-Ninja!"),
+    "appTitle" : MessageLookupByLibrary.simpleMessage(""),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< zurück"),
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Bleib auf der Klobrille"),
     "overlayHelpSurviveText" : m0,
-    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Runde starten"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Tippen zum Lenken"),
+    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Starten"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Tippe zum Lenken"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autoren"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Bilder"),
@@ -45,7 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("Neue Karriere"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("Teilen"),
     "pageGameOverShareMessage" : m2,
-    "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("Nochmal versuchen"),
+    "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("Nochmal"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("Fortsetzen"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("Credits"),
     "pageStartPlayButtonText" : MessageLookupByLibrary.simpleMessage("Start"),

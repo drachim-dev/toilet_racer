@@ -1,18 +1,18 @@
 {
-  "@@locale": "es",
-  "appDescription": "",
+  "@@locale": "pt-PT",
+  "appDescription": "Está sempre tão aborrecido durante a defecação? Ponha um fim ao mau cheiro.\nTransforme a sua casa de banho num santuário mágico e torne-se o ninja da sanita \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB\nSó não caias da sanita, está suja! Quanto tempo se pode durar?",
   "@appDescription": {},
-  "appDescriptionShort": "",
+  "appDescriptionShort": "Transforme a sua casa de banho num santuário mágico e torne-se o ninja da casa de banho!",
   "@appDescriptionShort": {},
-  "appTitle": "",
+  "appTitle": "Sanita Racer",
   "@appTitle": {},
   "commonAppUrl": "",
   "@commonAppUrl": {},
-  "commonBack": "< volver",
+  "commonBack": "< voltar",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Quédate en el asiento",
+  "overlayHelpStayOnMapText": "Ficar na casa de banho",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sobrevivir %ss",
+  "overlayHelpSurviveText": "Sobreviver a %s seg",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Toque para empezar",
+  "overlayHelpTapToStartText": "Toque para começar",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Toque para girar",
+  "overlayHelpTapToTurnText": "Toque para virar",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autores",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Compuesto por %s",
+  "pageCreditsComposedBy": "Composto por %s",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -34,23 +34,23 @@
       }
     }
   },
-  "pageCreditsImagesSectionText": "Imágenes",
+  "pageCreditsImagesSectionText": "Imagens",
   "@pageCreditsImagesSectionText": {},
-  "pageCreditsLicensesButtonText": "Licencias >",
+  "pageCreditsLicensesButtonText": "Licenças >",
   "@pageCreditsLicensesButtonText": {},
   "pageCreditsMusicSectionText": "Música",
   "@pageCreditsMusicSectionText": {},
   "pageCreditsTitle": "Créditos",
   "@pageCreditsTitle": {},
-  "pageGameOverHomeButtonText": "Menú",
+  "pageGameOverHomeButtonText": "Início",
   "@pageGameOverHomeButtonText": {},
-  "pageGameOverNextButtonText": "Sigue",
+  "pageGameOverNextButtonText": "Nível seguinte",
   "@pageGameOverNextButtonText": {},
   "pageGameOverRestartButtonText": "Reiniciar",
   "@pageGameOverRestartButtonText": {},
-  "pageGameOverShareButtonText": "Compartir",
+  "pageGameOverShareButtonText": "Partilhar",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "",
+  "pageGameOverShareMessage": "Durou %s segundos. Quanto tempo pode durar?{\\i1}n%s",
   "@pageGameOverShareMessage": {
     "placeholders": {
       "score": {
@@ -61,14 +61,14 @@
       }
     }
   },
-  "pageGameOverTryAgainButtonText": "Otra vez",
+  "pageGameOverTryAgainButtonText": "Tente novamente",
   "@pageGameOverTryAgainButtonText": {},
   "pageStartContinueButtonText": "Continuar",
   "@pageStartContinueButtonText": {},
   "pageStartCreditsButtonText": "Créditos",
   "@pageStartCreditsButtonText": {},
-  "pageStartPlayButtonText": "Jugar",
+  "pageStartPlayButtonText": "Reproduzir",
   "@pageStartPlayButtonText": {},
-  "pageStartShuffleButtonText": "Aleatorio",
+  "pageStartShuffleButtonText": "Baralhamento",
   "@pageStartShuffleButtonText": {}
 }

@@ -1,0 +1,74 @@
+{
+  "@@locale": "fr",
+  "appDescription": "Vous vous ennuyez toujours autant en déféquant ? Mettez fin à cette puanteur.\nTransformez votre salle de bain en un sanctuaire magique et devenez le ninja des toilettes \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB.\nMais ne tombe pas des toilettes, c'est sale ! Combien de temps pouvez-vous tenir ?",
+  "@appDescription": {},
+  "appDescriptionShort": "Transformez votre salle de bain en un sanctuaire magique et devenez le ninja des toilettes !",
+  "@appDescriptionShort": {},
+  "appTitle": "Toilet Racer",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< back",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "Restez sur les toilettes",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "Survivre %s sec",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "Tapez pour commencer",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "Tapez pour tourner",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "Auteurs",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "Composé par %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "Images",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "Licences >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "Musique",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "Crédits",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "Accueil",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "Niveau suivant",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "Redémarrer",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "Partager",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "J'ai tenu %s secondes. Combien de temps pouvez-vous tenir ?",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "Essayez à nouveau",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "Continuer",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "Crédits",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "Jouer",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "Shuffle",
+  "@pageStartShuffleButtonText": {}
+}

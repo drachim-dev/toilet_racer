@@ -1,0 +1,74 @@
+{
+  "@@locale": "ru",
+  "appDescription": "Тебе всегда так скучно во время испражнения? Положите конец зловонию.\nПреврати свою ванную в волшебное убежище и стань туалетным ниндзя \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB.\nТолько не упади с унитаза, он грязный! Как долго ты сможешь продержаться?",
+  "@appDescription": {},
+  "appDescriptionShort": "Преврати свою ванную комнату в волшебное убежище и стань туалетным ниндзя!",
+  "@appDescriptionShort": {},
+  "appTitle": "Туалетный гонщик",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< назад",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "Остаться на унитазе",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "Выжить %s сек",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "Нажмите, чтобы начать",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "Нажмите, чтобы повернуть",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "Авторы",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "Составлено %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "Изображения",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "Лицензии >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "Музыка",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "Кредиты",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "Главная",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "Следующий уровень",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "Restart",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "Поделиться",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "Я продержался %s секунд. Как долго ты можешь продержаться?\\n%s",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "Попробуйте еще раз",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "Продолжить",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "Кредиты",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "Играть",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "Shuffle",
+  "@pageStartShuffleButtonText": {}
+}

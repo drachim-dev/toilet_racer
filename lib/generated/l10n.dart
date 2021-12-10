@@ -35,11 +35,31 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Are you always so bored while defecating? Put an end to the stink.\nTurn your bathroom into a magical sanctuary and become the toilet ninja 🥷🏼🧻\nJust don't fall off the toilet, it's dirty! How long can you last?`
+  String get appDescription {
+    return Intl.message(
+      'Are you always so bored while defecating? Put an end to the stink.\nTurn your bathroom into a magical sanctuary and become the toilet ninja 🥷🏼🧻\nJust don\'t fall off the toilet, it\'s dirty! How long can you last?',
+      name: 'appDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Turn your bathroom into a magical sanctuary and become the toilet ninja!`
+  String get appDescriptionShort {
+    return Intl.message(
+      'Turn your bathroom into a magical sanctuary and become the toilet ninja!',
+      name: 'appDescriptionShort',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Toilet Racer`
-  String get commonAppTitle {
+  String get appTitle {
     return Intl.message(
       'Toilet Racer',
-      name: 'commonAppTitle',
+      name: 'appTitle',
       desc: '',
       args: [],
     );
@@ -135,10 +155,10 @@ class S {
     );
   }
 
-  /// `Show licenses >`
+  /// `Licenses >`
   String get pageCreditsLicensesButtonText {
     return Intl.message(
-      'Show licenses >',
+      'Licenses >',
       name: 'pageCreditsLicensesButtonText',
       desc: '',
       args: [],
@@ -272,8 +292,17 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'bn'),
       Locale.fromSubtags(languageCode: 'de'),
       Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'fr'),
+      Locale.fromSubtags(languageCode: 'hi'),
+      Locale.fromSubtags(languageCode: 'it'),
+      Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'pt', countryCode: 'BR'),
+      Locale.fromSubtags(languageCode: 'pt', countryCode: 'PT'),
+      Locale.fromSubtags(languageCode: 'ru'),
+      Locale.fromSubtags(languageCode: 'zh'),
     ];
   }
 

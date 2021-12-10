@@ -27,7 +27,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "commonAppTitle" : MessageLookupByLibrary.simpleMessage("Toilet Racer"),
+    "appDescription" : MessageLookupByLibrary.simpleMessage("Are you always so bored while defecating? Put an end to the stink.\nTurn your bathroom into a magical sanctuary and become the toilet ninja 🥷🏼🧻\nJust don\'t fall off the toilet, it\'s dirty! How long can you last?"),
+    "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Turn your bathroom into a magical sanctuary and become the toilet ninja!"),
+    "appTitle" : MessageLookupByLibrary.simpleMessage("Toilet Racer"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage("https://play.google.com/store/apps/details?id=dr.achim.toilet_racer"),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< back"),
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Stay on the toilet"),
@@ -37,7 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Authors"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Images"),
-    "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("Show licenses >"),
+    "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("Licenses >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("Music"),
     "pageCreditsTitle" : MessageLookupByLibrary.simpleMessage("Credits"),
     "pageGameOverHomeButtonText" : MessageLookupByLibrary.simpleMessage("Home"),

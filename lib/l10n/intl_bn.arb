@@ -1,0 +1,74 @@
+{
+  "@@locale": "bn",
+  "appDescription": "আপনি কি সবসময় মলত্যাগ করতে গিয়ে বিরক্ত হন? দুর্গন্ধের অবসান ঘটাও।\nআপনার বাথরুমকে একটি জাদুকরী অভয়ারণ্যে পরিণত করুন এবং টয়লেট নিনজা হয়ে উঠুন \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB\nশুধু টয়লেট থেকে পড়ে যাবেন না, এটা নোংরা! কতক্ষণ স্থায়ী হতে পারে?",
+  "@appDescription": {},
+  "appDescriptionShort": "আপনার বাথরুমকে একটি যাদুকরী অভয়ারণ্যে পরিণত করুন এবং টয়লেট নিনজা হয়ে উঠুন!",
+  "@appDescriptionShort": {},
+  "appTitle": "টয়লেট রেসার",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< ফিরে",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "টয়লেটে থাকুন",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "%s সেকেন্ড বেঁচে থাকুন",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "শুরু করতে আলতো চাপুন",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "ঘুরতে ট্যাপ করুন",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "লেখক",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "%s দ্বারা রচিত",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "ছবি",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "লাইসেন্স >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "সঙ্গীত",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "ক্রেডিট",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "বাড়ি",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "পরবর্তী ধাপ",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "আবার শুরু",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "শেয়ার করুন",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "আমি %s সেকেন্ড টিকেছিলাম। আপনি কতক্ষণ থাকতে পারবেন?\\n%s",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "আবার চেষ্টা করুন",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "চালিয়ে যান",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "ক্রেডিট",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "খেলা",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "অদলবদল",
+  "@pageStartShuffleButtonText": {}
+}

@@ -137,7 +137,7 @@ class CreditsMenu extends StatelessWidget {
 
     Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (BuildContext context) => LicensePage(
-        applicationName: kTitle,
+        applicationName: S.of(context).appTitle,
         applicationIcon: Image.asset(
           'assets/images/icons/ic_launcher_round.png',
           width: iconSize,

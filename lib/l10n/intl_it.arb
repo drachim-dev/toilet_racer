@@ -1,0 +1,74 @@
+{
+  "@@locale": "it",
+  "appDescription": "Sei sempre così annoiato mentre defechi? Metti fine alla puzza.\nTrasforma il tuo bagno in un santuario magico e diventa il ninja del water \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB\nBasta non cadere dal water, è sporco! Quanto puoi resistere?",
+  "@appDescription": {},
+  "appDescriptionShort": "Trasforma il tuo bagno in un magico santuario e diventa il ninja del water!",
+  "@appDescriptionShort": {},
+  "appTitle": "Pilota di toilette",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< indietro",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "Rimanere sulla toilette",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "Sopravvivere %s sec",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "Toccare per iniziare",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "Toccare per girare",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "Autori",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "Composto da %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "Immagini",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "Licenze >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "Musica",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "Crediti",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "Home",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "Prossimo livello",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "Restart",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "Condividi",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "Ho resistito %s secondi. Quanto tempo puoi durare tu?",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "Prova di nuovo",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "Continua",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "Crediti",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "Gioca",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "Shuffle",
+  "@pageStartShuffleButtonText": {}
+}

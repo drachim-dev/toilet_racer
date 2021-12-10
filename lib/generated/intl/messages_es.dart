@@ -27,7 +27,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "commonAppTitle" : MessageLookupByLibrary.simpleMessage(""),
+    "appDescription" : MessageLookupByLibrary.simpleMessage(""),
+    "appDescriptionShort" : MessageLookupByLibrary.simpleMessage(""),
+    "appTitle" : MessageLookupByLibrary.simpleMessage(""),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< volver"),
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Quédate en el asiento"),

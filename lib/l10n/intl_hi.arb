@@ -1,0 +1,74 @@
+{
+  "@@locale": "hi",
+  "appDescription": "क्या आप हमेशा शौच करते समय इतने ऊब जाते हैं? बदबू खत्म करो।\nअपने बाथरूम को एक जादुई अभयारण्य में बदल दें और शौचालय निंजा बनें\nबस शौचालय से मत गिरो, यह गंदा है! कब तक तुम अस्तित्व में रह सकते हो?",
+  "@appDescription": {},
+  "appDescriptionShort": "अपने बाथरूम को एक जादुई अभयारण्य में बदल दें और शौचालय निंजा बनें!",
+  "@appDescriptionShort": {},
+  "appTitle": "शौचालय रेसर",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "<पीछे",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "शौचालय पर रहो",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "%s सेकंड जीवित रहें",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "शुरू करने के लिए टैप करें",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "मुड़ने के लिए टैप करें",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "लेखकों",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "%s . द्वारा रचित",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "इमेजिस",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "लाइसेंस >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "संगीत",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "क्रेडिट",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "घर",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "अगला स्तर",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "पुनः आरंभ करें",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "साझा करना",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "मैं %s सेकंड तक चला। आप कितने समय तक टिक सकते हैं?\\n%s",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "पुनः प्रयास करें",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "जारी रखें",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "क्रेडिट",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "खेल",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "मिश्रण",
+  "@pageStartShuffleButtonText": {}
+}

@@ -1,7 +1,11 @@
 {
   "@@locale": "de",
-  "commonAppTitle": "",
-  "@commonAppTitle": {},
+  "appDescription": "Ist dir beim Stuhlgang auch immer langweilig? Mach Schluss mit dem Gestank.\nVerwandle deinen Schacht zu einem magischen Zufluchtsort und werde zum Toilet-Ninja \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB\nFall nur nicht von der Toilette, es ist wirklich schmutzig! Wie lange hältst du durch?",
+  "@appDescription": {},
+  "appDescriptionShort": "Verwandle dein Badezimmer in einen magischen Zufluchtsort und werde zum Toilet-Ninja!",
+  "@appDescriptionShort": {},
+  "appTitle": "",
+  "@appTitle": {},
   "commonAppUrl": "",
   "@commonAppUrl": {},
   "commonBack": "< zurück",
@@ -16,9 +20,9 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Runde starten",
+  "overlayHelpTapToStartText": "Starten",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Tippen zum Lenken",
+  "overlayHelpTapToTurnText": "Tippe zum Lenken",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autoren",
   "@pageCreditsAuthorsSectionText": {},
@@ -57,7 +61,7 @@
       }
     }
   },
-  "pageGameOverTryAgainButtonText": "Nochmal versuchen",
+  "pageGameOverTryAgainButtonText": "Nochmal",
   "@pageGameOverTryAgainButtonText": {},
   "pageStartContinueButtonText": "Fortsetzen",
   "@pageStartContinueButtonText": {},

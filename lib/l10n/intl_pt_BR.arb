@@ -1,18 +1,18 @@
 {
-  "@@locale": "es",
-  "appDescription": "",
+  "@@locale": "pt-BR",
+  "appDescription": "Você está sempre tão entediado durante a defecação? Ponha um fim ao fedor.\nTransforme seu banheiro em um santuário mágico e torne-se o banheiro ninja \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB\nSó não caia do vaso sanitário, está sujo! Quanto tempo você pode durar?",
   "@appDescription": {},
-  "appDescriptionShort": "",
+  "appDescriptionShort": "Transforme seu banheiro em um santuário mágico e torne-se o ninja do banheiro!",
   "@appDescriptionShort": {},
-  "appTitle": "",
+  "appTitle": "Toilet Racer",
   "@appTitle": {},
   "commonAppUrl": "",
   "@commonAppUrl": {},
-  "commonBack": "< volver",
+  "commonBack": "< voltar",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Quédate en el asiento",
+  "overlayHelpStayOnMapText": "Fique no banheiro",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sobrevivir %ss",
+  "overlayHelpSurviveText": "Sobreviver a %s seg",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Toque para empezar",
+  "overlayHelpTapToStartText": "Toque para começar",
   "@overlayHelpTapToStartText": {},
   "overlayHelpTapToTurnText": "Toque para girar",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autores",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Compuesto por %s",
+  "pageCreditsComposedBy": "Composto por %s",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -34,23 +34,23 @@
       }
     }
   },
-  "pageCreditsImagesSectionText": "Imágenes",
+  "pageCreditsImagesSectionText": "Imagens",
   "@pageCreditsImagesSectionText": {},
-  "pageCreditsLicensesButtonText": "Licencias >",
+  "pageCreditsLicensesButtonText": "Licenças >",
   "@pageCreditsLicensesButtonText": {},
   "pageCreditsMusicSectionText": "Música",
   "@pageCreditsMusicSectionText": {},
   "pageCreditsTitle": "Créditos",
   "@pageCreditsTitle": {},
-  "pageGameOverHomeButtonText": "Menú",
+  "pageGameOverHomeButtonText": "Início",
   "@pageGameOverHomeButtonText": {},
-  "pageGameOverNextButtonText": "Sigue",
+  "pageGameOverNextButtonText": "Próximo nível",
   "@pageGameOverNextButtonText": {},
-  "pageGameOverRestartButtonText": "Reiniciar",
+  "pageGameOverRestartButtonText": "Reinicie",
   "@pageGameOverRestartButtonText": {},
-  "pageGameOverShareButtonText": "Compartir",
+  "pageGameOverShareButtonText": "Compartilhe",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "",
+  "pageGameOverShareMessage": "Durei %s segundos. Quanto tempo você pode durar?\\n%s",
   "@pageGameOverShareMessage": {
     "placeholders": {
       "score": {
@@ -61,14 +61,14 @@
       }
     }
   },
-  "pageGameOverTryAgainButtonText": "Otra vez",
+  "pageGameOverTryAgainButtonText": "Tente novamente",
   "@pageGameOverTryAgainButtonText": {},
   "pageStartContinueButtonText": "Continuar",
   "@pageStartContinueButtonText": {},
   "pageStartCreditsButtonText": "Créditos",
   "@pageStartCreditsButtonText": {},
-  "pageStartPlayButtonText": "Jugar",
+  "pageStartPlayButtonText": "Reproduzir",
   "@pageStartPlayButtonText": {},
-  "pageStartShuffleButtonText": "Aleatorio",
+  "pageStartShuffleButtonText": "Baralhamento",
   "@pageStartShuffleButtonText": {}
 }

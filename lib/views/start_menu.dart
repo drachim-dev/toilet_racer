@@ -84,7 +84,7 @@ class _StartMenuState extends State<StartMenu>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(kTitle, style: titleStyle),
+                    Text(S.of(context).appTitle, style: titleStyle),
                     SizedBox(height: spacing * 3),
                     ElevatedButton.icon(
                         icon: ShadowIcon(

@@ -1,0 +1,74 @@
+{
+  "@@locale": "ja",
+  "appDescription": "排泄中、いつも退屈してないか？この悪臭に終止符を打ちましょう。\nあなたのトイレを魔法のような聖域に変えて、トイレ・ニンジャになりましょう! ただ、便器から落ちないように、汚いからね。どのくらい持つの？",
+  "@appDescription": {},
+  "appDescriptionShort": "トイレを魔法のサンクチュアリに変えて、トイレ忍者になろう",
+  "@appDescriptionShort": {},
+  "appTitle": "トイレットレーサー",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< バック",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "トイレに残る",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "%s 秒間のサバイバル",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "出発する",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "タップして回す",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "著者",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "作曲者 %s",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "イメージ",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "ライセンス >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "音楽",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "クレジット",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "ホーム",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "次のレベル",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "新しい経歴",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "シェア",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "もう一回",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "続ける",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "クレジット",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "プレイ",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "ランダムゲーム",
+  "@pageStartShuffleButtonText": {}
+}

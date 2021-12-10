@@ -1,0 +1,74 @@
+{
+  "@@locale": "zh",
+  "appDescription": "你在排便时总是这么无聊吗？杜绝恶臭。\n把你的浴室变成一个神奇的避难所，成为厕所忍者\uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB。\n只要别从马桶上掉下来就好，它很脏! 你能坚持多长时间？",
+  "@appDescription": {},
+  "appDescriptionShort": "把你的浴室变成一个神奇的避难所，成为马桶忍者吧!",
+  "@appDescriptionShort": {},
+  "appTitle": "厕所飞人",
+  "@appTitle": {},
+  "commonAppUrl": "",
+  "@commonAppUrl": {},
+  "commonBack": "< 返回",
+  "@commonBack": {},
+  "overlayHelpStayOnMapText": "呆在马桶上",
+  "@overlayHelpStayOnMapText": {},
+  "overlayHelpSurviveText": "存活%s秒",
+  "@overlayHelpSurviveText": {
+    "placeholders": {
+      "seconds": {
+        "type": "double"
+      }
+    }
+  },
+  "overlayHelpTapToStartText": "点击开始",
+  "@overlayHelpTapToStartText": {},
+  "overlayHelpTapToTurnText": "轻轻点一下就可以转身",
+  "@overlayHelpTapToTurnText": {},
+  "pageCreditsAuthorsSectionText": "作者",
+  "@pageCreditsAuthorsSectionText": {},
+  "pageCreditsComposedBy": "由 %s 创作",
+  "@pageCreditsComposedBy": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pageCreditsImagesSectionText": "图片",
+  "@pageCreditsImagesSectionText": {},
+  "pageCreditsLicensesButtonText": "许可证 >",
+  "@pageCreditsLicensesButtonText": {},
+  "pageCreditsMusicSectionText": "音乐",
+  "@pageCreditsMusicSectionText": {},
+  "pageCreditsTitle": "鸣谢",
+  "@pageCreditsTitle": {},
+  "pageGameOverHomeButtonText": "首页",
+  "@pageGameOverHomeButtonText": {},
+  "pageGameOverNextButtonText": "下一个水平",
+  "@pageGameOverNextButtonText": {},
+  "pageGameOverRestartButtonText": "重新开始",
+  "@pageGameOverRestartButtonText": {},
+  "pageGameOverShareButtonText": "分享",
+  "@pageGameOverShareButtonText": {},
+  "pageGameOverShareMessage": "我坚持了%s秒。How long can you last?\\n%s",
+  "@pageGameOverShareMessage": {
+    "placeholders": {
+      "score": {
+        "type": "double"
+      },
+      "appUrl": {
+        "type": "String"
+      }
+    }
+  },
+  "pageGameOverTryAgainButtonText": "再试一次",
+  "@pageGameOverTryAgainButtonText": {},
+  "pageStartContinueButtonText": "继续",
+  "@pageStartContinueButtonText": {},
+  "pageStartCreditsButtonText": "积分",
+  "@pageStartCreditsButtonText": {},
+  "pageStartPlayButtonText": "播放",
+  "@pageStartPlayButtonText": {},
+  "pageStartShuffleButtonText": "摇一摇",
+  "@pageStartShuffleButtonText": {}
+}

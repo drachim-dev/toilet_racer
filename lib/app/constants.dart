@@ -1,5 +1,3 @@
-const String kTitle = 'Toilet Racer';
-
 // margins
 const double kGameScreenMargin = 48.0;
 const double kMenuScreenMargin = 32.0;

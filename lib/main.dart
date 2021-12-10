@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: toiletTheme,
-      onGenerateTitle: (context) => S.of(context).commonAppTitle,
+      onGenerateTitle: (context) => S.of(context).appTitle,
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
