@@ -86,6 +86,33 @@ class MapRepository {
           outerCenter: Vector2(417, 1615),
           outerRadii: Radius.elliptical(310, 320)));
 
+  static final _robotVacuumCleaner = GameMap(
+      name: 'Robot',
+      filePath: 'level/robot_vacuum_cleaner.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(672, 1235),
+          innerRadii: Radius.elliptical(120, 118),
+          outerCenter: Vector2(713, 1319),
+          outerRadii: Radius.elliptical(423, 422)));
+
+  static final _trafficSign = GameMap(
+      name: 'Slow down',
+      filePath: 'level/traffic_sign.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(919, 1605),
+          innerRadii: Radius.elliptical(384, 380),
+          outerCenter: Vector2(922, 1610),
+          outerRadii: Radius.elliptical(570, 578)));
+
+  static final _tubDrain = GameMap(
+      name: 'Drain',
+      filePath: 'level/tub_drain.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(665, 1222),
+          innerRadii: Radius.elliptical(170, 170),
+          outerCenter: Vector2(665, 1222),
+          outerRadii: Radius.elliptical(280, 280)));
+
   static final _abstractEye = GameMap(
       name: 'Abstract eye',
       filePath: 'level/abstract_eye.webp',
@@ -108,10 +135,10 @@ class MapRepository {
       name: 'Time for coffee',
       filePath: 'level/coffee.webp',
       track: EllipseTrack(
-          innerCenter: Vector2(688, 1269),
-          innerRadii: Radius.elliptical(325, 325),
-          outerCenter: Vector2(691, 1271),
-          outerRadii: Radius.elliptical(471, 471)));
+          innerCenter: Vector2(688, 1273),
+          innerRadii: Radius.elliptical(314, 320),
+          outerCenter: Vector2(693, 1273),
+          outerRadii: Radius.elliptical(472, 472)));
 
   final List<GameMap> _allMaps = [
     _toilet1,
@@ -123,6 +150,9 @@ class MapRepository {
     _footBath,
     _vinyl,
     _friedEgg,
+    _trafficSign,
+    _tubDrain,
+    _robotVacuumCleaner,
     _abstractEye,
     _candles,
     _coffee,

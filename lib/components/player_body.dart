@@ -61,8 +61,7 @@ class PlayerBody extends PositionBodyComponent {
       {this.preview = false, this.counterclockwise = true})
       : assert(playerComponent != null),
         assert(startPosition != null),
-        super(
-            playerComponent.positionComponent,
+        super(playerComponent.positionComponent,
             playerComponent.positionComponent.size) {
     /// Player starts with bearing and heading
     /// in right direction when turning counterclockwise
@@ -133,6 +132,8 @@ class PlayerBody extends PositionBodyComponent {
   @override
   void update(double dt) {
     super.update(dt);
+
+    return;
 
     if (preview) return;
     _timerService.update(dt);
