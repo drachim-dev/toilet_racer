@@ -19,11 +19,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static m0(seconds) => "Выжить %s сек";
+  static m0(seconds) => "Выжить\n${seconds} сек";
 
-  static m1(name) => "Составлено %s";
+  static m1(name) => "Составлено ${name}";
 
-  static m2(score, appUrl) => "Я продержался %s секунд. Как долго ты можешь продержаться?\\n%s";
+  static m2(appUrl, seconds) => "Я продержался ${seconds} секунд. Как долго ты можешь продержаться?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -32,10 +32,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Туалетный гонщик"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< назад"),
-    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Остаться на унитазе"),
+    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Остаться\nна унитазе"),
     "overlayHelpSurviveText" : m0,
-    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Нажмите, чтобы начать"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Нажмите, чтобы повернуть"),
+    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Нажмите,\nчтобы начать"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Нажмите,\nчтобы\nповернуть"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Авторы"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Изображения"),

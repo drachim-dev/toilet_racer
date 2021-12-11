@@ -85,20 +85,20 @@ class S {
     );
   }
 
-  /// `Stay on the toilet`
+  /// `Stay on the\ntoilet`
   String get overlayHelpStayOnMapText {
     return Intl.message(
-      'Stay on the toilet',
+      'Stay on the\ntoilet',
       name: 'overlayHelpStayOnMapText',
       desc: '',
       args: [],
     );
   }
 
-  /// `Survive %s sec`
+  /// `Survive\n{seconds} sec`
   String overlayHelpSurviveText(Object seconds) {
     return Intl.message(
-      'Survive %s sec',
+      'Survive\n$seconds sec',
       name: 'overlayHelpSurviveText',
       desc: '',
       args: [seconds],
@@ -135,10 +135,10 @@ class S {
     );
   }
 
-  /// `Composed by %s`
+  /// `Composed by {name}`
   String pageCreditsComposedBy(Object name) {
     return Intl.message(
-      'Composed by %s',
+      'Composed by $name',
       name: 'pageCreditsComposedBy',
       desc: '',
       args: [name],
@@ -225,13 +225,13 @@ class S {
     );
   }
 
-  /// `I lasted %s seconds. How long can you last?\n%s`
-  String pageGameOverShareMessage(Object score, Object appUrl) {
+  /// `I lasted {seconds} seconds. How long can you last?\n\n{appUrl}`
+  String pageGameOverShareMessage(Object appUrl, Object seconds) {
     return Intl.message(
-      'I lasted %s seconds. How long can you last?\n%s',
+      'I lasted $seconds seconds. How long can you last?\n\n$appUrl',
       name: 'pageGameOverShareMessage',
       desc: '',
-      args: [score, appUrl],
+      args: [appUrl, seconds],
     );
   }
 

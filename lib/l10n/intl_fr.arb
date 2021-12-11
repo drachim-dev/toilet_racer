@@ -10,9 +10,9 @@
   "@commonAppUrl": {},
   "commonBack": "< back",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Restez sur les toilettes",
+  "overlayHelpStayOnMapText": "Restez sur\nles toilettes",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Survivre %s sec",
+  "overlayHelpSurviveText": "Survivre\n{seconds} sec",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Tapez pour commencer",
+  "overlayHelpTapToStartText": "Tapez pour\ncommencer",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Tapez pour tourner",
+  "overlayHelpTapToTurnText": "Tapez pour\ntourner",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Auteurs",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Composé par %s",
+  "pageCreditsComposedBy": "Composé par {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Partager",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "J'ai tenu %s secondes. Combien de temps pouvez-vous tenir ?",
+  "pageGameOverShareMessage": "J'ai tenu {seconds} secondes. Combien de temps pouvez-vous tenir?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

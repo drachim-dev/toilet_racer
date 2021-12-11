@@ -12,7 +12,7 @@
   "@commonBack": {},
   "overlayHelpStayOnMapText": "トイレに残る",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "%s 秒間のサバイバル",
+  "overlayHelpSurviveText": "{seconds} 秒間のサバイバル",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -26,7 +26,7 @@
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "著者",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "作曲者 %s",
+  "pageCreditsComposedBy": "作曲者 {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "シェア",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "",
+  "pageGameOverShareMessage": "{seconds}秒続きました。あなたはどれくらい長く続くことができますか？\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

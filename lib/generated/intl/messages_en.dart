@@ -19,11 +19,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(seconds) => "Survive %s sec";
+  static m0(seconds) => "Survive\n${seconds} sec";
 
-  static m1(name) => "Composed by %s";
+  static m1(name) => "Composed by ${name}";
 
-  static m2(score, appUrl) => "I lasted %s seconds. How long can you last?\\n%s";
+  static m2(appUrl, seconds) => "I lasted ${seconds} seconds. How long can you last?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -32,7 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Toilet Racer"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage("https://play.google.com/store/apps/details?id=dr.achim.toilet_racer"),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< back"),
-    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Stay on the toilet"),
+    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Stay on the\ntoilet"),
     "overlayHelpSurviveText" : m0,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Tap to begin"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Tap to turn"),

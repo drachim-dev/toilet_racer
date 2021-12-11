@@ -2,17 +2,17 @@
   "@@locale": "pt-PT",
   "appDescription": "Está sempre tão aborrecido durante a defecação? Ponha um fim ao mau cheiro.\nTransforme a sua casa de banho num santuário mágico e torne-se o ninja da sanita \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB\nSó não caias da sanita, está suja! Quanto tempo se pode durar?",
   "@appDescription": {},
-  "appDescriptionShort": "Transforme a sua casa de banho num santuário mágico e torne-se o ninja da casa de banho!",
+  "appDescriptionShort": "Transforme seu banheiro em um santuário mágico e torne-se o ninja do banheiro!",
   "@appDescriptionShort": {},
-  "appTitle": "Sanita Racer",
+  "appTitle": "Sanitário Racer",
   "@appTitle": {},
   "commonAppUrl": "",
   "@commonAppUrl": {},
   "commonBack": "< voltar",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Ficar na casa de banho",
+  "overlayHelpStayOnMapText": "Ficar na casa\nde banho",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sobreviver a %s seg",
+  "overlayHelpSurviveText": "Sobreviver\na {seconds} seg",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Toque para começar",
+  "overlayHelpTapToStartText": "Toque para\ncomeçar",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Toque para virar",
+  "overlayHelpTapToTurnText": "Toque para\nvirar",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autores",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Composto por %s",
+  "pageCreditsComposedBy": "Composto por {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Partilhar",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "Durou %s segundos. Quanto tempo pode durar?{\\i1}n%s",
+  "pageGameOverShareMessage": "Durou {seconds} segundos. Quanto tempo pode durar?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

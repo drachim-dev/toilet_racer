@@ -19,11 +19,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'it';
 
-  static m0(seconds) => "Sopravvivere %s sec";
+  static m0(seconds) => "Sopravvivere\n${seconds} sec";
 
-  static m1(name) => "Composto da %s";
+  static m1(name) => "Composto da ${name}";
 
-  static m2(score, appUrl) => "Ho resistito %s secondi. Quanto tempo puoi durare tu?";
+  static m2(appUrl, seconds) => "Ho resistito ${seconds} secondi. Quanto tempo puoi durare tu?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -32,10 +32,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Pilota di toilette"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< indietro"),
-    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Rimanere sulla toilette"),
+    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Rimanere\nsulla\ntoilette"),
     "overlayHelpSurviveText" : m0,
-    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toccare per iniziare"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toccare per girare"),
+    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toccare per\niniziare"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toccare per\ngirare"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autori"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Immagini"),

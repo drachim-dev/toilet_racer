@@ -19,11 +19,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'zh';
 
-  static m0(seconds) => "存活%s秒";
+  static m0(seconds) => "存活${seconds}秒";
 
-  static m1(name) => "由 %s 创作";
+  static m1(name) => "由 ${name} 创作";
 
-  static m2(score, appUrl) => "我坚持了%s秒。How long can you last?\\n%s";
+  static m2(appUrl, seconds) => "我持续了${seconds}的时间。你能坚持多长时间？\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -35,7 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("呆在马桶上"),
     "overlayHelpSurviveText" : m0,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("点击开始"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("轻轻点一下就可以转身"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("轻轻点一\n下就可以转身"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("作者"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("图片"),

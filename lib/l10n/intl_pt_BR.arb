@@ -4,15 +4,15 @@
   "@appDescription": {},
   "appDescriptionShort": "Transforme seu banheiro em um santuário mágico e torne-se o ninja do banheiro!",
   "@appDescriptionShort": {},
-  "appTitle": "Toilet Racer",
+  "appTitle": "Sanitário Racer",
   "@appTitle": {},
   "commonAppUrl": "",
   "@commonAppUrl": {},
   "commonBack": "< voltar",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Fique no banheiro",
+  "overlayHelpStayOnMapText": "Fique no\nbanheiro",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sobreviver a %s seg",
+  "overlayHelpSurviveText": "Sobreviver\na {seconds} seg",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Toque para começar",
+  "overlayHelpTapToStartText": "Toque para\ncomeçar",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Toque para girar",
+  "overlayHelpTapToTurnText": "Toque para\ngirar",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autores",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Composto por %s",
+  "pageCreditsComposedBy": "Composto por {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Compartilhe",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "Durei %s segundos. Quanto tempo você pode durar?\\n%s",
+  "pageGameOverShareMessage": "Durei {seconds} segundos. Quanto tempo você pode durar?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

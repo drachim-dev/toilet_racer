@@ -12,7 +12,7 @@
   "@commonBack": {},
   "overlayHelpStayOnMapText": "呆在马桶上",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "存活%s秒",
+  "overlayHelpSurviveText": "存活{seconds}秒",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -22,11 +22,11 @@
   },
   "overlayHelpTapToStartText": "点击开始",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "轻轻点一下就可以转身",
+  "overlayHelpTapToTurnText": "轻轻点一\n下就可以转身",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "作者",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "由 %s 创作",
+  "pageCreditsComposedBy": "由 {name} 创作",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "分享",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "我坚持了%s秒。How long can you last?\\n%s",
+  "pageGameOverShareMessage": "我持续了{seconds}的时间。你能坚持多长时间？\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

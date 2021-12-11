@@ -19,23 +19,23 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'pt_PT';
 
-  static m0(seconds) => "Sobreviver a %s seg";
+  static m0(seconds) => "Sobreviver\na ${seconds} seg";
 
-  static m1(name) => "Composto por %s";
+  static m1(name) => "Composto por ${name}";
 
-  static m2(score, appUrl) => "Durou %s segundos. Quanto tempo pode durar?{\\i1}n%s";
+  static m2(appUrl, seconds) => "Durou ${seconds} segundos. Quanto tempo pode durar?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("Está sempre tão aborrecido durante a defecação? Ponha um fim ao mau cheiro.\nTransforme a sua casa de banho num santuário mágico e torne-se o ninja da sanita 🥷🏼🧻\nSó não caias da sanita, está suja! Quanto tempo se pode durar?"),
-    "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Transforme a sua casa de banho num santuário mágico e torne-se o ninja da casa de banho!"),
-    "appTitle" : MessageLookupByLibrary.simpleMessage("Sanita Racer"),
+    "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Transforme seu banheiro em um santuário mágico e torne-se o ninja do banheiro!"),
+    "appTitle" : MessageLookupByLibrary.simpleMessage("Sanitário Racer"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< voltar"),
-    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Ficar na casa de banho"),
+    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Ficar na casa\nde banho"),
     "overlayHelpSurviveText" : m0,
-    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toque para começar"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toque para virar"),
+    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toque para\ncomeçar"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toque para\nvirar"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autores"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Imagens"),

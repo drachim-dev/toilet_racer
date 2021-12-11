@@ -7,12 +7,10 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/components/player_body.dart';
 
 class GameHelp extends PositionComponent with HasGameRef {
-  static final TextPaint textPaint = TextPaint(
-    config: TextPaintConfig(
-      fontSize: 56.0,
-      color: Colors.white,
-      fontFamily: 'NerkoOne',
-    ),
+  static final baseTextConfig = TextPaintConfig(
+    fontSize: 56.0,
+    color: Colors.white,
+    fontFamily: 'NerkoOne',
   );
 
   static final Paint _paint = Paint()
@@ -120,6 +118,20 @@ class GameHelp extends PositionComponent with HasGameRef {
           break;
       }
 
+      final textPaint = TextPaint(
+          config: baseTextConfig
+              .withTextDirection(Directionality.of(gameRef.buildContext)));
+
+      // There is a resolution bug in TextComponent, which is fixed in rc14 onwards
+      /* final textBoxComponent = TextBoxComponent(helpText,
+          textRenderer: textPaint,
+          boxConfig: TextBoxConfig(maxWidth: _screenSize.x - kGameScreenMargin),
+          position: position)
+        ..anchor = Anchor.center;
+
+      addChild(textBoxComponent); */
+
+      // text must be wrapped manually via linebreaks
       textPaint.render(c, helpText, position, anchor: Anchor.center);
     }
   }

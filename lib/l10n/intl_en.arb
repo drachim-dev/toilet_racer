@@ -10,9 +10,9 @@
   "@commonAppUrl": {},
   "commonBack": "< back",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Stay on the toilet",
+  "overlayHelpStayOnMapText": "Stay on the\ntoilet",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Survive %s sec",
+  "overlayHelpSurviveText": "Survive\n{seconds} sec",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -26,7 +26,7 @@
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Authors",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Composed by %s",
+  "pageCreditsComposedBy": "Composed by {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Share",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "I lasted %s seconds. How long can you last?\\n%s",
+  "pageGameOverShareMessage": "I lasted {seconds} seconds. How long can you last?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

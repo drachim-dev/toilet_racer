@@ -1,18 +1,18 @@
 {
   "@@locale": "es",
-  "appDescription": "",
+  "appDescription": "¿Siempre se aburre cuando defeca? Acaba con el hedor.\nConvierte tu alcantarilla en un santuario mágico y sé un ninja del retrete \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB.\nPero no te caigas del retrete, ¡está muy sucio! ¿Cuánto tiempo puede durar?",
   "@appDescription": {},
-  "appDescriptionShort": "",
+  "appDescriptionShort": "Convierte tu baño en un santuario mágico y conviértete en un ninja del baño.",
   "@appDescriptionShort": {},
-  "appTitle": "",
+  "appTitle": "Carrera de retretes",
   "@appTitle": {},
   "commonAppUrl": "",
   "@commonAppUrl": {},
   "commonBack": "< volver",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Quédate en el asiento",
+  "overlayHelpStayOnMapText": "Quédate en\nel asiento",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sobrevivir %ss",
+  "overlayHelpSurviveText": "Sobrevivir\n{seconds}s",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Toque para empezar",
+  "overlayHelpTapToStartText": "Toque para\nempezar",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Toque para girar",
+  "overlayHelpTapToTurnText": "Toque para\ngirar",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autores",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Compuesto por %s",
+  "pageCreditsComposedBy": "Compuesto por {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Compartir",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "",
+  "pageGameOverShareMessage": "He durado {seconds} segundos. ¿Cuánto tiempo puedes durar? \n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

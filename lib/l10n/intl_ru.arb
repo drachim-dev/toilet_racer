@@ -10,9 +10,9 @@
   "@commonAppUrl": {},
   "commonBack": "< назад",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Остаться на унитазе",
+  "overlayHelpStayOnMapText": "Остаться\nна унитазе",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Выжить %s сек",
+  "overlayHelpSurviveText": "Выжить\n{seconds} сек",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Нажмите, чтобы начать",
+  "overlayHelpTapToStartText": "Нажмите,\nчтобы начать",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Нажмите, чтобы повернуть",
+  "overlayHelpTapToTurnText": "Нажмите,\nчтобы\nповернуть",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Авторы",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Составлено %s",
+  "pageCreditsComposedBy": "Составлено {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Поделиться",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "Я продержался %s секунд. Как долго ты можешь продержаться?\\n%s",
+  "pageGameOverShareMessage": "Я продержался {seconds} секунд. Как долго ты можешь продержаться?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

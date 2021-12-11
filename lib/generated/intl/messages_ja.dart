@@ -19,11 +19,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
-  static m0(seconds) => "%s 秒間のサバイバル";
+  static m0(seconds) => "${seconds} 秒間のサバイバル";
 
-  static m1(name) => "作曲者 %s";
+  static m1(name) => "作曲者 ${name}";
 
-  static m2(score, appUrl) => "";
+  static m2(appUrl, seconds) => "${seconds}秒続きました。あなたはどれくらい長く続くことができますか？\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {

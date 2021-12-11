@@ -19,23 +19,23 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'de';
 
-  static m0(seconds) => "Überlebe %s sek";
+  static m0(seconds) => "Überlebe\n${seconds} sek";
 
-  static m1(name) => "Komponiert von %s";
+  static m1(name) => "Komponiert von ${name}";
 
-  static m2(score, appUrl) => "";
+  static m2(appUrl, seconds) => "Ich habe ${seconds} Sekunden durchgehalten. Wie lange kannst du? \n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("Ist dir beim Stuhlgang auch immer langweilig? Mach Schluss mit dem Gestank.\nVerwandle deinen Schacht zu einem magischen Zufluchtsort und werde zum Toilet-Ninja 🥷🏼🧻\nFall nur nicht von der Toilette, es ist wirklich schmutzig! Wie lange hältst du durch?"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Verwandle dein Badezimmer in einen magischen Zufluchtsort und werde zum Toilet-Ninja!"),
-    "appTitle" : MessageLookupByLibrary.simpleMessage(""),
+    "appTitle" : MessageLookupByLibrary.simpleMessage("Toilet Racer"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< zurück"),
-    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Bleib auf der Klobrille"),
+    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Bleib auf\nder Klobrille"),
     "overlayHelpSurviveText" : m0,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Starten"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Tippe zum Lenken"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Tippe zum\nLenken"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autoren"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Bilder"),

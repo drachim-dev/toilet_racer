@@ -19,23 +19,23 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'pt_BR';
 
-  static m0(seconds) => "Sobreviver a %s seg";
+  static m0(seconds) => "Sobreviver\na ${seconds} seg";
 
-  static m1(name) => "Composto por %s";
+  static m1(name) => "Composto por ${name}";
 
-  static m2(score, appUrl) => "Durei %s segundos. Quanto tempo você pode durar?\\n%s";
+  static m2(appUrl, seconds) => "Durei ${seconds} segundos. Quanto tempo você pode durar?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("Você está sempre tão entediado durante a defecação? Ponha um fim ao fedor.\nTransforme seu banheiro em um santuário mágico e torne-se o banheiro ninja 🥷🏼🧻\nSó não caia do vaso sanitário, está sujo! Quanto tempo você pode durar?"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Transforme seu banheiro em um santuário mágico e torne-se o ninja do banheiro!"),
-    "appTitle" : MessageLookupByLibrary.simpleMessage("Toilet Racer"),
+    "appTitle" : MessageLookupByLibrary.simpleMessage("Sanitário Racer"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< voltar"),
-    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Fique no banheiro"),
+    "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Fique no\nbanheiro"),
     "overlayHelpSurviveText" : m0,
-    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toque para começar"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toque para girar"),
+    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toque para\ncomeçar"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toque para\ngirar"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autores"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Imagens"),

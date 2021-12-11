@@ -10,9 +10,9 @@
   "@commonAppUrl": {},
   "commonBack": "< indietro",
   "@commonBack": {},
-  "overlayHelpStayOnMapText": "Rimanere sulla toilette",
+  "overlayHelpStayOnMapText": "Rimanere\nsulla\ntoilette",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sopravvivere %s sec",
+  "overlayHelpSurviveText": "Sopravvivere\n{seconds} sec",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "Toccare per iniziare",
+  "overlayHelpTapToStartText": "Toccare per\niniziare",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "Toccare per girare",
+  "overlayHelpTapToTurnText": "Toccare per\ngirare",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "Autori",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "Composto da %s",
+  "pageCreditsComposedBy": "Composto da {name}",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "Condividi",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "Ho resistito %s secondi. Quanto tempo puoi durare tu?",
+  "pageGameOverShareMessage": "Ho resistito {seconds} secondi. Quanto tempo puoi durare tu?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

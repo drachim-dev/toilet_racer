@@ -12,7 +12,7 @@
   "@commonBack": {},
   "overlayHelpStayOnMapText": "शौचालय पर रहो",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "%s सेकंड जीवित रहें",
+  "overlayHelpSurviveText": "{seconds} सेकंड\nजीवित रहें",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
@@ -20,13 +20,13 @@
       }
     }
   },
-  "overlayHelpTapToStartText": "शुरू करने के लिए टैप करें",
+  "overlayHelpTapToStartText": "शुरू करने के\nलिए टैप करें",
   "@overlayHelpTapToStartText": {},
-  "overlayHelpTapToTurnText": "मुड़ने के लिए टैप करें",
+  "overlayHelpTapToTurnText": "मुड़ने के लिए\nटैप करें",
   "@overlayHelpTapToTurnText": {},
   "pageCreditsAuthorsSectionText": "लेखकों",
   "@pageCreditsAuthorsSectionText": {},
-  "pageCreditsComposedBy": "%s . द्वारा रचित",
+  "pageCreditsComposedBy": "{name} . द्वारा रचित",
   "@pageCreditsComposedBy": {
     "placeholders": {
       "name": {
@@ -50,14 +50,14 @@
   "@pageGameOverRestartButtonText": {},
   "pageGameOverShareButtonText": "साझा करना",
   "@pageGameOverShareButtonText": {},
-  "pageGameOverShareMessage": "मैं %s सेकंड तक चला। आप कितने समय तक टिक सकते हैं?\\n%s",
+  "pageGameOverShareMessage": "मैं {seconds} सेकंड तक चला। आप कितने समय तक टिक सकते हैं?\n\n{appUrl}",
   "@pageGameOverShareMessage": {
     "placeholders": {
-      "score": {
-        "type": "double"
-      },
       "appUrl": {
         "type": "String"
+      },
+      "seconds": {
+        "type": "double"
       }
     }
   },

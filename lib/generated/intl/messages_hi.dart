@@ -19,11 +19,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'hi';
 
-  static m0(seconds) => "%s सेकंड जीवित रहें";
+  static m0(seconds) => "${seconds} सेकंड\nजीवित रहें";
 
-  static m1(name) => "%s . द्वारा रचित";
+  static m1(name) => "${name} . द्वारा रचित";
 
-  static m2(score, appUrl) => "मैं %s सेकंड तक चला। आप कितने समय तक टिक सकते हैं?\\n%s";
+  static m2(appUrl, seconds) => "मैं ${seconds} सेकंड तक चला। आप कितने समय तक टिक सकते हैं?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -34,8 +34,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "commonBack" : MessageLookupByLibrary.simpleMessage("<पीछे"),
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("शौचालय पर रहो"),
     "overlayHelpSurviveText" : m0,
-    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("शुरू करने के लिए टैप करें"),
-    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("मुड़ने के लिए टैप करें"),
+    "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("शुरू करने के\nलिए टैप करें"),
+    "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("मुड़ने के लिए\nटैप करें"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("लेखकों"),
     "pageCreditsComposedBy" : m1,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("इमेजिस"),
