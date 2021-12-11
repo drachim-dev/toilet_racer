@@ -133,8 +133,6 @@ class PlayerBody extends PositionBodyComponent {
   void update(double dt) {
     super.update(dt);
 
-    return;
-
     if (preview) return;
     _timerService.update(dt);
 
