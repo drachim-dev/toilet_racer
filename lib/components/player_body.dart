@@ -61,8 +61,9 @@ class PlayerBody extends PositionBodyComponent {
       {this.preview = false, this.counterclockwise = true})
       : assert(playerComponent != null),
         assert(startPosition != null),
-        super(playerComponent.positionComponent,
-            playerComponent.positionComponent.size) {
+        super(
+            positionComponent: playerComponent.positionComponent,
+            size: playerComponent.positionComponent.size) {
     /// Player starts with bearing and heading
     /// in right direction when turning counterclockwise
     /// and in left direction when turning clockwise

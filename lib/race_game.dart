@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart' hide Timer;
 import 'package:flame/flame.dart';
-import 'package:flame/gestures.dart';
+import 'package:flame/input.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:toilet_racer/app/constants.dart';
@@ -61,8 +61,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   @override
-  void onResize(Vector2 canvasSize) {
-    super.onResize(canvasSize);
+  void onGameResize(Vector2 canvasSize) {
+    super.onGameResize(canvasSize);
 
     if (_background != null) {
       camera.zoom = _defaultScale * _background.worldScale;
@@ -72,8 +72,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _initLevel(Level level) async {
     _currentLevel = level;
 
-    if (components.contains(_background)) {
-      _background.remove();
+    if (children.contains(_background)) {
+      remove(_background);
     }
 
     /// Should load image in onLoad() of component,
@@ -204,7 +204,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   void onTapDown(TapDownInfo details) {
     // Iterate over GameHelpers on firstLaunch
     if (_gameHelpShown) {
-      _gameHelper.current.remove();
+      remove(_gameHelper.current);
       if (_gameHelper.moveNext()) {
         add(_gameHelper.current);
         return;
@@ -228,7 +228,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void _onGameOver() async {
-    _gameComponents.forEach((c) => c.remove());
+    _gameComponents.forEach((c) => remove(c));
     removeContactCallback(_contactCallback);
 
     // Start menu background music before gameOverCallback because ads should be able to stop music again.

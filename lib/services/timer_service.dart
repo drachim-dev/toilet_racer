@@ -10,7 +10,7 @@ class TimerService {
     _seconds.value = 0;
     _timer = Timer(
       0.1,
-      callback: () {
+      onTick: () {
         var value = _seconds.value += 0.1;
         return _seconds.value = num.parse(value.toStringAsFixed(1));
       },

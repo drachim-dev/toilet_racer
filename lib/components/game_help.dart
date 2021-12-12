@@ -7,7 +7,7 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/components/player_body.dart';
 
 class GameHelp extends PositionComponent with HasGameRef {
-  static final baseTextConfig = TextPaintConfig(
+  static final baseTextConfig = TextStyle(
     fontSize: 56.0,
     color: Colors.white,
     fontFamily: 'NerkoOne',
@@ -44,7 +44,7 @@ class GameHelp extends PositionComponent with HasGameRef {
     this.textPosition = GamePosition.TOP,
     this.player,
   }) {
-    isHud = true;
+    positionType = PositionType.viewport;
   }
 
   @override
@@ -58,11 +58,11 @@ class GameHelp extends PositionComponent with HasGameRef {
             ..anchor = Anchor.centerLeft
             ..angle = -pi / 6;
 
-      await addChild(component);
+      await add(component);
     }
 
     if (player != null) {
-      await addChild(player);
+      await add(player);
     }
     return super.onLoad();
   }
@@ -119,17 +119,20 @@ class GameHelp extends PositionComponent with HasGameRef {
       }
 
       final textPaint = TextPaint(
-          config: baseTextConfig
-              .withTextDirection(Directionality.of(gameRef.buildContext)));
+          style: baseTextConfig,
+          textDirection: Directionality.of(gameRef.buildContext));
 
-      // There is a resolution bug in TextComponent, which is fixed in rc14 onwards
-      /* final textBoxComponent = TextBoxComponent(helpText,
+      // TextBoxComponent can't align text within itself yet:
+      // https://github.com/flame-engine/flame/issues/1088
+
+/*       final textBoxComponent = TextBoxComponent(
+          text: helpText,
           textRenderer: textPaint,
           boxConfig: TextBoxConfig(maxWidth: _screenSize.x - kGameScreenMargin),
           position: position)
         ..anchor = Anchor.center;
 
-      addChild(textBoxComponent); */
+      add(textBoxComponent); */
 
       // text must be wrapped manually via linebreaks
       textPaint.render(c, helpText, position, anchor: Anchor.center);
@@ -214,7 +217,7 @@ class GameHelp extends PositionComponent with HasGameRef {
   @override
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
-    _screenSize = gameRef.viewport.effectiveSize.clone();
+    _screenSize = gameRef.camera.viewport.effectiveSize.clone();
   }
 }
 

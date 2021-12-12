@@ -14,7 +14,7 @@ class Background extends SpriteComponent with HasGameRef {
 
   Background(this.map, Image image) {
     assert(map.filePath != null);
-    isHud = true;
+    positionType = PositionType.viewport;
     sprite = Sprite(image);
   }
 
@@ -33,7 +33,7 @@ class Background extends SpriteComponent with HasGameRef {
   void onGameResize(Vector2 gameSize) {
     super.onGameResize(gameSize);
 
-    final screenSize = gameRef.viewport.effectiveSize.clone();
+    final screenSize = gameRef.camera.viewport.effectiveSize.clone();
 
     final minScreenSide =
         math.min(screenSize.toSize().width, screenSize.toSize().height) -
