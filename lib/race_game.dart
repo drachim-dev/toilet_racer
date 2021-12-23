@@ -70,6 +70,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   Future<void> _initLevel(Level level) async {
+    final showAnimation = _currentLevel != null && _currentLevel.id != level.id;
+
     _currentLevel = level;
 
     if (children.contains(_background)) {
@@ -79,7 +81,12 @@ class RaceGame extends Forge2DGame with TapDetector {
     /// Should load image in onLoad() of component,
     /// but somehow this leads to the gameRef beeing null sometimes.
     final image = await Flame.images.load(level.map.filePath);
-    await add(_background = Background(level.map, image));
+
+    _background =
+        Background(map: level.map, image: image, animationEnabled: showAnimation);
+
+    await add(_background);
+    await _background.animationFuture;
   }
 
   /// Init and show game help
@@ -202,6 +209,11 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   @override
   void onTapDown(TapDownInfo details) {
+    // Ignore tap during zoom effect
+    if (_background.animationEnabled && !_background.animationCompleted) {
+      return;
+    }
+
     // Iterate over GameHelpers on firstLaunch
     if (_gameHelpShown) {
       remove(_gameHelper.current);
