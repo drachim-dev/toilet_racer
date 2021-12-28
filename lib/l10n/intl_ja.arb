@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "トイレットレーサー",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< バック",
   "@commonBack": {},
+  "overlayHelpLevelName": "レベル{name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "トイレに残る",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "{seconds} 秒間のサバイバル",

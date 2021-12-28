@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "Toilet Racer",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< back",
   "@commonBack": {},
+  "overlayHelpLevelName": "Niveau {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "Restez sur\nles toilettes",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "Survivre\n{seconds} sec",

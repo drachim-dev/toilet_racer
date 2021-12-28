@@ -10,6 +10,14 @@
   "@commonAppUrl": {},
   "commonBack": "< back",
   "@commonBack": {},
+  "overlayHelpLevelName": "Level {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "Stay on the\ntoilet",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "Survive\n{seconds} sec",

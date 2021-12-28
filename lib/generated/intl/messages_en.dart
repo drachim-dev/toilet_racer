@@ -19,11 +19,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static m0(seconds) => "Survive\n${seconds} sec";
+  static m0(name) => "Level ${name}";
 
-  static m1(name) => "Composed by ${name}";
+  static m1(seconds) => "Survive\n${seconds} sec";
 
-  static m2(appUrl, seconds) => "I lasted ${seconds} seconds. How long can you last?\n\n${appUrl}";
+  static m2(name) => "Composed by ${name}";
+
+  static m3(appUrl, seconds) => "I lasted ${seconds} seconds. How long can you last?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -32,12 +34,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Toilet Racer"),
     "commonAppUrl" : MessageLookupByLibrary.simpleMessage("https://play.google.com/store/apps/details?id=dr.achim.toilet_racer"),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< back"),
+    "overlayHelpLevelName" : m0,
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Stay on the\ntoilet"),
-    "overlayHelpSurviveText" : m0,
+    "overlayHelpSurviveText" : m1,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Tap to begin"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Tap to turn"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Authors"),
-    "pageCreditsComposedBy" : m1,
+    "pageCreditsComposedBy" : m2,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Images"),
     "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("Licenses >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("Music"),
@@ -46,7 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverNextButtonText" : MessageLookupByLibrary.simpleMessage("Next level"),
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("Restart"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("Share"),
-    "pageGameOverShareMessage" : m2,
+    "pageGameOverShareMessage" : m3,
     "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("Try again"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("Continue"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("Credits"),

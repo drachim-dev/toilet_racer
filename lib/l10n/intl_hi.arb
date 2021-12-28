@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "शौचालय रेसर",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "<पीछे",
   "@commonBack": {},
+  "overlayHelpLevelName": "स्तर {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "शौचालय पर रहो",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "{seconds} सेकंड\nजीवित रहें",

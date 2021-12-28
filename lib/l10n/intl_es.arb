@@ -1,18 +1,24 @@
 {
   "@@locale": "es",
-  "appDescription": "¿Siempre se aburre cuando defeca? Acaba con el hedor.\nConvierte tu alcantarilla en un santuario mágico y sé un ninja del retrete \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB.\nPero no te caigas del retrete, ¡está muy sucio! ¿Cuánto tiempo puede durar?",
+  "appDescription": "¿Siempre se aburre cuando defeca? Acaba con el mal olor.\nConvierte tu baño en un santuario mágico y sé un ninja del retrete \uD83E\uDD77\uD83C\uDFFC\uD83E\uDDFB.\nPero no te caigas en el retrete, ¡está muy sucio! ¿Cuánto tiempo podrás sobrevivir?",
   "@appDescription": {},
   "appDescriptionShort": "Convierte tu baño en un santuario mágico y conviértete en un ninja del baño.",
   "@appDescriptionShort": {},
   "appTitle": "Carrera de retretes",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< volver",
   "@commonBack": {},
+  "overlayHelpLevelName": "Nivel {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "Quédate en\nel asiento",
   "@overlayHelpStayOnMapText": {},
-  "overlayHelpSurviveText": "Sobrevivir\n{seconds}s",
+  "overlayHelpSurviveText": "Sobrevive\n{seconds}s",
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {

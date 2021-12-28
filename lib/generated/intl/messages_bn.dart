@@ -19,25 +19,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'bn';
 
-  static m0(seconds) => "${seconds} সেকেন্ড\nবেঁচে থাকুন";
+  static m0(name) => "স্তর ${name}";
 
-  static m1(name) => "${name} দ্বারা রচিত";
+  static m1(seconds) => "${seconds} সেকেন্ড\nবেঁচে থাকুন";
 
-  static m2(appUrl, seconds) => "আমি ${seconds} সেকেন্ড টিকেছিলাম। আপনি কতক্ষণ থাকতে পারবেন?\n\n${appUrl}";
+  static m2(name) => "${name} দ্বারা রচিত";
+
+  static m3(appUrl, seconds) => "আমি ${seconds} সেকেন্ড টিকেছিলাম। আপনি কতক্ষণ থাকতে পারবেন?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("আপনি কি সবসময় মলত্যাগ করতে গিয়ে বিরক্ত হন? দুর্গন্ধের অবসান ঘটাও।\nআপনার বাথরুমকে একটি জাদুকরী অভয়ারণ্যে পরিণত করুন এবং টয়লেট নিনজা হয়ে উঠুন 🥷🏼🧻\nশুধু টয়লেট থেকে পড়ে যাবেন না, এটা নোংরা! কতক্ষণ স্থায়ী হতে পারে?"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("আপনার বাথরুমকে একটি যাদুকরী অভয়ারণ্যে পরিণত করুন এবং টয়লেট নিনজা হয়ে উঠুন!"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("টয়লেট রেসার"),
-    "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< ফিরে"),
+    "overlayHelpLevelName" : m0,
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("টয়লেটে থাকুন"),
-    "overlayHelpSurviveText" : m0,
+    "overlayHelpSurviveText" : m1,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("শুরু করতে\nআলতো চাপুন"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("ঘুরতে\nট্যাপ করুন"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("লেখক"),
-    "pageCreditsComposedBy" : m1,
+    "pageCreditsComposedBy" : m2,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("ছবি"),
     "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("লাইসেন্স >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("সঙ্গীত"),
@@ -46,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverNextButtonText" : MessageLookupByLibrary.simpleMessage("পরবর্তী ধাপ"),
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("আবার শুরু"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("শেয়ার করুন"),
-    "pageGameOverShareMessage" : m2,
+    "pageGameOverShareMessage" : m3,
     "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("আবার চেষ্টা করুন"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("চালিয়ে যান"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("ক্রেডিট"),

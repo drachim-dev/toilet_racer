@@ -19,25 +19,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'it';
 
-  static m0(seconds) => "Sopravvivere\n${seconds} sec";
+  static m0(name) => "Livello ${name}";
 
-  static m1(name) => "Composto da ${name}";
+  static m1(seconds) => "Sopravvivere\n${seconds} sec";
 
-  static m2(appUrl, seconds) => "Ho resistito ${seconds} secondi. Quanto tempo puoi durare tu?\n\n${appUrl}";
+  static m2(name) => "Composto da ${name}";
+
+  static m3(appUrl, seconds) => "Ho resistito ${seconds} secondi. Quanto tempo puoi durare tu?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("Sei sempre così annoiato mentre defechi? Metti fine alla puzza.\nTrasforma il tuo bagno in un santuario magico e diventa il ninja del water 🥷🏼🧻\nBasta non cadere dal water, è sporco! Quanto puoi resistere?"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Trasforma il tuo bagno in un magico santuario e diventa il ninja del water!"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Pilota di toilette"),
-    "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< indietro"),
+    "overlayHelpLevelName" : m0,
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Rimanere\nsulla\ntoilette"),
-    "overlayHelpSurviveText" : m0,
+    "overlayHelpSurviveText" : m1,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toccare per\niniziare"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toccare per\ngirare"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autori"),
-    "pageCreditsComposedBy" : m1,
+    "pageCreditsComposedBy" : m2,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Immagini"),
     "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("Licenze >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("Musica"),
@@ -46,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverNextButtonText" : MessageLookupByLibrary.simpleMessage("Prossimo livello"),
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("Restart"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("Condividi"),
-    "pageGameOverShareMessage" : m2,
+    "pageGameOverShareMessage" : m3,
     "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("Prova di nuovo"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("Continua"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("Crediti"),

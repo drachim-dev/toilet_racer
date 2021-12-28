@@ -19,25 +19,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ja';
 
-  static m0(seconds) => "${seconds} 秒間のサバイバル";
+  static m0(name) => "レベル${name}";
 
-  static m1(name) => "作曲者 ${name}";
+  static m1(seconds) => "${seconds} 秒間のサバイバル";
 
-  static m2(appUrl, seconds) => "${seconds}秒続きました。あなたはどれくらい長く続くことができますか？\n\n${appUrl}";
+  static m2(name) => "作曲者 ${name}";
+
+  static m3(appUrl, seconds) => "${seconds}秒続きました。あなたはどれくらい長く続くことができますか？\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("排泄中、いつも退屈してないか？この悪臭に終止符を打ちましょう。\nあなたのトイレを魔法のような聖域に変えて、トイレ・ニンジャになりましょう! ただ、便器から落ちないように、汚いからね。どのくらい持つの？"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("トイレを魔法のサンクチュアリに変えて、トイレ忍者になろう"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("トイレットレーサー"),
-    "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< バック"),
+    "overlayHelpLevelName" : m0,
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("トイレに残る"),
-    "overlayHelpSurviveText" : m0,
+    "overlayHelpSurviveText" : m1,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("出発する"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("タップして回す"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("著者"),
-    "pageCreditsComposedBy" : m1,
+    "pageCreditsComposedBy" : m2,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("イメージ"),
     "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("ライセンス >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("音楽"),
@@ -46,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverNextButtonText" : MessageLookupByLibrary.simpleMessage("次のレベル"),
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("新しい経歴"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("シェア"),
-    "pageGameOverShareMessage" : m2,
+    "pageGameOverShareMessage" : m3,
     "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("もう一回"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("続ける"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("クレジット"),

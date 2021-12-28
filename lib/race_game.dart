@@ -82,8 +82,8 @@ class RaceGame extends Forge2DGame with TapDetector {
     /// but somehow this leads to the gameRef beeing null sometimes.
     final image = await Flame.images.load(level.map.filePath);
 
-    _background =
-        Background(map: level.map, image: image, animationEnabled: showAnimation);
+    _background = Background(
+        map: level.map, image: image, animationEnabled: showAnimation);
 
     await add(_background);
     await _background.animationFuture;
@@ -107,8 +107,10 @@ class RaceGame extends Forge2DGame with TapDetector {
       gameMode.resetProgress();
     }
 
-    await _initLevel(gameMode.getLevel());
-    await _initGameHelper();
+    final nextLevel = gameMode.getLevel();
+    final isNewLevel = _currentLevel == null || nextLevel != _currentLevel;
+    await _initLevel(nextLevel);
+    await _initGameHelper(isNewLevel);
 
     if (_gameHelper.moveNext()) {
       await add(_gameHelper.current);
@@ -125,7 +127,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     _timerService.start();
   }
 
-  Future<void> _initGameHelper() async {
+  Future<void> _initGameHelper(bool isNewLevel) async {
     final helper = <GameHelp>[];
     if (gameMode.helpNeeded) {
       final middleBoundary = _currentLevel.map.track.middleBoundary
@@ -153,6 +155,13 @@ class RaceGame extends Forge2DGame with TapDetector {
 
       helper.add(movementHelp);
       helper.add(gamePlayHelp);
+    } else if (gameMode.isCareer && isNewLevel) {
+      final levelName = GameHelp(
+        helpText: '${S.of(buildContext).overlayHelpLevelName(_currentLevel.id + 1)}',
+        textPosition: GamePosition.CENTER,
+      );
+
+      helper.add(levelName);
     }
 
     if (gameMode.levelHelpText != null) {

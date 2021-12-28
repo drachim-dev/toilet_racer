@@ -19,25 +19,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static m0(seconds) => "Выжить\n${seconds} сек";
+  static m0(name) => "Уровень ${name}";
 
-  static m1(name) => "Составлено ${name}";
+  static m1(seconds) => "Выжить\n${seconds} сек";
 
-  static m2(appUrl, seconds) => "Я продержался ${seconds} секунд. Как долго ты можешь продержаться?\n\n${appUrl}";
+  static m2(name) => "Составлено ${name}";
+
+  static m3(appUrl, seconds) => "Я продержался ${seconds} секунд. Как долго ты можешь продержаться?\n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appDescription" : MessageLookupByLibrary.simpleMessage("Тебе всегда так скучно во время испражнения? Положите конец зловонию.\nПреврати свою ванную в волшебное убежище и стань туалетным ниндзя 🥷🏼🧻.\nТолько не упади с унитаза, он грязный! Как долго ты сможешь продержаться?"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Преврати свою ванную комнату в волшебное убежище и стань туалетным ниндзя!"),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Туалетный гонщик"),
-    "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< назад"),
+    "overlayHelpLevelName" : m0,
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Остаться\nна унитазе"),
-    "overlayHelpSurviveText" : m0,
+    "overlayHelpSurviveText" : m1,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Нажмите,\nчтобы начать"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Нажмите,\nчтобы\nповернуть"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Авторы"),
-    "pageCreditsComposedBy" : m1,
+    "pageCreditsComposedBy" : m2,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Изображения"),
     "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("Лицензии >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("Музыка"),
@@ -46,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverNextButtonText" : MessageLookupByLibrary.simpleMessage("Следующий уровень"),
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("Restart"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("Поделиться"),
-    "pageGameOverShareMessage" : m2,
+    "pageGameOverShareMessage" : m3,
     "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("Попробуйте еще раз"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("Продолжить"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("Кредиты"),

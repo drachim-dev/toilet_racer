@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "Sanitário Racer",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< voltar",
   "@commonBack": {},
+  "overlayHelpLevelName": "Nível {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "Fique no\nbanheiro",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "Sobreviver\na {seconds} seg",

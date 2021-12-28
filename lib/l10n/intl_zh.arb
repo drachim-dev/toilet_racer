@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "厕所飞人",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< 返回",
   "@commonBack": {},
+  "overlayHelpLevelName": "{name} 级",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "呆在马桶上",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "存活{seconds}秒",

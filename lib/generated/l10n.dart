@@ -85,6 +85,16 @@ class S {
     );
   }
 
+  /// `Level {name}`
+  String overlayHelpLevelName(Object name) {
+    return Intl.message(
+      'Level $name',
+      name: 'overlayHelpLevelName',
+      desc: '',
+      args: [name],
+    );
+  }
+
   /// `Stay on the\ntoilet`
   String get overlayHelpStayOnMapText {
     return Intl.message(

@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "Туалетный гонщик",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< назад",
   "@commonBack": {},
+  "overlayHelpLevelName": "Уровень {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "Остаться\nна унитазе",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "Выжить\n{seconds} сек",

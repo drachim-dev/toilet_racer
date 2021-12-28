@@ -19,25 +19,27 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
-  static m0(seconds) => "Sobrevivir\n${seconds}s";
+  static m0(name) => "Nivel ${name}";
 
-  static m1(name) => "Compuesto por ${name}";
+  static m1(seconds) => "Sobrevive\n${seconds}s";
 
-  static m2(appUrl, seconds) => "He durado ${seconds} segundos. ¿Cuánto tiempo puedes durar? \n\n${appUrl}";
+  static m2(name) => "Compuesto por ${name}";
+
+  static m3(appUrl, seconds) => "He durado ${seconds} segundos. ¿Cuánto tiempo puedes durar? \n\n${appUrl}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "appDescription" : MessageLookupByLibrary.simpleMessage("¿Siempre se aburre cuando defeca? Acaba con el hedor.\nConvierte tu alcantarilla en un santuario mágico y sé un ninja del retrete 🥷🏼🧻.\nPero no te caigas del retrete, ¡está muy sucio! ¿Cuánto tiempo puede durar?"),
+    "appDescription" : MessageLookupByLibrary.simpleMessage("¿Siempre se aburre cuando defeca? Acaba con el mal olor.\nConvierte tu baño en un santuario mágico y sé un ninja del retrete 🥷🏼🧻.\nPero no te caigas en el retrete, ¡está muy sucio! ¿Cuánto tiempo podrás sobrevivir?"),
     "appDescriptionShort" : MessageLookupByLibrary.simpleMessage("Convierte tu baño en un santuario mágico y conviértete en un ninja del baño."),
     "appTitle" : MessageLookupByLibrary.simpleMessage("Carrera de retretes"),
-    "commonAppUrl" : MessageLookupByLibrary.simpleMessage(""),
     "commonBack" : MessageLookupByLibrary.simpleMessage("< volver"),
+    "overlayHelpLevelName" : m0,
     "overlayHelpStayOnMapText" : MessageLookupByLibrary.simpleMessage("Quédate en\nel asiento"),
-    "overlayHelpSurviveText" : m0,
+    "overlayHelpSurviveText" : m1,
     "overlayHelpTapToStartText" : MessageLookupByLibrary.simpleMessage("Toque para\nempezar"),
     "overlayHelpTapToTurnText" : MessageLookupByLibrary.simpleMessage("Toque para\ngirar"),
     "pageCreditsAuthorsSectionText" : MessageLookupByLibrary.simpleMessage("Autores"),
-    "pageCreditsComposedBy" : m1,
+    "pageCreditsComposedBy" : m2,
     "pageCreditsImagesSectionText" : MessageLookupByLibrary.simpleMessage("Imágenes"),
     "pageCreditsLicensesButtonText" : MessageLookupByLibrary.simpleMessage("Licencias >"),
     "pageCreditsMusicSectionText" : MessageLookupByLibrary.simpleMessage("Música"),
@@ -46,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "pageGameOverNextButtonText" : MessageLookupByLibrary.simpleMessage("Sigue"),
     "pageGameOverRestartButtonText" : MessageLookupByLibrary.simpleMessage("Reiniciar"),
     "pageGameOverShareButtonText" : MessageLookupByLibrary.simpleMessage("Compartir"),
-    "pageGameOverShareMessage" : m2,
+    "pageGameOverShareMessage" : m3,
     "pageGameOverTryAgainButtonText" : MessageLookupByLibrary.simpleMessage("Otra vez"),
     "pageStartContinueButtonText" : MessageLookupByLibrary.simpleMessage("Continuar"),
     "pageStartCreditsButtonText" : MessageLookupByLibrary.simpleMessage("Créditos"),

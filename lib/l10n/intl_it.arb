@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "Pilota di toilette",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< indietro",
   "@commonBack": {},
+  "overlayHelpLevelName": "Livello {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "Rimanere\nsulla\ntoilette",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "Sopravvivere\n{seconds} sec",

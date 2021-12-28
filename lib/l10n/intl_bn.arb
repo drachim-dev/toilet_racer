@@ -6,10 +6,16 @@
   "@appDescriptionShort": {},
   "appTitle": "টয়লেট রেসার",
   "@appTitle": {},
-  "commonAppUrl": "",
-  "@commonAppUrl": {},
   "commonBack": "< ফিরে",
   "@commonBack": {},
+  "overlayHelpLevelName": "স্তর {name}",
+  "@overlayHelpLevelName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "overlayHelpStayOnMapText": "টয়লেটে থাকুন",
   "@overlayHelpStayOnMapText": {},
   "overlayHelpSurviveText": "{seconds} সেকেন্ড\nবেঁচে থাকুন",
