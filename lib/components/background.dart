@@ -98,10 +98,10 @@ class Background extends SpriteComponent with HasGameRef {
   Future<void> _playAnimation() async {
     isAnimating = true;
 
-    // Scale the background image
     final effectDuration = 2.5;
-
     final effectController = EffectController(duration: effectDuration);
+
+    // Scale the background image
     final sizeEffect = SizeEffect.to(_calcTargetSize, effectController);
 
     // Move the image so that the track lies in the track zone of the screen.

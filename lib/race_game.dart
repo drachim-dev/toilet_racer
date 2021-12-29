@@ -156,14 +156,17 @@ class RaceGame extends Forge2DGame with TapDetector {
       helper.add(movementHelp);
       helper.add(gamePlayHelp);
     } else if (gameMode.isCareer && isNewLevel) {
+      // Show name of new level in career mode
       final levelName = GameHelp(
-        helpText: '${S.of(buildContext).overlayHelpLevelName(_currentLevel.id + 1)}',
+        helpText:
+            '${S.of(buildContext).overlayHelpLevelName(_currentLevel.id + 1)}',
         textPosition: GamePosition.CENTER,
       );
 
       helper.add(levelName);
     }
 
+    // Add level specific help
     if (gameMode.levelHelpText != null) {
       final goalHelp = GameHelp(
         helpText: gameMode.levelHelpText,
@@ -173,7 +176,8 @@ class RaceGame extends Forge2DGame with TapDetector {
       helper.add(goalHelp);
     }
 
-    if (helper.isNotEmpty) {
+    // Show tap to begin only for first gameplay
+    if (gameMode.helpNeeded) {
       final tapToBegin = GameHelp(
         helpText: S.of(buildContext).overlayHelpTapToStartText,
         textPosition: GamePosition.CENTER,
@@ -230,7 +234,14 @@ class RaceGame extends Forge2DGame with TapDetector {
         add(_gameHelper.current);
         return;
       }
-      _swapMenuOverlay(kCountDownOverlay);
+
+      // Show countdown only for first gameplay or for level specific help
+      if (gameMode.helpNeeded || _currentLevel.helpText?.isNotEmpty == true) {
+        _swapMenuOverlay(kCountDownOverlay);
+      } else {
+        startGame();
+      }
+
       _gameHelpShown = false;
       return;
     }
