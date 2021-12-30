@@ -11,6 +11,7 @@ import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/game_help.dart';
 import 'package:toilet_racer/components/player_body.dart';
+import 'package:toilet_racer/models/play_option.dart';
 import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
@@ -56,7 +57,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   @override
   Future<void> onLoad() async {
     await _audioService.playBackgroundMusic(menu: true);
-    await _initLevel(_levelRepository.getAllLevels().first);
+    await _initLevel(_levelRepository.getAllLevels().first, false);
     return super.onLoad();
   }
 
@@ -69,14 +70,14 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
   }
 
-  Future<void> _initLevel(Level level) async {
-    final showAnimation = _currentLevel != null && _currentLevel.id != level.id;
-
-    _currentLevel = level;
-
+  Future<void> _initLevel(Level level, bool isNewLevel) async {
     if (children.contains(_background)) {
       remove(_background);
     }
+
+    final showAnimation = gameMode?.animateNextLevel == true && isNewLevel;
+
+    _currentLevel = level;
 
     /// Should load image in onLoad() of component,
     /// but somehow this leads to the gameRef beeing null sometimes.
@@ -92,7 +93,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// Init and show game help
   Future<void> prepareStartGame(
       {GameModeIdentifier gameModeIdentifier,
-      bool resetProgress = false}) async {
+      @required PlayOption playOption}) async {
     _removeOverlays();
 
     if (gameModeIdentifier != null) {
@@ -103,13 +104,21 @@ class RaceGame extends Forge2DGame with TapDetector {
       throw '_gameMode has not been initialized.';
     }
 
-    if (resetProgress) {
-      gameMode.resetProgress();
+    Level nextLevel;
+    switch (playOption) {
+      case PlayOption.repeat:
+        nextLevel = _currentLevel;
+        break;
+      case PlayOption.next:
+        nextLevel = gameMode.getLevel();
+        break;
+      case PlayOption.restart:
+        gameMode.resetProgress();
+        break;
     }
 
-    final nextLevel = gameMode.getLevel();
     final isNewLevel = _currentLevel == null || nextLevel != _currentLevel;
-    await _initLevel(nextLevel);
+    await _initLevel(nextLevel, isNewLevel);
     await _initGameHelper(isNewLevel);
 
     if (_gameHelper.moveNext()) {

@@ -41,8 +41,9 @@ abstract class GameMode {
 
   bool get helpNeeded => globalHighscore < 5;
   bool get ghostMode => false;
-  bool get canPlayNext => false;
+  bool get canPlayNext;
   bool get hasCompleted => false;
+  bool get animateNextLevel;
 
   String get levelHelpText => null;
   Level getLevel();
@@ -61,7 +62,6 @@ class CareerGameMode extends GameMode {
   Iterator<Level> _levelsIterator;
 
   CareerGameMode(int selectedLevelIndex) : super(GameModeIdentifier.career) {
-  
     if (hasCompleted) {
       resetProgress();
     } else {
@@ -92,6 +92,9 @@ class CareerGameMode extends GameMode {
     final unlockedLevelIndexd = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
     return unlockedLevelIndexd > _levelRepository.getAllLevels().length - 1;
   }
+
+  @override
+  bool get animateNextLevel => true;
 
   @override
   String get levelHelpText => _levelsIterator.current.helpText;
@@ -143,6 +146,12 @@ class ShuffleGameMode extends GameMode {
   bool get ghostMode {
     return globalHighscore > 20.0 && Random().nextInt(10) == 0;
   }
+
+  @override
+  bool get canPlayNext => true;
+
+  @override
+  bool get animateNextLevel => false;
 
   /// Returns a random unlocked [Level].
   @override

@@ -1,0 +1,1 @@
+enum PlayOption { repeat, restart, next }

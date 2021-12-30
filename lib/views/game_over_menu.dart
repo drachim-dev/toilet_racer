@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/generated/l10n.dart';
+import 'package:toilet_racer/models/play_option.dart';
 
 class GameOverMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
-  final Future<void> Function(bool resetProgress) onPlayPressed;
+  final Function(PlayOption playOption) onPlayPressed;
   final double score;
   final bool canPlayNext;
   final bool hasCompletedGameMode;
@@ -73,11 +74,22 @@ class GameOverMenu extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: onBackToMenuPressed,
-                    child: Text(S.of(context).pageGameOverHomeButtonText,
-                        style: buttonStyle),
+                    child: Text(
+                      S.of(context).pageGameOverHomeButtonText,
+                      style: buttonStyle,
+                    ),
                   ),
                   SizedBox(height: spacing),
-                  _buildPlayButton(context, buttonStyle),
+                  if (canPlayNext) _buildNextButton(context, buttonStyle),
+                  if (canPlayNext) SizedBox(height: spacing),
+                  TextButton(
+                    onPressed: () => onPlayPressed(PlayOption.repeat),
+                    child: Text(
+                      S.of(context).pageGameOverTryAgainButtonText,
+                      style: buttonStyle,
+                    ),
+                  ),
+                  
                 ],
               ),
             ),
@@ -87,20 +99,19 @@ class GameOverMenu extends StatelessWidget {
     );
   }
 
-  TextButton _buildPlayButton(
+  TextButton _buildNextButton(
     BuildContext context,
     TextStyle buttonStyle,
   ) {
-    final resetProgress = hasCompletedGameMode;
+    final playOption =
+        hasCompletedGameMode ? PlayOption.restart : PlayOption.next;
 
     final buttonText = hasCompletedGameMode
         ? S.of(context).pageGameOverRestartButtonText
-        : canPlayNext
-            ? S.of(context).pageGameOverNextButtonText
-            : S.of(context).pageGameOverTryAgainButtonText;
+        : S.of(context).pageGameOverNextButtonText;
 
     return TextButton(
-      onPressed: () => onPlayPressed(resetProgress),
+      onPressed: () => onPlayPressed(playOption),
       child: Text(
         buttonText,
         style: buttonStyle,

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
+import 'package:toilet_racer/models/play_option.dart';
 import 'package:toilet_racer/race_game.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
@@ -90,7 +91,8 @@ class _MyAppState extends State<MyApp> {
               kStartMenu: (_, RaceGame game) => StartMenu(
                     onPlayPressed: (GameModeIdentifier gameModeIdentifier) =>
                         game.prepareStartGame(
-                            gameModeIdentifier: gameModeIdentifier),
+                            gameModeIdentifier: gameModeIdentifier,
+                            playOption: PlayOption.next),
                     onCreditsPressed: game.showCreditsMenu,
                     onLeaderboardPressed: game.showLeaderboardMenu,
                   ),
@@ -104,8 +106,8 @@ class _MyAppState extends State<MyApp> {
                   ),
               kGameOverMenu: (_, RaceGame game) => GameOverMenu(
                     onBackToMenuPressed: game.showStartMenu,
-                    onPlayPressed: (bool resetProgress) =>
-                        game.prepareStartGame(resetProgress: resetProgress),
+                    onPlayPressed: (PlayOption playOption) =>
+                        game.prepareStartGame(playOption: playOption),
                     score: game.score,
                     canPlayNext: game.gameMode.canPlayNext,
                     hasCompletedGameMode: game.gameMode.hasCompleted,
