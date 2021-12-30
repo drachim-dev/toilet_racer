@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/ad_manager.dart';
@@ -104,6 +105,9 @@ class MobileAdService implements AdService {
       VoidCallback onAdShown}) async {
     _onAdClosed = onAdClosed;
     _onAdShown = onAdShown;
+
+    // disable ads in debug
+    if (kDebugMode) return;
 
     await _prefService.setInt(kPrefKeyAdIntervalCounter, ++_counter);
 
