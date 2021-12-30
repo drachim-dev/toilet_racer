@@ -29,6 +29,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ${{ github.actor }} commited:
-            ${{ join(github.event.commits.*.message, '\n') }}
+            ${{ join(github.event.commits.*.message, '%0A') }}
             
             Changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
