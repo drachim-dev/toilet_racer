@@ -13,7 +13,7 @@ class GameService {
     return _prefService.getDouble(kPrefKeyGlobalHighscore) ?? 0;
   }
 
-  Future<void> submitScore(double score) {
+  Future<void> submitScore(double score) async {
     // TODO: submit score to firebase?
     _updateLocalScore(score);
   }
