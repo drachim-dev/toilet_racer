@@ -25,9 +25,6 @@ class MobileAdService implements AdService {
   final int _interval = kDefaultAdInterval;
   int _counter = 0;
 
-  VoidCallback _onAdClosed = () {};
-  VoidCallback _onAdShown = () {};
-
   InterstitialAd _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
 
@@ -50,16 +47,16 @@ class MobileAdService implements AdService {
   void load() {
     InterstitialAd.load(
         adUnitId: AdManager.interstitialAdUnitId,
-        request: AdRequest(),
+        request: const AdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (InterstitialAd ad) {
-            print('$ad loaded');
+            debugPrint('$ad loaded');
 
             _interstitialAd = ad;
             _numInterstitialLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('InterstitialAd failed to load: $error.');
+            debugPrint('InterstitialAd failed to load: $error.');
             _numInterstitialLoadAttempts += 1;
             _interstitialAd = null;
             if (_numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
@@ -69,24 +66,25 @@ class MobileAdService implements AdService {
         ));
   }
 
-  void _showInterstitialAd() {
+  void _showInterstitialAd(
+      {@required VoidCallback onAdClosed, @required VoidCallback onAdShown}) {
     if (_interstitialAd == null) {
-      print('Warning: attempt to show interstitial before loaded.');
+      debugPrint('Warning: attempt to show interstitial before loaded.');
       return;
     }
     _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) {
-        print('ad onAdShowedFullScreenContent.');
-        _onAdShown();
+        debugPrint('ad onAdShowedFullScreenContent.');
+        onAdShown();
       },
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
+        debugPrint('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
-        _onAdClosed();
+        onAdClosed();
         load();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
+        debugPrint('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         load();
       },
@@ -102,9 +100,6 @@ class MobileAdService implements AdService {
       {bool force = false,
       VoidCallback onAdClosed,
       VoidCallback onAdShown}) async {
-    _onAdClosed = onAdClosed;
-    _onAdShown = onAdShown;
-
     // disable ads in debug
     if (kDebugMode) return;
 
@@ -112,7 +107,7 @@ class MobileAdService implements AdService {
 
     if (force || _counter % _interval == 0) {
       _counter = 0;
-      _showInterstitialAd();
+      _showInterstitialAd(onAdClosed: onAdClosed, onAdShown: onAdShown);
     }
   }
 }

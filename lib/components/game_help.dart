@@ -7,7 +7,7 @@ import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/components/player_body.dart';
 
 class GameHelp extends PositionComponent with HasGameRef {
-  static final baseTextConfig = TextStyle(
+  static const baseTextConfig = TextStyle(
     fontSize: 56.0,
     color: Colors.white,
     fontFamily: 'NerkoOne',
@@ -41,7 +41,7 @@ class GameHelp extends PositionComponent with HasGameRef {
     this.rightArrow = false,
     this.helpText,
     this.imagePath,
-    this.textPosition = GamePosition.TOP,
+    this.textPosition = GamePosition.top,
     this.player,
   }) {
     positionType = PositionType.viewport;
@@ -68,12 +68,12 @@ class GameHelp extends PositionComponent with HasGameRef {
   }
 
   @override
-  void render(Canvas c) {
-    super.render(c);
+  void render(Canvas canvas) {
+    super.render(canvas);
 
     // darken background
     if (darken) {
-      c.drawColor(Colors.black54, BlendMode.darken);
+      canvas.drawColor(Colors.black54, BlendMode.darken);
     }
 
     if (bottomArrow || topArrow) {
@@ -82,10 +82,10 @@ class GameHelp extends PositionComponent with HasGameRef {
       final middleY = (boundary.first.y + boundary.last.y) / 2;
 
       if (bottomArrow) {
-        _drawBottomArrow(c, middleY);
+        _drawBottomArrow(canvas, middleY);
       }
       if (topArrow) {
-        _drawTopArrow(c, middleY);
+        _drawTopArrow(canvas, middleY);
       }
     }
 
@@ -95,11 +95,11 @@ class GameHelp extends PositionComponent with HasGameRef {
       final middleX = (boundary.first.x + boundary.last.x) / 2;
 
       if (leftArrow) {
-        _drawLeftArrow(c, middleX);
+        _drawLeftArrow(canvas, middleX);
       }
 
       if (rightArrow) {
-        _drawRightArrow(c, middleX);
+        _drawRightArrow(canvas, middleX);
       }
     }
 
@@ -107,13 +107,13 @@ class GameHelp extends PositionComponent with HasGameRef {
     if (helpText.isNotEmpty) {
       Vector2 position;
       switch (textPosition) {
-        case GamePosition.TOP:
+        case GamePosition.top:
           position = Vector2(_screenSize.x / 2, _screenSize.y / 6);
           break;
-        case GamePosition.CENTER:
+        case GamePosition.center:
           position = Vector2(_screenSize.x / 2, _screenSize.y / 2);
           break;
-        case GamePosition.BOTTOM:
+        case GamePosition.bottom:
           position = Vector2(_screenSize.x / 2, _screenSize.y / 6 * 5);
           break;
       }
@@ -135,7 +135,7 @@ class GameHelp extends PositionComponent with HasGameRef {
       add(textBoxComponent); */
 
       // text must be wrapped manually via linebreaks
-      textPaint.render(c, helpText, position, anchor: Anchor.center);
+      textPaint.render(canvas, helpText, position, anchor: Anchor.center);
     }
   }
 
@@ -221,4 +221,4 @@ class GameHelp extends PositionComponent with HasGameRef {
   }
 }
 
-enum GamePosition { TOP, CENTER, BOTTOM }
+enum GamePosition { top, center, bottom }

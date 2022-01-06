@@ -108,21 +108,21 @@ class PlayerBody extends PositionBodyComponent {
   }
 
   @override
-  void renderCircle(Canvas c, Offset center, double radius) {
-    super.renderCircle(c, center, radius);
+  void renderCircle(Canvas canvas, Offset center, double radius) {
+    super.renderCircle(canvas, center, radius);
 
     // draw lines to show heading and bearing
     final length = radius * 3;
     final heading = body.angle;
     final headingPointer = pointer(heading, length, true);
     final bearingPointer = pointer(bearing, length, true);
-    c.drawLine(
+    canvas.drawLine(
         center,
         center + headingPointer.toOffset(),
         Paint()
           ..strokeWidth = 1
           ..color = Colors.red);
-    c.drawLine(
+    canvas.drawLine(
         center,
         center + bearingPointer.toOffset(),
         Paint()
@@ -198,11 +198,13 @@ class BoundaryContactCallback extends ContactCallback<PlayerBody, Boundary> {
   BoundaryContactCallback(this.collisionDetected);
 
   @override
+  // ignore: avoid_renaming_method_parameters
   void begin(PlayerBody player, Boundary boundary, Contact contact) {
     boundary.paint.color = material.Colors.red;
     collisionDetected();
   }
 
   @override
+  // ignore: avoid_renaming_method_parameters
   void end(PlayerBody player, Boundary boundary, Contact contact) {}
 }

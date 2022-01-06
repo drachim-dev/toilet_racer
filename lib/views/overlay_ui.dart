@@ -5,6 +5,8 @@ import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 
 class OverlayUi extends StatefulWidget {
+  const OverlayUi({Key key}) : super(key: key);
+
   @override
   _OverlayUiState createState() => _OverlayUiState();
 }
@@ -30,8 +32,8 @@ class _OverlayUiState extends State<OverlayUi> {
         children: [
           IconButton(
             icon: _musicEnabled
-                ? Icon(Icons.volume_up, color: Colors.white)
-                : Icon(Icons.volume_off, color: Colors.white),
+                ? const Icon(Icons.volume_up, color: Colors.white)
+                : const Icon(Icons.volume_off, color: Colors.white),
             iconSize: kOverlayIconSize,
             onPressed: () => _toggleMusic(),
           ),
@@ -44,7 +46,7 @@ class _OverlayUiState extends State<OverlayUi> {
               textAlign: TextAlign.center,
             )),
           ),
-          SizedBox(width: kOverlayIconSize),
+          const SizedBox(width: kOverlayIconSize),
         ],
       ),
     );

@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 class CountDownOverlay extends StatefulWidget {
   final VoidCallback onCountDownFinished;
 
-  const CountDownOverlay({@required this.onCountDownFinished});
+  const CountDownOverlay({Key key, @required this.onCountDownFinished})
+      : super(key: key);
 
   @override
   _CountDownOverlayState createState() => _CountDownOverlayState();
@@ -65,8 +66,8 @@ class _CountDownOverlayState extends State<CountDownOverlay>
 }
 
 class AnimatedCountdown extends AnimatedWidget {
-  const AnimatedCountdown({this.counterAnimation, this.scaleAnimation})
-      : super(listenable: counterAnimation);
+  const AnimatedCountdown({Key key, this.counterAnimation, this.scaleAnimation})
+      : super(key: key, listenable: counterAnimation);
 
   final Animation<int> counterAnimation;
   final Animation<double> scaleAnimation;
@@ -75,7 +76,7 @@ class AnimatedCountdown extends AnimatedWidget {
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: scaleAnimation,
-      builder: (_, child) => Container(
+      builder: (_, child) => SizedBox(
         height: scaleAnimation.value,
         width: scaleAnimation.value,
         child: child,
@@ -83,7 +84,7 @@ class AnimatedCountdown extends AnimatedWidget {
       child: FittedBox(
         child: Text(
           counterAnimation.value.toString(),
-          style: TextStyle(fontSize: 150.0),
+          style: const TextStyle(fontSize: 150.0),
         ),
       ),
     );

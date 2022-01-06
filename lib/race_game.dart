@@ -37,6 +37,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   GameMode gameMode;
 
   @override
+  // ignore: overridden_fields
   bool debugMode = kDebugMode;
 
   bool _gameHelpShown = false;
@@ -168,8 +169,8 @@ class RaceGame extends Forge2DGame with TapDetector {
       // Show name of new level in career mode
       final levelName = GameHelp(
         helpText:
-            '${S.of(buildContext).overlayHelpLevelName(_currentLevel.id + 1)}',
-        textPosition: GamePosition.CENTER,
+            S.of(buildContext).overlayHelpLevelName(_currentLevel.id + 1),
+        textPosition: GamePosition.center,
       );
 
       helper.add(levelName);
@@ -179,7 +180,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     if (gameMode.levelHelpText != null) {
       final goalHelp = GameHelp(
         helpText: gameMode.levelHelpText,
-        textPosition: GamePosition.CENTER,
+        textPosition: GamePosition.center,
       );
 
       helper.add(goalHelp);
@@ -189,7 +190,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     if (gameMode.helpNeeded) {
       final tapToBegin = GameHelp(
         helpText: S.of(buildContext).overlayHelpTapToStartText,
-        textPosition: GamePosition.CENTER,
+        textPosition: GamePosition.center,
       );
 
       helper.add(tapToBegin);
@@ -230,7 +231,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   @override
-  void onTapDown(TapDownInfo details) {
+  void onTapDown(TapDownInfo info) {
     // Ignore tap during zoom effect
     if (_background.animationEnabled && !_background.animationCompleted) {
       return;
@@ -256,7 +257,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
 
     _playerBody?.spin();
-    return super.onTapDown(details);
+    return super.onTapDown(info);
   }
 
   void _onCollisionDetected() {
@@ -269,7 +270,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void _onGameOver() async {
-    _gameComponents.forEach((c) => remove(c));
+    for (var c in _gameComponents) {
+      remove(c);
+    }
     removeContactCallback(_contactCallback);
 
     // Start menu background music before gameOverCallback because ads should be able to stop music again.
@@ -277,7 +280,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     await gameOverCallback();
 
     // Short delay to prevent possible game start before ad is shown
-    await Future.delayed(Duration(milliseconds: 150));
+    await Future.delayed(const Duration(milliseconds: 150));
 
     _swapMenuOverlay(kGameOverMenu);
   }
@@ -300,9 +303,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// Removes all active overlays
   void _removeOverlays() {
     final activeOverlays = overlays.value.toSet();
-    activeOverlays.forEach((overlay) {
+    for (var overlay in activeOverlays) {
       overlays.remove(overlay);
-    });
+    }
   }
 
   /// Removes all active overlays in favor of [overlayName]

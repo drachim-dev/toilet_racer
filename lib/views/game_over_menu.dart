@@ -14,18 +14,20 @@ class GameOverMenu extends StatelessWidget {
   final bool hasCompletedGameMode;
 
   const GameOverMenu(
-      {@required this.onBackToMenuPressed,
+      {Key key,
+      @required this.onBackToMenuPressed,
       @required this.onPlayPressed,
       @required this.score,
       @required this.canPlayNext,
-      @required this.hasCompletedGameMode});
+      @required this.hasCompletedGameMode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final titleStyle = Theme.of(context).textTheme.headline2;
     final buttonStyle = Theme.of(context).textTheme.headline3;
-    final dividerHeight = 5.0;
-    final blur = 10.0;
+    const dividerHeight = 5.0;
+    const blur = 10.0;
     final backgroundColor = buttonStyle.color;
 
     const spacing = 16.0;
@@ -67,7 +69,7 @@ class GameOverMenu extends StatelessWidget {
               },
             ),
             Divider(thickness: dividerHeight, color: backgroundColor),
-            SizedBox(height: spacing),
+            const SizedBox(height: spacing),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Column(
@@ -79,9 +81,9 @@ class GameOverMenu extends StatelessWidget {
                       style: buttonStyle,
                     ),
                   ),
-                  SizedBox(height: spacing),
+                  const SizedBox(height: spacing),
                   if (canPlayNext) _buildNextButton(context, buttonStyle),
-                  if (canPlayNext) SizedBox(height: spacing),
+                  if (canPlayNext) const SizedBox(height: spacing),
                   TextButton(
                     onPressed: () => onPlayPressed(PlayOption.repeat),
                     child: Text(
@@ -89,7 +91,6 @@ class GameOverMenu extends StatelessWidget {
                       style: buttonStyle,
                     ),
                   ),
-                  
                 ],
               ),
             ),

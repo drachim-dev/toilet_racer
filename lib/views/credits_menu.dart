@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class CreditsMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
 
-  const CreditsMenu(this.onBackToMenuPressed);
+  const CreditsMenu(this.onBackToMenuPressed, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +23,9 @@ class CreditsMenu extends StatelessWidget {
         .headline6
         .copyWith(decoration: TextDecoration.underline);
 
-    final blur = 10.0;
-    final sectionSpacing = 24.0;
-    final itemSpacing = sectionSpacing / 2;
+    const blur = 10.0;
+    const sectionSpacing = 24.0;
+    const itemSpacing = sectionSpacing / 2;
 
     return BackdropFilter(
       filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
@@ -40,21 +40,24 @@ class CreditsMenu extends StatelessWidget {
               padding: const EdgeInsets.all(kMenuScreenMargin),
               child: TextButton(
                 onPressed: onBackToMenuPressed,
-                style: TextButton.styleFrom(padding: EdgeInsets.only(left: 0)),
+                style: TextButton.styleFrom(
+                    padding: const EdgeInsets.only(left: 0)),
                 child: Text(S.of(context).commonBack, style: menuStyle),
               ),
             ),
             Text(S.of(context).pageCreditsTitle, style: titleStyle),
-            SizedBox(height: sectionSpacing),
+            const SizedBox(height: sectionSpacing),
             Expanded(
               child: ListView(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 padding: const EdgeInsets.only(
                     left: kMenuScreenMargin,
                     right: kMenuScreenMargin,
                     bottom: kMenuScreenMargin / 2),
                 children: [
-                  Center(child: Text(S.of(context).pageCreditsAuthorsSectionText, style: sectionStyle)),
+                  Center(
+                      child: Text(S.of(context).pageCreditsAuthorsSectionText,
+                          style: sectionStyle)),
                   Center(child: Text('Dr. Achim', style: textStyle)),
                   Center(
                     child: Linkify(
@@ -64,7 +67,7 @@ class CreditsMenu extends StatelessWidget {
                       linkStyle: urlStyle,
                     ),
                   ),
-                  SizedBox(height: itemSpacing),
+                  const SizedBox(height: itemSpacing),
                   Center(child: Text('Dr. Manni', style: textStyle)),
                   Center(
                     child: Linkify(
@@ -74,14 +77,20 @@ class CreditsMenu extends StatelessWidget {
                       linkStyle: urlStyle,
                     ),
                   ),
-                  SizedBox(height: sectionSpacing),
-                  Center(child: Text(S.of(context).pageCreditsMusicSectionText, style: sectionStyle)),
+                  const SizedBox(height: sectionSpacing),
+                  Center(
+                      child: Text(S.of(context).pageCreditsMusicSectionText,
+                          style: sectionStyle)),
                   Center(
                       child: Text('„Toilet Racer“',
                           style: textStyle, textAlign: TextAlign.center)),
                   Center(
-                      child: Text(S.of(context).pageCreditsComposedBy('Roberto Risorto'),
-                          style: textStyle, textAlign: TextAlign.center)),
+                      child: Text(
+                          S
+                              .of(context)
+                              .pageCreditsComposedBy('Roberto Risorto'),
+                          style: textStyle,
+                          textAlign: TextAlign.center)),
                   Center(
                     child: Linkify(
                       onOpen: _onOpen,
@@ -90,7 +99,7 @@ class CreditsMenu extends StatelessWidget {
                       linkStyle: urlStyle,
                     ),
                   ),
-                  SizedBox(height: itemSpacing),
+                  const SizedBox(height: itemSpacing),
                   Center(
                       child: Text('„Short wet bold fart“', style: textStyle)),
                   Center(
@@ -101,8 +110,10 @@ class CreditsMenu extends StatelessWidget {
                       linkStyle: urlStyle,
                     ),
                   ),
-                  SizedBox(height: sectionSpacing),
-                  Center(child: Text(S.of(context).pageCreditsImagesSectionText, style: sectionStyle)),
+                  const SizedBox(height: sectionSpacing),
+                  Center(
+                      child: Text(S.of(context).pageCreditsImagesSectionText,
+                          style: sectionStyle)),
                   Center(
                       child:
                           Text('Poop Vectors by Vecteezy', style: textStyle)),
@@ -114,13 +125,14 @@ class CreditsMenu extends StatelessWidget {
                       linkStyle: urlStyle,
                     ),
                   ),
-                  SizedBox(height: sectionSpacing),
+                  const SizedBox(height: sectionSpacing),
                   Center(
                     child: TextButton(
                       style: TextButton.styleFrom(
-                          padding: EdgeInsets.only(left: 0)),
+                          padding: const EdgeInsets.only(left: 0)),
                       onPressed: () => showLicense(context),
-                      child: Text(S.of(context).pageCreditsLicensesButtonText, style: sectionStyle),
+                      child: Text(S.of(context).pageCreditsLicensesButtonText,
+                          style: sectionStyle),
                     ),
                   ),
                 ],

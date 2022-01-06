@@ -9,12 +9,14 @@ class FlipWidget extends StatelessWidget {
   final AnimationController _controller;
 
   const FlipWidget({
+    Key key,
     @required this.background,
     @required this.flippable,
     @required AnimationController controller,
   })  : assert(background != null),
         assert(flippable != null),
-        _controller = controller;
+        _controller = controller,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

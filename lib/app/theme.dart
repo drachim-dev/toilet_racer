@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const primaryColor = Colors.brown;
 const secondaryColor = Colors.orangeAccent;
 
-final colorScheme = ColorScheme.dark(
+const colorScheme = ColorScheme.dark(
   primary: primaryColor,
   secondary: secondaryColor,
 );
@@ -15,7 +15,7 @@ final toiletTheme = ThemeData(
     brightness: Brightness.dark,
     fontFamily: 'NerkoOne',
     textTheme: TextTheme(
-      headline1: TextStyle(fontSize: 128),
+      headline1: const TextStyle(fontSize: 128),
       headline2: _getTextStyleWithShadow(96),
       headline3: _getTextStyleWithShadow(72),
       headline4: _getTextStyleWithShadow(36),

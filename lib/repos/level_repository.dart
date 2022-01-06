@@ -21,7 +21,7 @@ class LevelRepository {
     final levels = <Level>[];
     var levelIndex = 0;
     players.asMap().forEach((playerIndex, player) {
-      maps.forEach((map) {
+      for (var map in maps) {
         var status = unlockedIndex >= levelIndex
             ? LevelStatus.unlocked
             : LevelStatus.locked;
@@ -30,7 +30,7 @@ class LevelRepository {
         final goal = 15.0 + playerIndex * 2.5;
 
         // set help text for each first map
-        var helpText;
+        String helpText;
         if (maps.first == map) {
           helpText = S.current.overlayHelpSurviveText(goal.formatDecimal(2));
         }
@@ -43,7 +43,7 @@ class LevelRepository {
             goal: goal,
             status: status);
         levels.add(level);
-      });
+      }
     });
 
     return levels;

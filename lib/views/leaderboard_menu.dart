@@ -11,7 +11,7 @@ class LeaderboardMenu extends StatelessWidget {
 
   final VoidCallback onBackToMenuPressed;
 
-  LeaderboardMenu(this.onBackToMenuPressed);
+  LeaderboardMenu(this.onBackToMenuPressed, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class LeaderboardMenu extends StatelessWidget {
     final titleStyle = Theme.of(context).textTheme.headline3;
     final textStyle = Theme.of(context).textTheme.headline2;
 
-    final blur = 10.0;
-    final sectionSpacing = 24.0;
-    final itemSpacing = sectionSpacing / 2;
+    const blur = 10.0;
+    const sectionSpacing = 24.0;
+    const itemSpacing = sectionSpacing / 2;
 
     final localLeader = Leader('Your Score', _gameService.getLocalHighscore());
     final leaders = <Leader>[localLeader];
@@ -40,15 +40,16 @@ class LeaderboardMenu extends StatelessWidget {
               padding: const EdgeInsets.all(kMenuScreenMargin),
               child: TextButton(
                 onPressed: onBackToMenuPressed,
-                style: TextButton.styleFrom(padding: EdgeInsets.only(left: 0)),
+                style: TextButton.styleFrom(
+                    padding: const EdgeInsets.only(left: 0)),
                 child: Text('< back', style: menuStyle),
               ),
             ),
             Text('Highscore', style: titleStyle),
-            SizedBox(height: sectionSpacing),
+            const SizedBox(height: sectionSpacing),
             Expanded(
               child: ListView.separated(
-                physics: ScrollPhysics(),
+                physics: const ScrollPhysics(),
                 padding: const EdgeInsets.only(
                     left: kMenuScreenMargin,
                     right: kMenuScreenMargin,
@@ -57,7 +58,8 @@ class LeaderboardMenu extends StatelessWidget {
                 itemBuilder: (_, int index) => Center(
                     child: Text(leaders[index].score.toString(),
                         style: textStyle)),
-                separatorBuilder: (_, __) => SizedBox(height: itemSpacing),
+                separatorBuilder: (_, __) =>
+                    const SizedBox(height: itemSpacing),
               ),
             ),
           ],

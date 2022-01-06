@@ -14,10 +14,11 @@ class StartMenu extends StatefulWidget {
   final VoidCallback onLeaderboardPressed;
 
   const StartMenu({
+    Key key,
     @required this.onPlayPressed,
     @required this.onCreditsPressed,
     @required this.onLeaderboardPressed,
-  });
+  }) : super(key: key);
 
   @override
   _StartMenuState createState() => _StartMenuState();
@@ -35,7 +36,7 @@ class _StartMenuState extends State<StartMenu>
 
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       value: 0,
     );
   }
@@ -54,10 +55,10 @@ class _StartMenuState extends State<StartMenu>
     final titleStyle = theme.textTheme.headline1.copyWith(color: Colors.brown);
     final buttonStyle = theme.textTheme.headline2;
 
-    final iconColor = secondaryColor;
-    final shadowColor = primaryColor;
+    const iconColor = secondaryColor;
+    const shadowColor = primaryColor;
     final iconSize = buttonStyle.fontSize - 8;
-    final iconPadding = EdgeInsets.only(right: 16);
+    const iconPadding = EdgeInsets.only(right: 16);
 
     const spacing = 86.0;
 
@@ -85,7 +86,7 @@ class _StartMenuState extends State<StartMenu>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(S.of(context).appTitle, style: titleStyle),
-                    SizedBox(height: spacing * 3),
+                    const SizedBox(height: spacing * 3),
                     ElevatedButton.icon(
                         icon: ShadowIcon(
                           Icons.play_circle_outline_outlined,
@@ -100,7 +101,7 @@ class _StartMenuState extends State<StartMenu>
                                 ? S.of(context).pageStartContinueButtonText
                                 : S.of(context).pageStartPlayButtonText,
                             style: buttonStyle)),
-                    SizedBox(height: spacing),
+                    const SizedBox(height: spacing),
                     if (hasCareerProgress)
                       ElevatedButton.icon(
                         icon: ShadowIcon(
@@ -114,7 +115,7 @@ class _StartMenuState extends State<StartMenu>
                         label: Text(S.of(context).pageStartShuffleButtonText,
                             style: buttonStyle),
                       ),
-                    SizedBox(height: spacing),
+                    const SizedBox(height: spacing),
                     ElevatedButton.icon(
                       icon: ShadowIcon(
                         Icons.help_outline_outlined,
@@ -127,7 +128,7 @@ class _StartMenuState extends State<StartMenu>
                       label: Text(S.of(context).pageStartCreditsButtonText,
                           style: buttonStyle),
                     ),
-                    SizedBox(height: spacing),
+                    const SizedBox(height: spacing),
                   ],
                 ),
               )),

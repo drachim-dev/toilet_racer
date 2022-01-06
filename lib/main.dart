@@ -29,10 +29,12 @@ Future<void> main() async {
   setupLocator();
   await locator.allReady();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -64,7 +66,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: toiletTheme,
       onGenerateTitle: (context) => S.of(context).appTitle,
-      localizationsDelegates: [
+      localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -100,7 +102,7 @@ class _MyAppState extends State<MyApp> {
                   CreditsMenu(game.showStartMenu),
               kLeaderboardMenu: (_, RaceGame game) =>
                   LeaderboardMenu(game.showStartMenu),
-              kOverlayUi: (_, RaceGame game) => OverlayUi(),
+              kOverlayUi: (_, RaceGame game) => const OverlayUi(),
               kCountDownOverlay: (_, RaceGame game) => CountDownOverlay(
                     onCountDownFinished: game.startGame,
                   ),

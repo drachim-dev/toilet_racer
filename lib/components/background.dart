@@ -98,7 +98,7 @@ class Background extends SpriteComponent with HasGameRef {
   Future<void> _playAnimation() async {
     isAnimating = true;
 
-    final effectDuration = 2.5;
+    const effectDuration = 2.5;
     final effectController = EffectController(duration: effectDuration);
 
     // Scale the background image
