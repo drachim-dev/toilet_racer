@@ -40,7 +40,7 @@ class MobileAdService implements AdService {
 
   @override
   void dispose() {
-    _interstitialAd.dispose();
+    _interstitialAd?.dispose();
   }
 
   @override

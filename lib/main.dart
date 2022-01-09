@@ -45,11 +45,17 @@ class _MyAppState extends State<MyApp> {
 
   RaceGame _game;
 
+  _MyAppState() {
+    _game = RaceGame(gameOverCallback: () {
+      return _adService?.mayShow(
+          onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
+          onAdShown: () => _audioService.stopBackgroundMusic());
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
-    _game = RaceGame(gameOverCallback: _onGameOver);
 
     _adService.load();
   }
@@ -64,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: toiletTheme,
       onGenerateTitle: (context) => S.of(context).appTitle,
       localizationsDelegates: const [
@@ -121,8 +128,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-  Future<void> _onGameOver() => _adService?.mayShow(
-      onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
-      onAdShown: () => _audioService.stopBackgroundMusic());
 }
