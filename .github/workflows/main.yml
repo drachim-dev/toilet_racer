@@ -30,6 +30,7 @@ jobs:
           format: html
           message: |
             ${{ github.actor }} commited:
-            ${{ join(github.event.commits.*.message, "\r\n") }}
+            ${{ join(github.event.commits.*.message, '
+            ') }}
             
             Changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
