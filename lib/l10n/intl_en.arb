@@ -14,7 +14,7 @@
   "@overlayHelpLevelName": {
     "placeholders": {
       "name": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -24,7 +24,7 @@
   "@overlayHelpSurviveText": {
     "placeholders": {
       "seconds": {
-        "type": "double"
+        "type": "String"
       }
     }
   },

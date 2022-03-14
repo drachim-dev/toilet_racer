@@ -65,7 +65,7 @@ class GameOverMenu extends StatelessWidget {
               label: Text(S.of(context).pageGameOverShareButtonText),
               onPressed: () {
                 return Share.share(S.of(context).pageGameOverShareMessage(
-                    score, S.of(context).commonAppUrl));
+                    S.of(context).commonAppUrl, score));
               },
             ),
             Divider(thickness: dividerHeight, color: backgroundColor),
