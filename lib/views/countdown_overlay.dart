@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class CountDownOverlay extends StatefulWidget {
   final VoidCallback onCountDownFinished;
 
-  const CountDownOverlay({Key key, @required this.onCountDownFinished})
+  const CountDownOverlay({Key? key, required this.onCountDownFinished})
       : super(key: key);
 
   @override
@@ -18,9 +18,9 @@ class _CountDownOverlayState extends State<CountDownOverlay>
 
   static const kCountDownTime = Duration(seconds: 2);
 
-  AnimationController _controller;
-  Animation<double> _scaleAnimation;
-  Animation<int> _counterAnimation;
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+  late Animation<int> _counterAnimation;
 
   @override
   void initState() {
@@ -66,7 +66,8 @@ class _CountDownOverlayState extends State<CountDownOverlay>
 }
 
 class AnimatedCountdown extends AnimatedWidget {
-  const AnimatedCountdown({Key key, this.counterAnimation, this.scaleAnimation})
+  const AnimatedCountdown(
+      {Key? key, required this.counterAnimation, required this.scaleAnimation})
       : super(key: key, listenable: counterAnimation);
 
   final Animation<int> counterAnimation;

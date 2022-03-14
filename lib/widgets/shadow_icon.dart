@@ -8,10 +8,10 @@ class ShadowIcon extends StatelessWidget {
   final EdgeInsets padding;
 
   const ShadowIcon(this.icon,
-      {Key key,
-      this.color,
-      this.shadowColor,
-      this.size,
+      {Key? key,
+      required this.color,
+      required this.shadowColor,
+      required this.size,
       this.padding = EdgeInsets.zero})
       : super(key: key);
 

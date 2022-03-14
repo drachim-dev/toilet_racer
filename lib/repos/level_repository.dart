@@ -30,7 +30,7 @@ class LevelRepository {
         final goal = 15.0 + playerIndex * 2.5;
 
         // set help text for each first map
-        String helpText;
+        String? helpText;
         if (maps.first == map) {
           helpText = S.current.overlayHelpSurviveText(goal.formatDecimal(2));
         }

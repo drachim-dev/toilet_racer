@@ -11,10 +11,10 @@ class Player {
   final List<String> filePaths;
 
   Player({
-    @required this.name,
+    required this.name,
     this.maxVelocity = 100,
     this.acceleration = 1.0,
     this.scale = 1.0,
-    @required this.filePaths,
+    required this.filePaths,
   });
 }

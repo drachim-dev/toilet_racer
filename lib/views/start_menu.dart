@@ -14,10 +14,10 @@ class StartMenu extends StatefulWidget {
   final VoidCallback onLeaderboardPressed;
 
   const StartMenu({
-    Key key,
-    @required this.onPlayPressed,
-    @required this.onCreditsPressed,
-    @required this.onLeaderboardPressed,
+    Key? key,
+    required this.onPlayPressed,
+    required this.onCreditsPressed,
+    required this.onLeaderboardPressed,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class StartMenu extends StatefulWidget {
 
 class _StartMenuState extends State<StartMenu>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   final SharedPreferences _prefService = locator<SharedPreferences>();
 
@@ -43,7 +43,7 @@ class _StartMenuState extends State<StartMenu>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
 
     super.dispose();
   }
@@ -52,12 +52,12 @@ class _StartMenuState extends State<StartMenu>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    final titleStyle = theme.textTheme.headline1.copyWith(color: Colors.brown);
-    final buttonStyle = theme.textTheme.headline2;
+    final titleStyle = theme.textTheme.headline1!.copyWith(color: Colors.brown);
+    final buttonStyle = theme.textTheme.headline2!;
 
     const iconColor = secondaryColor;
     const shadowColor = primaryColor;
-    final iconSize = buttonStyle.fontSize - 8;
+    final iconSize = buttonStyle.fontSize! - 8;
     const iconPadding = EdgeInsets.only(right: 16);
 
     const spacing = 86.0;

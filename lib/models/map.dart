@@ -8,5 +8,5 @@ class GameMap {
   final String filePath;
   final Track track;
 
-  GameMap({@required this.name, @required this.filePath, @required this.track});
+  GameMap({required this.name, required this.filePath, required this.track});
 }

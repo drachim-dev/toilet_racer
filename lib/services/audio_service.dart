@@ -8,7 +8,7 @@ import 'package:toilet_racer/app/locator.dart';
 abstract class AudioService {
   Future<AudioService> init();
 
-  Future<void> playBackgroundMusic({bool menu});
+  Future<void> playBackgroundMusic({required bool menu});
 
   Future<void> playDropSound(String path);
 
@@ -84,7 +84,7 @@ class WebAudioService implements AudioService {
   }
 
   @override
-  Future<void> playBackgroundMusic({bool menu}) async {}
+  Future<void> playBackgroundMusic({required bool menu}) async {}
 
   @override
   Future<void> playDropSound(String path) async {}

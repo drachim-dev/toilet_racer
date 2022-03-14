@@ -25,7 +25,7 @@ class MobileAdService implements AdService {
   final int _interval = kDefaultAdInterval;
   int _counter = 0;
 
-  InterstitialAd _interstitialAd;
+  InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
 
   @override
@@ -67,20 +67,20 @@ class MobileAdService implements AdService {
   }
 
   void _showInterstitialAd(
-      {@required VoidCallback onAdClosed, @required VoidCallback onAdShown}) {
+      {VoidCallback? onAdClosed, VoidCallback? onAdShown}) {
     if (_interstitialAd == null) {
       debugPrint('Warning: attempt to show interstitial before loaded.');
       return;
     }
-    _interstitialAd.fullScreenContentCallback = FullScreenContentCallback(
+    _interstitialAd?.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (InterstitialAd ad) {
         debugPrint('ad onAdShowedFullScreenContent.');
-        onAdShown();
+        onAdShown?.call();
       },
       onAdDismissedFullScreenContent: (InterstitialAd ad) {
         debugPrint('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
-        onAdClosed();
+        onAdClosed?.call();
         load();
       },
       onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
@@ -89,7 +89,7 @@ class MobileAdService implements AdService {
         load();
       },
     );
-    _interstitialAd.show();
+    _interstitialAd?.show();
     _interstitialAd = null;
   }
 
@@ -98,8 +98,8 @@ class MobileAdService implements AdService {
   @override
   Future<void> mayShow(
       {bool force = false,
-      VoidCallback onAdClosed,
-      VoidCallback onAdShown}) async {
+      VoidCallback? onAdClosed,
+      VoidCallback? onAdShown}) async {
     // disable ads in debug
     if (kDebugMode) return;
 
@@ -127,6 +127,6 @@ class WebAdService implements AdService {
   @override
   Future<void> mayShow(
       {bool force = false,
-      VoidCallback onAdClosed,
-      VoidCallback onAdShown}) async {}
+      VoidCallback? onAdClosed,
+      VoidCallback? onAdShown}) async {}
 }

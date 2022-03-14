@@ -10,20 +10,16 @@ import 'app/locator.dart';
 enum GameModeIdentifier { career, shuffle }
 
 extension GameModeIdentifierExtension on GameModeIdentifier {
-  GameMode gameMode(int selectedLevel) {
+  GameMode gameMode(int? selectedLevel) {
     final _prefService = locator<SharedPreferences>();
 
     switch (this) {
       case GameModeIdentifier.career:
         final levelIndex =
             selectedLevel ?? _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
-        return CareerGameMode(levelIndex);
-        break;
+        return CareerGameMode(selectedLevelIndex: levelIndex);
       case GameModeIdentifier.shuffle:
         return ShuffleGameMode();
-        break;
-      default:
-        return null;
     }
   }
 }
@@ -45,7 +41,7 @@ abstract class GameMode {
   bool get hasCompleted => false;
   bool get animateNextLevel;
 
-  String get levelHelpText => null;
+  String? get levelHelpText => null;
   Level getLevel();
 
   void updateScoreAndAchievements(double score);
@@ -59,17 +55,17 @@ extension GameModeExtension on GameMode {
 }
 
 class CareerGameMode extends GameMode {
-  Iterator<Level> _levelsIterator;
+  late Iterator<Level> _levelsIterator;
 
-  CareerGameMode(int selectedLevelIndex) : super(GameModeIdentifier.career) {
+  CareerGameMode({required int selectedLevelIndex}) : super(GameModeIdentifier.career) {
     if (hasCompleted) {
       resetProgress();
     } else {
-      _init(selectedLevelIndex);
+      _init(selectedLevelIndex: selectedLevelIndex);
     }
   }
 
-  void _init(int selectedLevelIndex) {
+  void _init({required int selectedLevelIndex}) {
     _levelsIterator = _levelRepository
         .getAllLevels()
         .skip(selectedLevelIndex)
@@ -97,7 +93,7 @@ class CareerGameMode extends GameMode {
   bool get animateNextLevel => true;
 
   @override
-  String get levelHelpText => _levelsIterator.current.helpText;
+  String? get levelHelpText => _levelsIterator.current.helpText;
 
   /// Returns the next unlocked [Level].
   @override
@@ -135,7 +131,7 @@ class CareerGameMode extends GameMode {
   @override
   void resetProgress() {
     _prefService.setInt(kPrefKeyUnlockedIndex, 0);
-    _init(0);
+    _init(selectedLevelIndex: 0);
   }
 }
 

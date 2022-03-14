@@ -30,10 +30,10 @@ final toiletTheme = ThemeData(
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          primary: Colors.orange[100].withOpacity(0.25),
+          primary: Colors.orange.shade100.withOpacity(0.25),
           elevation: 0,
           onPrimary: Colors.white,
-          shadowColor: Colors.orange[100].withOpacity(0.25)),
+          shadowColor: Colors.orange.shade100.withOpacity(0.25)),
     ));
 
 TextStyle _getTextStyleWithShadow(double fontSize) {

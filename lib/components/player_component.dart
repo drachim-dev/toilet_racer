@@ -8,7 +8,7 @@ class PlayerComponent {
 
   final Player player;
 
-  SpriteAnimationComponent _spriteAnimationComponent;
+  late SpriteAnimationComponent _spriteAnimationComponent;
 
   PlayerComponent(this.player);
 
@@ -27,8 +27,8 @@ class PlayerComponent {
     return this;
   }
 
-  void update({double velocity}) {
-    _spriteAnimationComponent.animation.stepTime =
+  void update({required double velocity}) {
+    _spriteAnimationComponent.animation?.stepTime =
         PlayerComponent.calculateStepTime(
             velocity: velocity,
             maxVelocity: player.maxVelocity,
@@ -46,10 +46,10 @@ class PlayerComponent {
   }
 
   static double calculateStepTime({
-    double velocity,
-    int maxVelocity,
-    double minAnimationStepTime,
-    double maxAnimationStepTime,
+    required double velocity,
+    required int maxVelocity,
+    required double minAnimationStepTime,
+    required double maxAnimationStepTime,
   }) {
     return velocity *
             ((minAnimationStepTime - maxAnimationStepTime) / maxVelocity) +

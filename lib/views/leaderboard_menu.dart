@@ -11,7 +11,7 @@ class LeaderboardMenu extends StatelessWidget {
 
   final VoidCallback onBackToMenuPressed;
 
-  LeaderboardMenu(this.onBackToMenuPressed, {Key key}) : super(key: key);
+  LeaderboardMenu(this.onBackToMenuPressed, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

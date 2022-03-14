@@ -51,7 +51,7 @@ class PlayerBody extends PositionBodyComponent {
   final bool counterclockwise;
 
   /// Angle of the direction the player wants to go.
-  double bearing;
+  late double bearing;
 
   final bool preview;
 
@@ -59,9 +59,7 @@ class PlayerBody extends PositionBodyComponent {
 
   PlayerBody(this.playerComponent, this.startPosition,
       {this.preview = false, this.counterclockwise = true})
-      : assert(playerComponent != null),
-        assert(startPosition != null),
-        super(
+      : super(
             positionComponent: playerComponent.positionComponent,
             size: playerComponent.positionComponent.size) {
     /// Player starts with bearing and heading
@@ -155,7 +153,7 @@ class PlayerBody extends PositionBodyComponent {
         : (-1.0 * math.pow(time / timeToMaxVelocity - 1.0, 2.0) + 1.0) *
                 (maxVelocity - startVelocity) +
             startVelocity;
-    final velocity = pointer(heading, absoluteVelocity);
+    final velocity = pointer(heading, absoluteVelocity.toDouble());
     final impulse = (velocity - body.linearVelocity) * body.mass;
     body.applyLinearImpulse(impulse);
 

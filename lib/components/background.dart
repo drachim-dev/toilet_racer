@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flutter/foundation.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/models/level.dart';
 import 'package:toilet_racer/models/map.dart';
@@ -13,24 +12,23 @@ class Background extends SpriteComponent with HasGameRef {
   final GameMap map;
   final bool animationEnabled;
 
-  Future<void> animationFuture;
+  Future<void>? animationFuture;
   bool animationCompleted = false;
   bool isAnimating = false;
 
-  Rect _trackScreenZone;
-  double _imageScale;
-  double worldScale;
+  late Rect _trackScreenZone;
+  late double _imageScale;
+  late double worldScale;
 
   Background(
-      {@required this.map,
-      @required Image image,
-      @required this.animationEnabled}) {
-    assert(map.filePath != null);
+      {required this.map,
+      required Image image,
+      required this.animationEnabled}) {
     positionType = PositionType.viewport;
     sprite = Sprite(image);
   }
 
-  Vector2 get _calcTargetSize => sprite.srcSize * _imageScale;
+  Vector2 get _calcTargetSize => sprite!.srcSize * _imageScale;
   Vector2 get _calcTargetPosition {
     final offset =
         _trackScreenZone.topLeft - map.track.zone.topLeft * _imageScale;
@@ -43,7 +41,7 @@ class Background extends SpriteComponent with HasGameRef {
   }
 
   @override
-  Future<void> onLoad() {
+  Future<void>? onLoad() {
     // gameRef.camera.followComponent(this);
     // sprite = await Sprite.load(map.filePath);
 

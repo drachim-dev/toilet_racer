@@ -2,7 +2,6 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flutter/foundation.dart';
 
 abstract class Track {
   static const maxSizeOnScreen = 400.0;
@@ -26,14 +25,10 @@ class EllipseTrack extends Track {
   Radius innerRadii, outerRadii;
 
   EllipseTrack(
-      {@required this.innerCenter,
-      @required this.innerRadii,
-      @required this.outerCenter,
-      @required this.outerRadii})
-      : assert(innerCenter != null),
-        assert(innerRadii != null),
-        assert(outerCenter != null),
-        assert(outerRadii != null);
+      {required this.innerCenter,
+      required this.innerRadii,
+      required this.outerCenter,
+      required this.outerRadii});
 
   @override
   List<Vector2> get innerBoundary =>

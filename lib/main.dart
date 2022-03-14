@@ -33,7 +33,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -43,11 +43,11 @@ class _MyAppState extends State<MyApp> {
   final AdService _adService = locator<AdService>();
   final AudioService _audioService = locator<AudioService>();
 
-  RaceGame _game;
+  late RaceGame _game;
 
   _MyAppState() {
     _game = RaceGame(gameOverCallback: () {
-      return _adService?.mayShow(
+       return _adService.mayShow(
           onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
           onAdShown: () => _audioService.stopBackgroundMusic());
     });
@@ -117,9 +117,9 @@ class _MyAppState extends State<MyApp> {
                     onBackToMenuPressed: game.showStartMenu,
                     onPlayPressed: (PlayOption playOption) =>
                         game.prepareStartGame(playOption: playOption),
-                    score: game.score,
-                    canPlayNext: game.gameMode.canPlayNext,
-                    hasCompletedGameMode: game.gameMode.hasCompleted,
+                    score: game.score ?? 0,
+                    canPlayNext: game.gameMode!.canPlayNext,
+                    hasCompletedGameMode: game.gameMode!.hasCompleted,
                   ),
             },
             initialActiveOverlays: const [kStartMenu],

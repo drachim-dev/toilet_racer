@@ -5,7 +5,7 @@ import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
 
 class OverlayUi extends StatefulWidget {
-  const OverlayUi({Key key}) : super(key: key);
+  const OverlayUi({Key? key}) : super(key: key);
 
   @override
   _OverlayUiState createState() => _OverlayUiState();
@@ -15,7 +15,7 @@ class _OverlayUiState extends State<OverlayUi> {
   final AudioService _audioService = locator<AudioService>();
   final TimerService _timerService = locator<TimerService>();
 
-  bool _musicEnabled;
+  bool _musicEnabled = false;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _OverlayUiState extends State<OverlayUi> {
           ),
           ValueListenableBuilder(
             valueListenable: _timerService.seconds,
-            builder: (_, double value, Widget child) => Expanded(
+            builder: (_, double? value, Widget? child) => Expanded(
                 child: Text(
               value.toString(),
               style: Theme.of(context).textTheme.headline3,

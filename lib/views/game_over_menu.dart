@@ -14,18 +14,18 @@ class GameOverMenu extends StatelessWidget {
   final bool hasCompletedGameMode;
 
   const GameOverMenu(
-      {Key key,
-      @required this.onBackToMenuPressed,
-      @required this.onPlayPressed,
-      @required this.score,
-      @required this.canPlayNext,
-      @required this.hasCompletedGameMode})
+      {Key? key,
+      required this.onBackToMenuPressed,
+      required this.onPlayPressed,
+      required this.score,
+      required this.canPlayNext,
+      required this.hasCompletedGameMode})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = Theme.of(context).textTheme.headline2;
-    final buttonStyle = Theme.of(context).textTheme.headline3;
+    final titleStyle = Theme.of(context).textTheme.headline2!;
+    final buttonStyle = Theme.of(context).textTheme.headline3!;
     const dividerHeight = 5.0;
     const blur = 10.0;
     final backgroundColor = buttonStyle.color;
@@ -64,7 +64,7 @@ class GameOverMenu extends StatelessWidget {
               icon: Icon(Icons.share, color: backgroundColor),
               label: Text(S.of(context).pageGameOverShareButtonText),
               onPressed: () {
-                return Share.share(S.of(context).pageGameOverShareMessage(
+                Share.share(S.of(context).pageGameOverShareMessage(
                     S.of(context).commonAppUrl, score));
               },
             ),

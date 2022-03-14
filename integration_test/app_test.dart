@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'start_menu_test.dart';
 
-IntegrationTestWidgetsFlutterBinding binding;
+late IntegrationTestWidgetsFlutterBinding binding;
 void main() {
   _ensureInitialized();
   _testAll();

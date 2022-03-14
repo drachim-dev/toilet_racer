@@ -32,9 +32,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   final TimerService _timerService = locator<TimerService>();
   final LevelRepository _levelRepository = locator<LevelRepository>();
 
-  final AsyncCallback gameOverCallback;
+  final AsyncCallback? gameOverCallback;
 
-  GameMode gameMode;
+  GameMode? gameMode;
 
   @override
   // ignore: overridden_fields
@@ -43,15 +43,15 @@ class RaceGame extends Forge2DGame with TapDetector {
   bool _gameHelpShown = false;
   bool _collisionDetected = false;
 
-  Background _background;
-  Level _currentLevel;
-  BoundaryContactCallback _contactCallback;
+  Background? _background;
+  Level? _currentLevel;
+  BoundaryContactCallback? _contactCallback;
 
-  Set<Component> _gameComponents;
-  PlayerBody _playerBody;
-  Iterator<GameHelp> _gameHelper;
+  Set<Component> _gameComponents = {};
+  PlayerBody? _playerBody;
+  Iterator<GameHelp>? _gameHelper;
 
-  double get score => _timerService?.seconds?.value ?? 0;
+  double? get score => _timerService.seconds.value;
 
   RaceGame({this.gameOverCallback}) : super(gravity: Vector2.zero());
 
@@ -66,14 +66,17 @@ class RaceGame extends Forge2DGame with TapDetector {
   void onGameResize(Vector2 canvasSize) {
     super.onGameResize(canvasSize);
 
-    if (_background != null) {
-      camera.zoom = _defaultScale * _background.worldScale;
+    final background = _background;
+    if (background != null) {
+      camera.zoom = _defaultScale * background.worldScale;
     }
   }
 
   Future<void> _initLevel(Level level, bool isNewLevel) async {
     if (children.contains(_background)) {
-      remove(_background);
+      if (_background != null) {
+        remove(_background!);
+      }
     }
 
     final showAnimation = gameMode?.animateNextLevel == true && isNewLevel;
@@ -87,14 +90,14 @@ class RaceGame extends Forge2DGame with TapDetector {
     _background = Background(
         map: level.map, image: image, animationEnabled: showAnimation);
 
-    await add(_background);
-    await _background.animationFuture;
+    await add(_background!);
+    await _background!.animationFuture;
   }
 
   /// Init and show game help
   Future<void> prepareStartGame(
-      {GameModeIdentifier gameModeIdentifier,
-      @required PlayOption playOption}) async {
+      {GameModeIdentifier? gameModeIdentifier,
+      required PlayOption playOption}) async {
     _removeOverlays();
 
     if (gameModeIdentifier != null) {
@@ -108,13 +111,14 @@ class RaceGame extends Forge2DGame with TapDetector {
     Level nextLevel;
     switch (playOption) {
       case PlayOption.repeat:
-        nextLevel = _currentLevel;
+        nextLevel = _currentLevel ?? gameMode!.getLevel();
         break;
       case PlayOption.next:
-        nextLevel = gameMode.getLevel();
+        nextLevel = gameMode!.getLevel();
         break;
       case PlayOption.restart:
-        gameMode.resetProgress();
+        gameMode!.resetProgress();
+        nextLevel = gameMode!.getLevel();
         break;
     }
 
@@ -122,8 +126,8 @@ class RaceGame extends Forge2DGame with TapDetector {
     await _initLevel(nextLevel, isNewLevel);
     await _initGameHelper(isNewLevel);
 
-    if (_gameHelper.moveNext()) {
-      await add(_gameHelper.current);
+    if (_gameHelper?.moveNext() == true) {
+      await add(_gameHelper!.current);
       _gameHelpShown = true;
     } else {
       startGame();
@@ -138,21 +142,28 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   Future<void> _initGameHelper(bool isNewLevel) async {
+    if (buildContext == null ||
+        gameMode == null ||
+        _currentLevel == null ||
+        _background == null) {
+      return;
+    }
+
     final helper = <GameHelp>[];
-    if (gameMode.helpNeeded) {
-      final middleBoundary = _currentLevel.map.track.middleBoundary
-          .map((e) => _background.getImageToScreen(e))
+    if (gameMode!.helpNeeded) {
+      final middleBoundary = _currentLevel!.map.track.middleBoundary
+          .map((e) => _background!.getImageToScreen(e))
           .toList();
 
-      final player = await PlayerComponent(_currentLevel.player).onLoad();
+      final player = await PlayerComponent(_currentLevel!.player).onLoad();
       final _playerBody = PlayerBody(
-          player, _background.getImageToScreen(_currentLevel.startPosition),
+          player, _background!.getImageToScreen(_currentLevel!.startPosition),
           preview: true);
 
       final movementHelp = GameHelp(
           boundary: middleBoundary,
           rightArrow: true,
-          helpText: S.of(buildContext).overlayHelpTapToTurnText,
+          helpText: S.of(buildContext!).overlayHelpTapToTurnText,
           imagePath: 'icons/ic_gesture_tap.png',
           player: _playerBody);
 
@@ -160,16 +171,16 @@ class RaceGame extends Forge2DGame with TapDetector {
         boundary: middleBoundary,
         bottomArrow: true,
         topArrow: true,
-        helpText: S.of(buildContext).overlayHelpStayOnMapText,
+        helpText: S.of(buildContext!).overlayHelpStayOnMapText,
       );
 
       helper.add(movementHelp);
       helper.add(gamePlayHelp);
-    } else if (gameMode.isCareer && isNewLevel) {
+    } else if (gameMode!.isCareer && isNewLevel) {
       // Show name of new level in career mode
       final levelName = GameHelp(
         helpText:
-            S.of(buildContext).overlayHelpLevelName(_currentLevel.id + 1),
+            S.of(buildContext!).overlayHelpLevelName(_currentLevel!.id + 1),
         textPosition: GamePosition.center,
       );
 
@@ -177,9 +188,9 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
 
     // Add level specific help
-    if (gameMode.levelHelpText != null) {
+    if (gameMode!.levelHelpText != null) {
       final goalHelp = GameHelp(
-        helpText: gameMode.levelHelpText,
+        helpText: gameMode!.levelHelpText,
         textPosition: GamePosition.center,
       );
 
@@ -187,9 +198,9 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
 
     // Show tap to begin only for first gameplay
-    if (gameMode.helpNeeded) {
+    if (gameMode!.helpNeeded) {
       final tapToBegin = GameHelp(
-        helpText: S.of(buildContext).overlayHelpTapToStartText,
+        helpText: S.of(buildContext!).overlayHelpTapToStartText,
         textPosition: GamePosition.center,
       );
 
@@ -202,23 +213,27 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _addGameComponents() async {
     Boundary innerBoundary, outerBoundary;
 
-    final ghostMode = gameMode.ghostMode;
-    final player = PlayerComponent(_currentLevel.player);
+    if (_currentLevel == null) return;
+    if (_background == null) return;
+    if (gameMode == null) return;
+
+    final ghostMode = gameMode!.ghostMode;
+    final player = PlayerComponent(_currentLevel!.player);
     await add(_playerBody = PlayerBody(await player.onLoad(),
-        _background.getImageToScreen(_currentLevel.startPosition),
+        _background!.getImageToScreen(_currentLevel!.startPosition),
         counterclockwise: !ghostMode));
 
-    await add(outerBoundary = Boundary(_currentLevel.map.track.outerBoundary
-        .map((vertex) => _background.getImageToScreen(vertex))
+    await add(outerBoundary = Boundary(_currentLevel!.map.track.outerBoundary
+        .map((vertex) => _background!.getImageToScreen(vertex))
         .toList()));
-    await add(innerBoundary = Boundary(_currentLevel.map.track.innerBoundary
-        .map((vertex) => _background.getImageToScreen(vertex))
+    await add(innerBoundary = Boundary(_currentLevel!.map.track.innerBoundary
+        .map((vertex) => _background!.getImageToScreen(vertex))
         .toList()));
 
     addContactCallback(
         _contactCallback = BoundaryContactCallback(_onCollisionDetected));
 
-    _gameComponents = {_playerBody, outerBoundary, innerBoundary};
+    _gameComponents = {_playerBody!, outerBoundary, innerBoundary};
   }
 
   @override
@@ -232,21 +247,25 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   @override
   void onTapDown(TapDownInfo info) {
+    if (_currentLevel == null) return;
+
     // Ignore tap during zoom effect
-    if (_background.animationEnabled && !_background.animationCompleted) {
+    if (_background?.animationEnabled == true &&
+        _background?.animationCompleted != true) {
       return;
     }
 
     // Iterate over GameHelpers on firstLaunch
-    if (_gameHelpShown) {
-      remove(_gameHelper.current);
-      if (_gameHelper.moveNext()) {
-        add(_gameHelper.current);
+    if (_gameHelpShown && _gameHelper != null) {
+      remove(_gameHelper!.current);
+      if (_gameHelper!.moveNext()) {
+        add(_gameHelper!.current);
         return;
       }
 
       // Show countdown only for first gameplay or for level specific help
-      if (gameMode.helpNeeded || _currentLevel.helpText?.isNotEmpty == true) {
+      if (gameMode?.helpNeeded == true ||
+          _currentLevel!.helpText?.isNotEmpty == true) {
         _swapMenuOverlay(kCountDownOverlay);
       } else {
         startGame();
@@ -273,11 +292,14 @@ class RaceGame extends Forge2DGame with TapDetector {
     for (var c in _gameComponents) {
       remove(c);
     }
-    removeContactCallback(_contactCallback);
+
+    if (_contactCallback != null) {
+      removeContactCallback(_contactCallback!);
+    }
 
     // Start menu background music before gameOverCallback because ads should be able to stop music again.
     await _audioService.playBackgroundMusic(menu: true);
-    await gameOverCallback();
+    await gameOverCallback?.call();
 
     // Short delay to prevent possible game start before ad is shown
     await Future.delayed(const Duration(milliseconds: 150));
@@ -290,10 +312,12 @@ class RaceGame extends Forge2DGame with TapDetector {
     final _gameService = locator<GameService>();
     final score = _timerService.seconds.value;
 
-    gameMode.updateScoreAndAchievements(score);
+    if (score != null) {
+      gameMode?.updateScoreAndAchievements(score);
 
-    // submit score
-    await _gameService.submitScore(score);
+      // submit score
+      await _gameService.submitScore(score);
+    }
   }
 
   void showStartMenu() => _swapMenuOverlay(kStartMenu);

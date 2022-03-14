@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class CreditsMenu extends StatelessWidget {
   final VoidCallback onBackToMenuPressed;
 
-  const CreditsMenu(this.onBackToMenuPressed, {Key key}) : super(key: key);
+  const CreditsMenu(this.onBackToMenuPressed, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class CreditsMenu extends StatelessWidget {
     final textStyle = Theme.of(context).textTheme.headline5;
     final urlStyle = Theme.of(context)
         .textTheme
-        .headline6
+        .headline6!
         .copyWith(decoration: TextDecoration.underline);
 
     const blur = 10.0;
@@ -171,5 +171,5 @@ class CreditsMenu extends StatelessWidget {
 class Credit {
   final String title, url;
 
-  const Credit({this.title, this.url});
+  const Credit({required this.title, required this.url});
 }

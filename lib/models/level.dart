@@ -1,5 +1,4 @@
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
 
 import 'map.dart';
 import 'player.dart';
@@ -12,27 +11,24 @@ class Level {
   final GameMap map;
   final Player player;
 
-  final String helpText;
+  final String? helpText;
 
   /// Minimum score required to win the level
   final double goal;
 
-  final double highscore;
+  final double? highscore;
 
   LevelStatus status;
 
   Level({
-    @required this.id,
-    @required this.map,
-    @required this.player,
+    required this.id,
+    required this.map,
+    required this.player,
     this.helpText,
-    @required this.goal,
+    required this.goal,
     this.highscore,
-    @required this.status,
-  })  : assert(map != null),
-        assert(player != null),
-        assert(goal != null),
-        assert(status != null);
+    required this.status,
+  });
 
   Vector2 get startPosition => map.track.bottomPosition;
 }

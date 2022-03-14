@@ -22,15 +22,15 @@ class GameHelp extends PositionComponent with HasGameRef {
 
   static const double _arrowLength = 40.0;
 
-  final List<Vector2> boundary;
+  final List<Vector2>? boundary;
   final bool darken, bottomArrow, topArrow, leftArrow, rightArrow;
-  final String helpText;
+  final String? helpText;
   final GamePosition textPosition;
-  final String imagePath;
+  final String? imagePath;
 
-  final PlayerBody player;
+  final PlayerBody? player;
 
-  Vector2 _screenSize;
+  late Vector2 _screenSize;
 
   GameHelp({
     this.boundary,
@@ -48,9 +48,15 @@ class GameHelp extends PositionComponent with HasGameRef {
   }
 
   @override
+  void onGameResize(Vector2 gameSize) {
+    super.onGameResize(gameSize);
+    _screenSize = gameRef.camera.viewport.effectiveSize.clone();
+  }
+
+  @override
   Future<void> onLoad() async {
     if (imagePath != null) {
-      final image = await Flame.images.load(imagePath);
+      final image = await Flame.images.load(imagePath!);
       final component =
           SpriteComponent.fromImage(image, size: Vector2(192, 192))
             ..position = Vector2(_screenSize.x / 2 - kGameScreenMargin,
@@ -62,7 +68,7 @@ class GameHelp extends PositionComponent with HasGameRef {
     }
 
     if (player != null) {
-      await add(player);
+      await add(player!);
     }
     return super.onLoad();
   }
@@ -76,35 +82,37 @@ class GameHelp extends PositionComponent with HasGameRef {
       canvas.drawColor(Colors.black54, BlendMode.darken);
     }
 
-    if (bottomArrow || topArrow) {
-      // calculate middle y position
-      boundary.sort((a, b) => a.y.compareTo(b.y));
-      final middleY = (boundary.first.y + boundary.last.y) / 2;
+    if (boundary != null) {
+      if (bottomArrow || topArrow) {
+        // calculate middle y position
+        boundary!.sort((a, b) => a.y.compareTo(b.y));
+        final middleY = (boundary!.first.y + boundary!.last.y) / 2;
 
-      if (bottomArrow) {
-        _drawBottomArrow(canvas, middleY);
-      }
-      if (topArrow) {
-        _drawTopArrow(canvas, middleY);
-      }
-    }
-
-    if (leftArrow || rightArrow) {
-      // calculate middle x position
-      boundary.sort((a, b) => a.x.compareTo(b.x));
-      final middleX = (boundary.first.x + boundary.last.x) / 2;
-
-      if (leftArrow) {
-        _drawLeftArrow(canvas, middleX);
+        if (bottomArrow) {
+          _drawBottomArrow(boundary!, canvas, middleY);
+        }
+        if (topArrow) {
+          _drawTopArrow(boundary!, canvas, middleY);
+        }
       }
 
-      if (rightArrow) {
-        _drawRightArrow(canvas, middleX);
+      if (leftArrow || rightArrow) {
+        // calculate middle x position
+        boundary!.sort((a, b) => a.x.compareTo(b.x));
+        final middleX = (boundary!.first.x + boundary!.last.x) / 2;
+
+        if (leftArrow) {
+          _drawLeftArrow(boundary!, canvas, middleX);
+        }
+
+        if (rightArrow) {
+          _drawRightArrow(boundary!, canvas, middleX);
+        }
       }
     }
 
     // draw hint text
-    if (helpText.isNotEmpty) {
+    if (helpText?.isNotEmpty == true) {
       Vector2 position;
       switch (textPosition) {
         case GamePosition.top:
@@ -118,12 +126,13 @@ class GameHelp extends PositionComponent with HasGameRef {
           break;
       }
 
-      final textPaint = TextPaint(
-          style: baseTextConfig,
-          textDirection: Directionality.of(gameRef.buildContext));
+      final context = gameRef.buildContext;
+      if (context != null) {
+        final textPaint = TextPaint(
+            style: baseTextConfig, textDirection: Directionality.of(context));
 
-      // TextBoxComponent can't align text within itself yet:
-      // https://github.com/flame-engine/flame/issues/1088
+        // TextBoxComponent can't align text within itself yet:
+        // https://github.com/flame-engine/flame/issues/1088
 
 /*       final textBoxComponent = TextBoxComponent(
           text: helpText,
@@ -134,44 +143,45 @@ class GameHelp extends PositionComponent with HasGameRef {
 
       add(textBoxComponent); */
 
-      // text must be wrapped manually via linebreaks
-      textPaint.render(canvas, helpText, position, anchor: Anchor.center);
+        // text must be wrapped manually via linebreaks
+        textPaint.render(canvas, helpText!, position, anchor: Anchor.center);
+      }
     }
   }
 
-  void _drawBottomArrow(Canvas c, double middleY) {
+  void _drawBottomArrow(List<Vector2> boundary, Canvas c, double middleY) {
     // get lower half and sort by x asc
     final vertices = boundary.where((element) => element.y > middleY).toList()
       ..sort((a, b) => a.x.compareTo(b.x));
 
-    _drawArrow(c, vertices);
+    _drawArrow(boundary, c, vertices);
   }
 
-  void _drawTopArrow(Canvas c, double middleY) {
+  void _drawTopArrow(List<Vector2> boundary, Canvas c, double middleY) {
     // get upper half and sort by x desc
     final vertices = boundary.where((element) => element.y < middleY).toList()
       ..sort((a, b) => b.x.compareTo(a.x));
 
-    _drawArrow(c, vertices);
+    _drawArrow(boundary, c, vertices);
   }
 
-  void _drawLeftArrow(Canvas c, double middleX) {
+  void _drawLeftArrow(List<Vector2> boundary, Canvas c, double middleX) {
     // get left half and sort by y asc
     final vertices = boundary.where((element) => element.x < middleX).toList()
       ..sort((a, b) => a.y.compareTo(b.y));
 
-    _drawArrow(c, vertices);
+    _drawArrow(boundary, c, vertices);
   }
 
-  void _drawRightArrow(Canvas c, double middleX) {
+  void _drawRightArrow(List<Vector2> boundary, Canvas c, double middleX) {
     // get right half and sort by y desc
     final vertices = boundary.where((element) => element.x > middleX).toList()
       ..sort((a, b) => b.y.compareTo(a.y));
 
-    _drawArrow(c, vertices);
+    _drawArrow(boundary, c, vertices);
   }
 
-  void _drawArrow(Canvas c, List<Vector2> vertices) {
+  void _drawArrow(List<Vector2> boundary, Canvas c, List<Vector2> vertices) {
     final reducedArrow =
         vertices.skip((boundary.length * 0.05).round()).toList();
 
@@ -204,20 +214,6 @@ class GameHelp extends PositionComponent with HasGameRef {
 
     final head = Path()..addPolygon([p1, p2, p3], false);
     c.drawPath(head, _paint);
-  }
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if (_screenSize == null) {
-      return;
-    }
-  }
-
-  @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
-    _screenSize = gameRef.camera.viewport.effectiveSize.clone();
   }
 }
 
