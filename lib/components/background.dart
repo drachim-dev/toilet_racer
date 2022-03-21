@@ -17,8 +17,8 @@ class Background extends SpriteComponent with HasGameRef {
   bool isAnimating = false;
 
   late Rect _trackScreenZone;
-  late double _imageScale;
-  late double worldScale;
+  double _imageScale = 1.0;
+  double worldScale = 1.0;
 
   Background(
       {required this.map,
@@ -45,13 +45,14 @@ class Background extends SpriteComponent with HasGameRef {
     // gameRef.camera.followComponent(this);
     // sprite = await Sprite.load(map.filePath);
 
+    size = gameRef.camera.viewport.effectiveSize;
     animationFuture = animationEnabled ? _playAnimation() : Future.value(null);
     return super.onLoad();
   }
 
   @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
 
     if (isAnimating) {
       return;
@@ -84,10 +85,7 @@ class Background extends SpriteComponent with HasGameRef {
     // In other words the size of the background image has no influence on the player's size and movement.
     worldScale = _trackScreenZone.width / Level.kReferenceWidth;
 
-    if (animationEnabled && !animationCompleted) {
-      // Fit image in screen
-      size = screenSize;
-    } else {
+    if (!animationEnabled || animationCompleted) {
       size = _calcTargetSize;
       position = _calcTargetPosition;
     }
@@ -101,14 +99,15 @@ class Background extends SpriteComponent with HasGameRef {
 
     // Scale the background image
     final sizeEffect = SizeEffect.to(_calcTargetSize, effectController);
+    final sizeEffectFuture = add(sizeEffect);
 
     // Move the image so that the track lies in the track zone of the screen.
     final moveEffect = MoveEffect.to(_calcTargetPosition, effectController);
+    final moveEffectFuture = add(moveEffect);
 
-    // TODO: Workaround until onCompleted callback can be provided to effect
-    return Future.wait([
-      add(sizeEffect),
-      add(moveEffect),
+    await Future.wait([
+      if (sizeEffectFuture != null) sizeEffectFuture,
+      if (moveEffectFuture != null) moveEffectFuture,
       Future.delayed(Duration(milliseconds: (effectDuration * 1000).toInt())),
     ]).then((_) {
       isAnimating = false;

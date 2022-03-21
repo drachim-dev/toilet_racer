@@ -2,9 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flame/components.dart';
-import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flame_forge2d/position_body_component.dart';
 import 'package:flutter/material.dart' show Colors;
 import 'package:flutter/material.dart' as material;
 import 'package:toilet_racer/app/locator.dart';
@@ -13,7 +11,7 @@ import 'package:toilet_racer/services/timer_service.dart';
 
 import 'boundary.dart';
 
-class PlayerBody extends PositionBodyComponent {
+class PlayerBody extends BodyComponent {
   static const pi = math.pi;
   static const pi2 = math.pi * 2;
 
@@ -41,6 +39,7 @@ class PlayerBody extends PositionBodyComponent {
   }
 
   final PlayerComponent playerComponent;
+  final Vector2 size;
 
   /// Total time that the player exists.
   /// This will be used to make the player faster.
@@ -59,9 +58,10 @@ class PlayerBody extends PositionBodyComponent {
 
   PlayerBody(this.playerComponent, this.startPosition,
       {this.preview = false, this.counterclockwise = true})
-      : super(
-            positionComponent: playerComponent.positionComponent,
-            size: playerComponent.positionComponent.size) {
+      : size = playerComponent.positionComponent.size {
+    renderBody = false;
+    add(playerComponent.positionComponent);
+
     /// Player starts with bearing and heading
     /// in right direction when turning counterclockwise
     /// and in left direction when turning clockwise

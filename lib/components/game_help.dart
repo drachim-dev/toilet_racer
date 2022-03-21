@@ -48,8 +48,8 @@ class GameHelp extends PositionComponent with HasGameRef {
   }
 
   @override
-  void onGameResize(Vector2 gameSize) {
-    super.onGameResize(gameSize);
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
     _screenSize = gameRef.camera.viewport.effectiveSize.clone();
   }
 

@@ -58,7 +58,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   @override
   Future<void> onLoad() async {
     await _audioService.playBackgroundMusic(menu: true);
-    await _initLevel(_levelRepository.getAllLevels().first, false);
+    await _initLevel(_levelRepository.getAllLevels().first);
     return super.onLoad();
   }
 
@@ -66,20 +66,17 @@ class RaceGame extends Forge2DGame with TapDetector {
   void onGameResize(Vector2 canvasSize) {
     super.onGameResize(canvasSize);
 
-    final background = _background;
-    if (background != null) {
-      camera.zoom = _defaultScale * background.worldScale;
+    if (_background != null) {
+      camera.zoom = _defaultScale * _background!.worldScale;
     }
   }
 
-  Future<void> _initLevel(Level level, bool isNewLevel) async {
-    if (children.contains(_background)) {
-      if (_background != null) {
-        remove(_background!);
-      }
+  Future<void> _initLevel(Level level) async {
+    if (children.contains(_background) && _background != null) {
+      remove(_background!);
     }
 
-    final showAnimation = gameMode?.animateNextLevel == true && isNewLevel;
+    final showAnimation = gameMode?.animateNextLevel == true;
 
     _currentLevel = level;
 
@@ -123,7 +120,10 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
 
     final isNewLevel = _currentLevel == null || nextLevel != _currentLevel;
-    await _initLevel(nextLevel, isNewLevel);
+    if (isNewLevel) {
+      await _initLevel(nextLevel);
+    }
+
     await _initGameHelper(isNewLevel);
 
     if (_gameHelper?.moveNext() == true) {
@@ -251,7 +251,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     // Ignore tap during zoom effect
     if (_background?.animationEnabled == true &&
-        _background?.animationCompleted != true) {
+        _background?.animationCompleted == false) {
       return;
     }
 

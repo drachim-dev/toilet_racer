@@ -23,7 +23,8 @@ class PlayerComponent {
         size: PlayerComponent.scaleSpriteSize(
             spriteAnimation.getSprite().originalSize,
             scale: player.scale),
-        animation: spriteAnimation);
+        animation: spriteAnimation,
+        anchor: Anchor.center);
     return this;
   }
 
