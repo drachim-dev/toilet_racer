@@ -45,7 +45,13 @@ class Background extends SpriteComponent with HasGameRef {
     // gameRef.camera.followComponent(this);
     // sprite = await Sprite.load(map.filePath);
 
-    size = gameRef.camera.viewport.effectiveSize;
+    if (!animationEnabled || animationCompleted) {
+      size = _calcTargetSize;
+      position = _calcTargetPosition;
+    } else {
+      size = gameRef.camera.viewport.effectiveSize;
+    }
+
     animationFuture = animationEnabled ? _playAnimation() : Future.value(null);
     return super.onLoad();
   }
@@ -86,8 +92,8 @@ class Background extends SpriteComponent with HasGameRef {
     worldScale = _trackScreenZone.width / Level.kReferenceWidth;
 
     if (!animationEnabled || animationCompleted) {
-      size = _calcTargetSize;
-      position = _calcTargetPosition;
+      // size = _calcTargetSize;
+      // position = _calcTargetPosition;
     }
   }
 
