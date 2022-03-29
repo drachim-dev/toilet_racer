@@ -50,6 +50,24 @@ class MapRepository {
           outerCenter: Vector2(500, 795),
           outerRadii: const Radius.elliptical(185, 185)));
 
+  static final _toiletAirplane1 = GameMap(
+      name: 'Time to travel',
+      filePath: 'level/toilet_airplane_1.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(830, 1730),
+          innerRadii: const Radius.elliptical(186, 243),
+          outerCenter: Vector2(835, 1745),
+          outerRadii: const Radius.elliptical(325, 375)));
+
+  static final _toiletBerlinBrettSpielPlatz = GameMap(
+      name: "Let's play a game",
+      filePath: 'level/toilet_berlin_brettspielplatz.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(808, 1832),
+          innerRadii: const Radius.elliptical(170, 225),
+          outerCenter: Vector2(808, 1832),
+          outerRadii: const Radius.elliptical(275, 335)));
+
   static final _floatingPool = GameMap(
       name: 'Floating',
       filePath: 'level/floating_pool.webp',
@@ -68,6 +86,34 @@ class MapRepository {
           outerCenter: Vector2(818, 1352),
           outerRadii: const Radius.elliptical(560, 560)));
 
+  static final _toiletBerlinUwe = GameMap(
+      name: "I'm the Uwe",
+      filePath: 'level/toilet_berlin_uwe.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(824, 1708),
+          innerRadii: const Radius.elliptical(225, 275),
+          outerCenter: Vector2(833, 1715),
+          outerRadii: const Radius.elliptical(357, 438)));
+
+  static final _toiletEgyptAirportSharmElSheikh = GameMap(
+      name: 'Airport Sharm El Sheikh',
+      filePath: 'level/toilet_egypt_airport_sharmelsheikh.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(787, 1754),
+          innerRadii: const Radius.elliptical(170, 240),
+          outerCenter: Vector2(787, 1770),
+          outerRadii: const Radius.elliptical(285, 360)));
+
+  // TODO: Ellipse doesn't fit form
+  static final _toiletEgyptCoralReefDahab = GameMap(
+      name: 'Coral Reef Hotel Dahab',
+      filePath: 'level/toilet_egypt_coral_reef.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(824, 1758),
+          innerRadii: const Radius.elliptical(165, 240),
+          outerCenter: Vector2(824, 1758),
+          outerRadii: const Radius.elliptical(280, 365)));
+
   static final _vinyl = GameMap(
       name: 'Turn it up',
       filePath: 'level/vinyl.webp',
@@ -76,6 +122,25 @@ class MapRepository {
           innerRadii: const Radius.elliptical(139, 139),
           outerCenter: Vector2(934, 938),
           outerRadii: const Radius.elliptical(375, 375)));
+
+  static final _toiletEgyptDirty = GameMap(
+      name: 'What a mess',
+      filePath: 'level/toilet_egypt_dirty.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(790, 1720),
+          innerRadii: const Radius.elliptical(220, 260),
+          outerCenter: Vector2(790, 1700),
+          outerRadii: const Radius.elliptical(318, 394)));
+
+  // TODO: Ellipse doesn't fit form
+  static final _toiletEgyptHole = GameMap(
+      name: 'Fire in the hole',
+      filePath: 'level/toilet_egypt_hole.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(800, 1395),
+          innerRadii: const Radius.elliptical(55, 65),
+          outerCenter: Vector2(800, 1570),
+          outerRadii: const Radius.elliptical(182, 335)));
 
   static final _friedEgg = GameMap(
       name: 'Fried egg',
@@ -113,6 +178,15 @@ class MapRepository {
           outerCenter: Vector2(665, 1222),
           outerRadii: const Radius.elliptical(280, 280)));
 
+  static final _toiletForDisabled = GameMap(
+      name: 'Wooden flavour',
+      filePath: 'level/toilet_for_disabled.webp',
+      track: EllipseTrack(
+          innerCenter: Vector2(820, 1835),
+          innerRadii: const Radius.elliptical(157, 200),
+          outerCenter: Vector2(820, 1845),
+          outerRadii: const Radius.elliptical(285, 360)));
+
   static final _abstractEye = GameMap(
       name: 'Abstract eye',
       filePath: 'level/abstract_eye.webp',
@@ -146,12 +220,20 @@ class MapRepository {
     _toiletTrain,
     _toiletRed,
     _donut1,
+    _toiletAirplane1,
+    _toiletBerlinBrettSpielPlatz,
     _floatingPool,
     _footBath,
+    _toiletBerlinUwe,
+    _toiletEgyptAirportSharmElSheikh,
+    // _toiletEgyptCoralReefDahab,
     _vinyl,
+    _toiletEgyptDirty,
+    // _toiletEgyptHole,
     _friedEgg,
     _trafficSign,
     _tubDrain,
+    _toiletForDisabled,
     _robotVacuumCleaner,
     _abstractEye,
     _candles,
