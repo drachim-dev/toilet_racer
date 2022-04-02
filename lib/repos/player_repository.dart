@@ -49,6 +49,13 @@ class PlayerRepository {
               (index) => 'player/bug_beetle/movement/bug_beetle_move$index.png')
           .toList());
 
+  static final _policeCar = Player(
+      name: 'Police',
+      scale: 0.9,
+      filePaths: Iterable<int>.generate(3)
+          .map((index) => 'player/policecar/movement/policecar_move$index.png')
+          .toList());
+
   static final _alien = Player(
       name: 'Alien',
       filePaths: Iterable<int>.generate(9)
@@ -73,6 +80,7 @@ class PlayerRepository {
     _snake,
     _mosquitoLarva1,
     _bugBeetle,
+    _policeCar,
     _alien,
     _mosquitoLarva2,
     _rat,

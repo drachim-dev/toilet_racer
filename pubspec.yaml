@@ -103,6 +103,10 @@ flutter:
     - assets/images/player/mosquito_larva2/movement/
     - assets/images/player/mosquito_larva2/portrait/
 
+    - assets/images/player/policecar/
+    - assets/images/player/policecar/movement/
+    - assets/images/player/policecar/portrait/
+
     - assets/images/player/snake/
     - assets/images/player/snake/movement/
     - assets/images/player/snake/portrait/
