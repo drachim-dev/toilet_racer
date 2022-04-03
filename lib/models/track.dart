@@ -3,55 +3,75 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 
-abstract class Track {
+class Track {
   static const maxSizeOnScreen = 400.0;
 
   /// The boundaries of the track.
-  List<Vector2> get innerBoundary;
-  List<Vector2> get outerBoundary;
-  List<Vector2> get middleBoundary;
+  final Boundary innerBoundary;
+  final Boundary outerBoundary;
 
-  /// A position on the middleBoundary which may be used as the startPosition for the player.
-  Vector2 get bottomPosition;
+  Track({required this.innerBoundary, required this.outerBoundary});
 
-  /// The zone in the image that contains the relevant track for the level.
-  Rect get zone;
-}
-
-class EllipseTrack extends Track {
-  static const int _numEdges = 50;
-
-  Vector2 innerCenter, outerCenter;
-  Radius innerRadii, outerRadii;
-
-  EllipseTrack(
-      {required this.innerCenter,
-      required this.innerRadii,
-      required this.outerCenter,
-      required this.outerRadii});
-
-  @override
-  List<Vector2> get innerBoundary =>
-      _calculateVertices(innerCenter, innerRadii, _numEdges);
-
-  @override
-  List<Vector2> get outerBoundary =>
-      _calculateVertices(outerCenter, outerRadii, _numEdges);
-
-  @override
   List<Vector2> get middleBoundary =>
-      _getMiddleVertices(innerBoundary, outerBoundary);
+      _getMiddleVertices(innerBoundary.vertices, outerBoundary.vertices);
 
-  @override
   Vector2 get bottomPosition =>
       middleBoundary.reduce((currentVector, nextVector) =>
           currentVector.y > nextVector.y ? currentVector : nextVector);
 
+  /// calculates the middle vertices between [first] and [second]
+  /// [first] and [second] must be of equal size
+  List<Vector2> _getMiddleVertices(List<Vector2> first, List<Vector2> second) {
+
+    if (first.length != second.length) {
+      throw RangeError(
+          'first (size: ${first.length}) != second (size: ${second.length})');
+    }
+
+    var middle = List<Vector2>.from(first);
+    for (var i = 0; i < first.length; i++) {
+      middle[i].add(second[i]);
+      middle[i].scale(0.5);
+    }
+    return middle;
+  }
+
+  Rect get zone {
+    final double minX = outerBoundary.vertices
+        .reduce((currentVector, nextVector) =>
+            currentVector.x < nextVector.x ? currentVector : nextVector)
+        .x;
+    final double maxX = outerBoundary.vertices
+        .reduce((currentVector, nextVector) =>
+            currentVector.x > nextVector.x ? currentVector : nextVector)
+        .x;
+    final double minY = outerBoundary.vertices
+        .reduce((currentVector, nextVector) =>
+            currentVector.y < nextVector.y ? currentVector : nextVector)
+        .y;
+    final double maxY = outerBoundary.vertices
+        .reduce((currentVector, nextVector) =>
+            currentVector.y > nextVector.y ? currentVector : nextVector)
+        .y;
+
+    return Rect.fromLTRB(minX, minY, maxX, maxY);
+  }
+}
+
+abstract class Boundary {
+  List<Vector2> get vertices;
+}
+
+class EllipseBoundary extends Boundary {
+  static const int _numEdges = 50;
+
+  Vector2 center;
+  Radius radii;
+
+  EllipseBoundary({required this.center, required this.radii});
+
   @override
-  Rect get zone => Rect.fromCenter(
-      center: outerCenter.toOffset(),
-      width: outerRadii.x * 2,
-      height: outerRadii.y * 2);
+  List<Vector2> get vertices => _calculateVertices(center, radii, _numEdges);
 
   static List<Vector2> _calculateVertices(
       Vector2 center, Radius radii, int count) {
@@ -66,21 +86,11 @@ class EllipseTrack extends Track {
 
     return vertices;
   }
+}
 
-  /// calculates the middle vertices between [first] and [second]
-  /// [first] and [second] must be of equal size
-  static List<Vector2> _getMiddleVertices(
-      List<Vector2> first, List<Vector2> second) {
-    if (first.length != second.length) {
-      throw RangeError(
-          'first (size: ${first.length}) != second (size: ${second.length})');
-    }
+class PolygonBoundary extends Boundary {
+  @override
+  List<Vector2> vertices;
 
-    var middle = List<Vector2>.from(first);
-    for (var i = 0; i < first.length; i++) {
-      middle[i].add(second[i]);
-      middle[i].scale(0.5);
-    }
-    return middle;
-  }
+  PolygonBoundary({required this.vertices});
 }
