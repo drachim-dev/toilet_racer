@@ -152,7 +152,7 @@ class RaceGame extends Forge2DGame with TapDetector {
     final helper = <GameHelp>[];
     if (gameMode!.helpNeeded) {
       final middleBoundary = _currentLevel!.map.track.middleBoundary
-          .map((e) => _background!.getImageToScreen(e))
+          ?.map((e) => _background!.getImageToScreen(e))
           .toList();
 
       final player = await PlayerComponent(_currentLevel!.player).onLoad();
@@ -223,10 +223,12 @@ class RaceGame extends Forge2DGame with TapDetector {
         _background!.getImageToScreen(_currentLevel!.startPosition),
         counterclockwise: !ghostMode));
 
-    await add(outerBoundary = Boundary(_currentLevel!.map.track.outerBoundary.vertices
+    await add(outerBoundary = Boundary(_currentLevel!
+        .map.track.outerBoundary.vertices
         .map((vertex) => _background!.getImageToScreen(vertex))
         .toList()));
-    await add(innerBoundary = Boundary(_currentLevel!.map.track.innerBoundary.vertices
+    await add(innerBoundary = Boundary(_currentLevel!
+        .map.track.innerBoundary.vertices
         .map((vertex) => _background!.getImageToScreen(vertex))
         .toList()));
 
