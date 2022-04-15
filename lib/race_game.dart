@@ -98,7 +98,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> prepareStartGame(
       {GameModeIdentifier? gameModeIdentifier,
       required PlayOption playOption}) async {
-    _removeOverlays();
+    overlays.clear();
 
     if (gameModeIdentifier != null) {
       gameMode = gameModeIdentifier.gameMode(null);
@@ -304,12 +304,10 @@ class RaceGame extends Forge2DGame with TapDetector {
     await _audioService.playBackgroundMusic(menu: true);
 
     await _updateScoreAndAchievements().then((hasWon) async {
-
       // ask for review
       if (hasWon && gameMode?.shouldAskForReview() == true) {
         await mayShowInAppReview();
       } else {
-
         // show ad
         await _adService.mayShow(
             onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
@@ -357,17 +355,10 @@ class RaceGame extends Forge2DGame with TapDetector {
   void showCreditsMenu() => _swapMenuOverlay(kCreditsMenu);
   void showLeaderboardMenu() => _swapMenuOverlay(kLeaderboardMenu);
 
-  /// Removes all active overlays
-  void _removeOverlays() {
-    final activeOverlays = overlays.value.toSet();
-    for (var overlay in activeOverlays) {
-      overlays.remove(overlay);
-    }
-  }
-
   /// Removes all active overlays in favor of [overlayName]
   void _swapMenuOverlay(String overlayName) {
-    _removeOverlays();
-    overlays.add(overlayName);
+    overlays
+      ..clear()
+      ..add(overlayName);
   }
 }
