@@ -14,7 +14,7 @@ class LevelRepository {
   final SharedPreferences _prefsService = locator<SharedPreferences>();
 
   List<Level> getAllLevels() {
-    final maps = _mapRepository.getAllMaps();
+    final maps = _mapRepository.getAllMaps;
     final players = _playerRepository.getAllPlayers();
     final unlockedIndex = _prefsService.getInt(kPrefKeyUnlockedIndex) ?? 0;
 
