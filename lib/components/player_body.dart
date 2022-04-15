@@ -39,7 +39,6 @@ class PlayerBody extends BodyComponent {
   }
 
   final PlayerComponent playerComponent;
-  final Vector2 size;
 
   /// Total time that the player exists.
   /// This will be used to make the player faster.
@@ -57,8 +56,7 @@ class PlayerBody extends BodyComponent {
   final TimerService _timerService = locator<TimerService>();
 
   PlayerBody(this.playerComponent, this.startPosition,
-      {this.preview = false, this.counterclockwise = true})
-      : size = playerComponent.positionComponent.size {
+      {this.preview = false, this.counterclockwise = true}) {
     renderBody = false;
     add(playerComponent.positionComponent);
 

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/models/level.dart';
 import 'package:toilet_racer/repos/level_repository.dart';
+import 'package:toilet_racer/repos/map_repository.dart';
 
 import 'app/locator.dart';
 
@@ -44,7 +45,8 @@ abstract class GameMode {
   String? get levelHelpText => null;
   Level getLevel();
 
-  void updateScoreAndAchievements(double score);
+  Future<bool> updateScoreAndAchievements(double score);
+  bool shouldAskForReview() => false;
 
   void resetProgress() {}
 }
@@ -57,7 +59,8 @@ extension GameModeExtension on GameMode {
 class CareerGameMode extends GameMode {
   late Iterator<Level> _levelsIterator;
 
-  CareerGameMode({required int selectedLevelIndex}) : super(GameModeIdentifier.career) {
+  CareerGameMode({required int selectedLevelIndex})
+      : super(GameModeIdentifier.career) {
     if (hasCompleted) {
       resetProgress();
     } else {
@@ -107,7 +110,7 @@ class CareerGameMode extends GameMode {
   }
 
   @override
-  void updateScoreAndAchievements(double score) {
+  Future<bool> updateScoreAndAchievements(double score) async {
     if (score >= _levelsIterator.current.goal) {
       final allLevels = _levelRepository.getAllLevels();
 
@@ -123,15 +126,31 @@ class CareerGameMode extends GameMode {
       // Update last unlocked level index
       if (nextLevelIndex > unlockedLevelIndex &&
           _levelsIterator.current != allLevels.last) {
-        _prefService.setInt(kPrefKeyUnlockedIndex, nextLevelIndex);
+        await _prefService.setInt(kPrefKeyUnlockedIndex, nextLevelIndex);
       }
     }
+
+    return score >= _levelsIterator.current.goal;
   }
 
   @override
   void resetProgress() {
     _prefService.setInt(kPrefKeyUnlockedIndex, 0);
     _init(selectedLevelIndex: 0);
+  }
+
+  @override
+  bool shouldAskForReview() {
+    final MapRepository _mapRepository = locator<MapRepository>();
+
+    var timesAskedForReview =
+        _prefService.getInt(kPrefKeyTimesAskedForReview) ?? 0;
+    final unlockedLevelIndex = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    final completedLastMap =
+        unlockedLevelIndex % _mapRepository.getAllMaps.length == 0;
+
+    return timesAskedForReview < kMaxTimesAskForReview &&
+        (unlockedLevelIndex == kMinProgressAskForReview || completedLastMap);
   }
 }
 
@@ -161,7 +180,9 @@ class ShuffleGameMode extends GameMode {
   }
 
   @override
-  void updateScoreAndAchievements(double score) {
+  Future<bool> updateScoreAndAchievements(double score) async {
     // TODO: implement updateScore
+    return false;
   }
+
 }

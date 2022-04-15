@@ -15,10 +15,13 @@ class Boundary extends BodyComponent {
   }
 
   @override
+  Color get debugColor => Colors.white.withAlpha(150);
+
+  @override
   Body createBody() {
     paint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = Colors.white.withAlpha(150)
+      ..color = debugMode ? debugColor : Colors.transparent
       ..strokeWidth = 1.5;
 
     final shape = ChainShape()

@@ -19,6 +19,7 @@ const String kGameOverMenu = 'GAME_OVER_MENU';
 const String kPrefKeyAudioEnabled = 'PREF_KEY_AUDIO_ENABLED';
 const String kPrefKeyGlobalHighscore = 'PREF_KEY_GLOBAL_HIGHSCORE';
 const String kPrefKeyUnlockedIndex = 'PREF_KEY_UNLOCKED_INDEX';
+const String kPrefKeyTimesAskedForReview = 'PREF_KEY_ASKED_FOR_REVIEW';
 
 // audio
 const String kAudioPath = 'assets/audio/';
@@ -39,3 +40,7 @@ const String kPrefKeyShuffleShowHelp = 'PREF_KEY_SHUFFLE_SHOW_HELP';
 // ads
 const int kDefaultAdInterval = 5;
 const String kPrefKeyAdIntervalCounter = 'PREF_KEY_AD_INTERVAL_COUNTER';
+
+// inApp review
+const int kMinProgressAskForReview = 2;
+const int kMaxTimesAskForReview = 3;

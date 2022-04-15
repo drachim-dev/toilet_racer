@@ -5,6 +5,8 @@ import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
 import 'package:flutter/foundation.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/background.dart';
@@ -13,6 +15,7 @@ import 'package:toilet_racer/components/game_help.dart';
 import 'package:toilet_racer/components/player_body.dart';
 import 'package:toilet_racer/models/play_option.dart';
 import 'package:toilet_racer/race_game_mode.dart';
+import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
 import 'package:toilet_racer/services/timer_service.dart';
@@ -28,11 +31,11 @@ class RaceGame extends Forge2DGame with TapDetector {
   /// This is the default world scaling factor that was used in an older version of forge.
   static const double _defaultScale = 4.0;
 
+  final AdService _adService = locator<AdService>();
   final AudioService _audioService = locator<AudioService>();
-  final TimerService _timerService = locator<TimerService>();
   final LevelRepository _levelRepository = locator<LevelRepository>();
-
-  final AsyncCallback? gameOverCallback;
+  final SharedPreferences _prefService = locator<SharedPreferences>();
+  final TimerService _timerService = locator<TimerService>();
 
   GameMode? gameMode;
 
@@ -53,7 +56,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   double? get score => _timerService.seconds.value;
 
-  RaceGame({this.gameOverCallback}) : super(gravity: Vector2.zero());
+  RaceGame() : super(gravity: Vector2.zero());
 
   @override
   Future<void> onLoad() async {
@@ -155,17 +158,18 @@ class RaceGame extends Forge2DGame with TapDetector {
           ?.map((e) => _background!.getImageToScreen(e))
           .toList();
 
-      final player = await PlayerComponent(_currentLevel!.player).onLoad();
-      final _playerBody = PlayerBody(
-          player, _background!.getImageToScreen(_currentLevel!.startPosition),
+      final player = PlayerComponent(_currentLevel!.player);
+      final _playerBody = PlayerBody(await player.onLoad(),
+          _background!.getImageToScreen(_currentLevel!.startPosition),
           preview: true);
 
       final movementHelp = GameHelp(
-          boundary: middleBoundary,
-          rightArrow: true,
-          helpText: S.of(buildContext!).overlayHelpTapToTurnText,
-          imagePath: 'icons/ic_gesture_tap.png',
-          player: _playerBody);
+        boundary: middleBoundary,
+        rightArrow: true,
+        helpText: S.of(buildContext!).overlayHelpTapToTurnText,
+        imagePath: 'icons/ic_gesture_tap.png',
+        // player: _playerBody TODO: Position and scale is wrong
+      );
 
       final gamePlayHelp = GameHelp(
         boundary: middleBoundary,
@@ -242,8 +246,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   void update(double dt) {
     super.update(dt);
     if (_collisionDetected) {
-      _onGameOver();
       _collisionDetected = false;
+      _timerService.cancel();
+      _onGameOver();
     }
   }
 
@@ -283,14 +288,10 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   void _onCollisionDetected() {
     _collisionDetected = true;
-    _timerService.cancel();
-
     _audioService.playDropSound(kAudioToiletDropSound);
-
-    _updateScoreAndAchievements();
   }
 
-  void _onGameOver() async {
+  Future<void> _onGameOver() async {
     for (var c in _gameComponents) {
       remove(c);
     }
@@ -301,24 +302,54 @@ class RaceGame extends Forge2DGame with TapDetector {
 
     // Start menu background music before gameOverCallback because ads should be able to stop music again.
     await _audioService.playBackgroundMusic(menu: true);
-    await gameOverCallback?.call();
 
-    // Short delay to prevent possible game start before ad is shown
-    await Future.delayed(const Duration(milliseconds: 150));
+    await _updateScoreAndAchievements().then((hasWon) async {
 
-    _swapMenuOverlay(kGameOverMenu);
+      // ask for review
+      if (hasWon && gameMode?.shouldAskForReview() == true) {
+        await mayShowInAppReview();
+      } else {
+
+        // show ad
+        await _adService.mayShow(
+            onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
+            onAdShown: () => _audioService.stopBackgroundMusic());
+
+        // Short delay to prevent possible game start before ad is shown
+        await Future.delayed(const Duration(milliseconds: 150));
+      }
+
+      _swapMenuOverlay(kGameOverMenu);
+    });
   }
 
   /// Updates score and achievement status async in background.
-  void _updateScoreAndAchievements() async {
+  Future<bool> _updateScoreAndAchievements() async {
     final _gameService = locator<GameService>();
     final score = _timerService.seconds.value;
 
     if (score != null) {
-      gameMode?.updateScoreAndAchievements(score);
-
-      // submit score
+      var hasWon = await gameMode?.updateScoreAndAchievements(score) ?? false;
       await _gameService.submitScore(score);
+      return hasWon;
+    }
+
+    return false;
+  }
+
+  /// Ask user for review if his progress is at [kMinProgressAskForReview]
+  /// and he was not asked more than [kMaxTimesAskForReview].
+  Future<void> mayShowInAppReview() async {
+    final InAppReview inAppReview = InAppReview.instance;
+
+    if (await inAppReview.isAvailable()) {
+      // ignore: unawaited_futures
+      inAppReview.requestReview().then((_) async {
+        var timesAskedForReview =
+            _prefService.getInt(kPrefKeyTimesAskedForReview) ?? 0;
+        await _prefService.setInt(
+            kPrefKeyTimesAskedForReview, ++timesAskedForReview);
+      });
     }
   }
 

@@ -23,7 +23,6 @@ class MobileAdService implements AdService {
   final SharedPreferences _prefService = locator<SharedPreferences>();
 
   final int _interval = kDefaultAdInterval;
-  int _counter = 0;
 
   InterstitialAd? _interstitialAd;
   int _numInterstitialLoadAttempts = 0;
@@ -33,8 +32,6 @@ class MobileAdService implements AdService {
     await MobileAds.instance.initialize();
     await MobileAds.instance.updateRequestConfiguration(
         RequestConfiguration(testDeviceIds: AdManager.testDeviceIds));
-
-    _counter = _prefService.getInt(kPrefKeyAdIntervalCounter) ?? _counter;
     return this;
   }
 
@@ -102,7 +99,7 @@ class MobileAdService implements AdService {
       VoidCallback? onAdShown}) async {
     // disable ads in debug
     if (kDebugMode) return;
-
+    var _counter = _prefService.getInt(kPrefKeyAdIntervalCounter) ?? 0;
     await _prefService.setInt(kPrefKeyAdIntervalCounter, ++_counter);
 
     if (force || _counter % _interval == 0) {
