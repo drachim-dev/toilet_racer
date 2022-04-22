@@ -42,5 +42,5 @@ const int kDefaultAdInterval = 5;
 const String kPrefKeyAdIntervalCounter = 'PREF_KEY_AD_INTERVAL_COUNTER';
 
 // inApp review
-const int kMinProgressAskForReview = 2;
+const int kMinProgressAskForReview = 5;
 const int kMaxTimesAskForReview = 3;
