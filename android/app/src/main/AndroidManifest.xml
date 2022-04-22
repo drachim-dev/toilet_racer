@@ -49,13 +49,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> -->
 
-        <queries>
-            <!-- Open instagram from credits page -->
-            <intent>
-                <package android:name="com.instagram.android" />
-            </intent>
-    </queries>
-
     </application>
+
+    <queries>
+        <!-- Open instagram from credits page -->
+        <package android:name="com.instagram.android" />
+
+    </queries>
 
 </manifest>
