@@ -98,7 +98,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> prepareStartGame(
       {GameModeIdentifier? gameModeIdentifier,
       required PlayOption playOption}) async {
-    _removeOverlays();
+    overlays.clear();
 
     if (gameModeIdentifier != null) {
       gameMode = gameModeIdentifier.gameMode(null);
@@ -168,7 +168,7 @@ class RaceGame extends Forge2DGame with TapDetector {
         rightArrow: true,
         helpText: S.of(buildContext!).overlayHelpTapToTurnText,
         imagePath: 'icons/ic_gesture_tap.png',
-        // player: _playerBody TODO: Position and scale is wrong
+        player: _playerBody // TODO: Position and scale is wrong
       );
 
       final gamePlayHelp = GameHelp(
@@ -182,10 +182,12 @@ class RaceGame extends Forge2DGame with TapDetector {
       helper.add(gamePlayHelp);
     } else if (gameMode!.isCareer && isNewLevel) {
       // Show name of new level in career mode
+      final levelIndex =
+          S.of(buildContext!).overlayHelpLevelName(_currentLevel!.id + 1);
+      final mapName = _currentLevel!.map.name;
       final levelName = GameHelp(
-        helpText:
-            S.of(buildContext!).overlayHelpLevelName(_currentLevel!.id + 1),
-        textPosition: GamePosition.center,
+        helpText: '$levelIndex\n$mapName',
+        textPosition: GamePosition.top,
       );
 
       helper.add(levelName);
@@ -304,12 +306,10 @@ class RaceGame extends Forge2DGame with TapDetector {
     await _audioService.playBackgroundMusic(menu: true);
 
     await _updateScoreAndAchievements().then((hasWon) async {
-
       // ask for review
       if (hasWon && gameMode?.shouldAskForReview() == true) {
         await mayShowInAppReview();
       } else {
-
         // show ad
         await _adService.mayShow(
             onAdClosed: () => _audioService.playBackgroundMusic(menu: true),
@@ -357,17 +357,9 @@ class RaceGame extends Forge2DGame with TapDetector {
   void showCreditsMenu() => _swapMenuOverlay(kCreditsMenu);
   void showLeaderboardMenu() => _swapMenuOverlay(kLeaderboardMenu);
 
-  /// Removes all active overlays
-  void _removeOverlays() {
-    final activeOverlays = overlays.value.toSet();
-    for (var overlay in activeOverlays) {
-      overlays.remove(overlay);
-    }
-  }
-
   /// Removes all active overlays in favor of [overlayName]
   void _swapMenuOverlay(String overlayName) {
-    _removeOverlays();
+    overlays.clear();
     overlays.add(overlayName);
   }
 }

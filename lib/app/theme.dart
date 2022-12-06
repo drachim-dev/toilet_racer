@@ -25,14 +25,14 @@ final toiletTheme = ThemeData(
     ).apply(displayColor: secondaryColor),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        primary: secondaryColor,
+        foregroundColor: secondaryColor,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          primary: Colors.orange.shade100.withOpacity(0.25),
+          backgroundColor: Colors.orange.shade100.withOpacity(0.25),
           elevation: 0,
-          onPrimary: Colors.white,
+          foregroundColor: Colors.white,
           shadowColor: Colors.orange.shade100.withOpacity(0.25)),
     ));
 

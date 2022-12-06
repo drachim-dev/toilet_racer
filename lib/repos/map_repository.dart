@@ -6,7 +6,7 @@ import 'package:toilet_racer/models/map.dart';
 
 class MapRepository {
   static final _toilet1 = GameMap(
-      name: 'Need a seat',
+      name: 'Need a seat or you get a seat',
       filePath: 'level/toilet1.webp',
       track: Track(
           innerBoundary: EllipseBoundary(
@@ -193,7 +193,7 @@ class MapRepository {
   );
 
   static final _toiletEgyptCoralReefDahab = GameMap(
-    name: 'Coral Reef Hotel Dahab',
+    name: 'Di Daba Dahab',
     filePath: 'level/toilet_egypt_coral_reef.webp',
     track: Track(
       innerBoundary: PolygonBoundary(vertices: [
@@ -322,7 +322,7 @@ class MapRepository {
   );
 
   static final _friedEgg = GameMap(
-    name: 'Fried egg',
+    name: 'Easy egg to crack',
     filePath: 'level/fried_egg.webp',
     track: Track(
         innerBoundary: EllipseBoundary(
@@ -387,7 +387,7 @@ class MapRepository {
   );
 
   static final _abstractEye = GameMap(
-    name: 'Abstract eye',
+    name: 'Look at me',
     filePath: 'level/abstract_eye.webp',
     track: Track(
         innerBoundary: EllipseBoundary(

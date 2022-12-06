@@ -22,17 +22,16 @@ abstract class AudioService {
 class MobileAudioService implements AudioService {
   final SharedPreferences _prefService = locator<SharedPreferences>();
   // Use custom Bgm instance with fixedPlayer instead of FlameAudio.bgm to prevent MediaPlayerNative error.
-  final Bgm _bgm = Bgm(audioCache: AudioCache(fixedPlayer: AudioPlayer()));
+  final Bgm _bgm = Bgm(audioCache: AudioCache(prefix: kAudioPath));
 
   @override
   Future<MobileAudioService> init() async {
     _bgm.initialize();
-    _bgm.audioCache.prefix = kAudioPath;
 
     FlameAudio.audioCache.prefix = kAudioPath;
 
     // preload bg audio
-    await _bgm.audioCache
+    await _bgm.audioPlayer.audioCache
         .loadAll([kAudioBackgroundPath, kAudioMenuBackgroundPath]);
 
     // preload audio

@@ -18,9 +18,9 @@ class PlayerBody extends BodyComponent {
   static Vector2 pointer(double angle, double length, [bool flipY = false]) {
     final rotation = Rot.withAngle(angle);
     if (flipY) {
-      return Rot.mulTransVec2(rotation, Vector2(0, 1)..scale(length));
+      return Rot.mulTransVec2(rotation, Vector2(0, -1)..scale(length));
     } else {
-      return Rot.mulVec2(rotation, Vector2(0, -1)..scale(length));
+      return Rot.mulVec2(rotation, Vector2(0, 1)..scale(length));
     }
   }
 
@@ -63,7 +63,7 @@ class PlayerBody extends BodyComponent {
     /// Player starts with bearing and heading
     /// in right direction when turning counterclockwise
     /// and in left direction when turning clockwise
-    bearing = counterclockwise ? pi / 2 : -pi / 2;
+    bearing = counterclockwise ? -pi / 2 : pi / 2;
   }
 
   @override
@@ -183,7 +183,7 @@ class PlayerBody extends BodyComponent {
   void spin() {
     // How much to rotate the bearing
     // 20 means that you have to click 20 times for a full 360° turn
-    final deltaBearing = counterclockwise ? pi2 / 20 : -pi2 / 20;
+    final deltaBearing = counterclockwise ? -pi2 / 20 : pi2 / 20;
     bearing = normalizeAngle(bearing + deltaBearing);
   }
 }

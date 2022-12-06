@@ -21,8 +21,7 @@ Future<void> _testAll() async {
 }
 
 void _ensureInitialized() {
-  binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized()
-      as IntegrationTestWidgetsFlutterBinding;
+  binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {

@@ -35,7 +35,7 @@ class LevelRepository {
           helpText = S.current.overlayHelpSurviveText(goal.formatDecimal(2));
         }
 
-        var level = Level(
+        final level = Level(
             id: levelIndex++,
             map: map,
             player: player,
