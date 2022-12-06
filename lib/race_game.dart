@@ -168,7 +168,7 @@ class RaceGame extends Forge2DGame with TapDetector {
         rightArrow: true,
         helpText: S.of(buildContext!).overlayHelpTapToTurnText,
         imagePath: 'icons/ic_gesture_tap.png',
-        player: _playerBody // TODO: Position and scale is wrong
+        // player: _playerBody // TODO: Position and scale is wrong
       );
 
       final gamePlayHelp = GameHelp(
