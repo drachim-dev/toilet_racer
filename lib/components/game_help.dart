@@ -131,20 +131,19 @@ class GameHelp extends PositionComponent with HasGameRef {
         final textPaint = TextPaint(
             style: baseTextConfig, textDirection: Directionality.of(context));
 
-        // TextBoxComponent can't align text within itself yet:
-        // https://github.com/flame-engine/flame/issues/1088
-
-/*       final textBoxComponent = TextBoxComponent(
+        // Does not support newlines at the moment:
+        // https://github.com/flame-engine/flame/issues/1622
+        final textBoxComponent = TextBoxComponent(
           text: helpText,
           textRenderer: textPaint,
           boxConfig: TextBoxConfig(maxWidth: _screenSize.x - kGameScreenMargin),
-          position: position)
-        ..anchor = Anchor.center;
+          position: position,
+          align: Anchor.center,
+          anchor: Anchor.center,
+          size: Vector2(_screenSize.x - kGameScreenMargin, _screenSize.y / 6),
+        );
 
-      add(textBoxComponent); */
-
-        // text must be wrapped manually via linebreaks
-        textPaint.render(canvas, helpText!, position, anchor: Anchor.center);
+        add(textBoxComponent);
       }
     }
   }

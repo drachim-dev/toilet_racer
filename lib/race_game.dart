@@ -186,7 +186,7 @@ class RaceGame extends Forge2DGame with TapDetector {
           S.of(buildContext!).overlayHelpLevelName(_currentLevel!.id + 1);
       final mapName = _currentLevel!.map.name;
       final levelName = GameHelp(
-        helpText: '$levelIndex\n$mapName',
+        helpText: '$levelIndex: $mapName',
         textPosition: GamePosition.top,
       );
 
