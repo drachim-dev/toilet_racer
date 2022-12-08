@@ -1,11 +1,16 @@
 import 'package:flame_forge2d/body_component.dart';
+import 'package:flame_forge2d/contact_callbacks.dart';
 import 'package:forge2d/forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:toilet_racer/components/player_body.dart';
 
-class Boundary extends BodyComponent {
-  final List<Vector2> _vertices;
+import 'package:flutter/material.dart' as material;
 
-  Boundary(this._vertices);
+class Boundary extends BodyComponent with ContactCallbacks {
+  final Function collisionDetected;
+  final List<Vector2> vertices;
+
+  Boundary({required this.collisionDetected, required this.vertices});
 
   @override
   Future<void> onLoad() {
@@ -26,10 +31,18 @@ class Boundary extends BodyComponent {
 
     final shape = ChainShape()
       ..createLoop(
-          _vertices.map((vertex) => gameRef.screenToWorld(vertex)).toList());
+          vertices.map((vertex) => gameRef.screenToWorld(vertex)).toList());
 
     final fixtureDef = FixtureDef(shape);
     final bodyDef = BodyDef()..userData = this;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
+
+  @override
+  void beginContact(Object other, Contact contact) {
+    if (other is PlayerBody) {
+      paint.color = material.Colors.red;
+      collisionDetected();
+    }
   }
 }

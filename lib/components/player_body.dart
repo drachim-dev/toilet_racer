@@ -4,12 +4,9 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart' show Colors;
-import 'package:flutter/material.dart' as material;
 import 'package:toilet_racer/app/locator.dart';
 import 'package:toilet_racer/components/player_component.dart';
 import 'package:toilet_racer/services/timer_service.dart';
-
-import 'boundary.dart';
 
 class PlayerBody extends BodyComponent {
   static const pi = math.pi;
@@ -186,21 +183,4 @@ class PlayerBody extends BodyComponent {
     final deltaBearing = counterclockwise ? -pi2 / 20 : pi2 / 20;
     bearing = normalizeAngle(bearing + deltaBearing);
   }
-}
-
-class BoundaryContactCallback extends ContactCallback<PlayerBody, Boundary> {
-  final Function collisionDetected;
-
-  BoundaryContactCallback(this.collisionDetected);
-
-  @override
-  // ignore: avoid_renaming_method_parameters
-  void begin(PlayerBody player, Boundary boundary, Contact contact) {
-    boundary.paint.color = material.Colors.red;
-    collisionDetected();
-  }
-
-  @override
-  // ignore: avoid_renaming_method_parameters
-  void end(PlayerBody player, Boundary boundary, Contact contact) {}
 }

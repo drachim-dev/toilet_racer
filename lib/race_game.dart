@@ -48,7 +48,6 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   Background? _background;
   Level? _currentLevel;
-  BoundaryContactCallback? _contactCallback;
 
   Set<Component> _gameComponents = {};
   PlayerBody? _playerBody;
@@ -229,17 +228,16 @@ class RaceGame extends Forge2DGame with TapDetector {
         _background!.getImageToScreen(_currentLevel!.startPosition),
         counterclockwise: !ghostMode));
 
-    await add(outerBoundary = Boundary(_currentLevel!
-        .map.track.outerBoundary.vertices
-        .map((vertex) => _background!.getImageToScreen(vertex))
-        .toList()));
-    await add(innerBoundary = Boundary(_currentLevel!
-        .map.track.innerBoundary.vertices
-        .map((vertex) => _background!.getImageToScreen(vertex))
-        .toList()));
-
-    addContactCallback(
-        _contactCallback = BoundaryContactCallback(_onCollisionDetected));
+    await add(outerBoundary = Boundary(
+        collisionDetected: _onCollisionDetected,
+        vertices: _currentLevel!.map.track.outerBoundary.vertices
+            .map((vertex) => _background!.getImageToScreen(vertex))
+            .toList()));
+    await add(innerBoundary = Boundary(
+        collisionDetected: _onCollisionDetected,
+        vertices: _currentLevel!.map.track.innerBoundary.vertices
+            .map((vertex) => _background!.getImageToScreen(vertex))
+            .toList()));
 
     _gameComponents = {_playerBody!, outerBoundary, innerBoundary};
   }
@@ -296,10 +294,6 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> _onGameOver() async {
     for (var c in _gameComponents) {
       remove(c);
-    }
-
-    if (_contactCallback != null) {
-      removeContactCallback(_contactCallback!);
     }
 
     // Start menu background music before gameOverCallback because ads should be able to stop music again.
