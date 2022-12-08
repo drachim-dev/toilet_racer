@@ -103,6 +103,7 @@ class _MyAppState extends State<MyApp> {
                     onCountDownFinished: game.startGame,
                   ),
               kGameOverMenu: (_, RaceGame game) => GameOverMenu(
+                    gameMode: game.gameMode,
                     onBackToMenuPressed: game.showStartMenu,
                     onPlayPressed: (PlayOption playOption) =>
                         game.prepareStartGame(playOption: playOption),

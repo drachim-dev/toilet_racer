@@ -5,8 +5,10 @@ import 'package:share/share.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/generated/l10n.dart';
 import 'package:toilet_racer/models/play_option.dart';
+import 'package:toilet_racer/race_game_mode.dart';
 
 class GameOverMenu extends StatelessWidget {
+  final GameMode? gameMode;
   final VoidCallback onBackToMenuPressed;
   final Function(PlayOption playOption) onPlayPressed;
   final double score;
@@ -15,6 +17,7 @@ class GameOverMenu extends StatelessWidget {
 
   const GameOverMenu(
       {Key? key,
+      required this.gameMode,
       required this.onBackToMenuPressed,
       required this.onPlayPressed,
       required this.score,
@@ -104,12 +107,18 @@ class GameOverMenu extends StatelessWidget {
     BuildContext context,
     TextStyle buttonStyle,
   ) {
+    final String buttonText;
+
     final playOption =
         hasCompletedGameMode ? PlayOption.restart : PlayOption.next;
 
-    final buttonText = hasCompletedGameMode
-        ? S.of(context).pageGameOverRestartButtonText
-        : S.of(context).pageGameOverNextButtonText;
+    if (gameMode?.isShuffle == true) {
+      buttonText = S.of(context).pageStartShuffleButtonText;
+    } else if (hasCompletedGameMode) {
+      buttonText = S.of(context).pageGameOverRestartButtonText;
+    } else {
+      buttonText = S.of(context).pageGameOverNextButtonText;
+    }
 
     return TextButton(
       onPressed: () => onPlayPressed(playOption),
