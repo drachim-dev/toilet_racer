@@ -4,6 +4,7 @@ import 'package:flame/components.dart' hide Timer;
 import 'package:flame/flame.dart';
 import 'package:flame/input.dart';
 import 'package:flame_forge2d/forge2d_game.dart';
+import 'package:flame_rive/flame_rive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ import 'package:toilet_racer/components/background.dart';
 import 'package:toilet_racer/components/boundary.dart';
 import 'package:toilet_racer/components/game_help.dart';
 import 'package:toilet_racer/components/player_body.dart';
+import 'package:toilet_racer/components/win_animation.dart';
 import 'package:toilet_racer/models/play_option.dart';
 import 'package:toilet_racer/race_game_mode.dart';
 import 'package:toilet_racer/services/ad_service.dart';
@@ -38,6 +40,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   final TimerService _timerService = locator<TimerService>();
 
   GameMode? gameMode;
+  int _winAnimationCount = 0;
 
   @override
   // ignore: overridden_fields
@@ -61,6 +64,7 @@ class RaceGame extends Forge2DGame with TapDetector {
   Future<void> onLoad() async {
     await _audioService.playBackgroundMusic(menu: true);
     await _initLevel(_levelRepository.getAllLevels().first);
+
     return super.onLoad();
   }
 
@@ -245,6 +249,15 @@ class RaceGame extends Forge2DGame with TapDetector {
   @override
   void update(double dt) {
     super.update(dt);
+
+    final goalNotReached = _timerService.seconds.value! <= _currentLevel!.goal;
+
+    if (goalNotReached) {
+      _winAnimationCount = 0;
+    } else if (_winAnimationCount == 0) {
+      // showWinAnimation();
+    }
+
     if (_collisionDetected) {
       _collisionDetected = false;
       _timerService.cancel();
@@ -355,5 +368,15 @@ class RaceGame extends Forge2DGame with TapDetector {
   void _swapMenuOverlay(String overlayName) {
     overlays.clear();
     overlays.add(overlayName);
+  }
+
+  Future<void> showWinAnimation() async {
+    final winAnimationArtboard =
+        await loadArtboard(RiveFile.asset('assets/animations/rive/stars.riv'));
+    winAnimationArtboard.fills.first.isVisible = false;
+
+    final winAnimationComponent = WinAnimationComponent(winAnimationArtboard)
+      ..size = size;
+    await add(winAnimationComponent);
   }
 }
