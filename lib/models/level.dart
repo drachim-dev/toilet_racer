@@ -11,23 +11,22 @@ class Level {
   final GameMap map;
   final Player player;
 
-  final String? helpText;
-
-  /// Minimum score required to win the level
-  final double goal;
-
   final double? highscore;
 
   LevelStatus status;
+
+  String? helpText;
+
+  final double goal;
 
   Level({
     required this.id,
     required this.map,
     required this.player,
-    this.helpText,
-    required this.goal,
     this.highscore,
     required this.status,
+    required this.goal,
+    this.helpText,
   });
 
   Vector2 get startPosition => map.track.bottomPosition;
@@ -37,6 +36,8 @@ enum LevelStatus { hidden, locked, unlocked, won }
 
 extension LevelExtension on Level {
   bool get isHidden => status == LevelStatus.hidden;
+  bool get isLocked => status == LevelStatus.locked;
+  bool get isUnlocked => status == LevelStatus.unlocked;
   bool get hasWon => status == LevelStatus.won;
 }
 /* 

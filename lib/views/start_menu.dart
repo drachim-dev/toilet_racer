@@ -10,12 +10,14 @@ import 'package:toilet_racer/widgets/shadow_icon.dart';
 
 class StartMenu extends StatefulWidget {
   final Future<void> Function(GameModeIdentifier identifier) onPlayPressed;
+  final VoidCallback onSelectLevelsPressed;
   final VoidCallback onCreditsPressed;
   final VoidCallback onLeaderboardPressed;
 
   const StartMenu({
     Key? key,
     required this.onPlayPressed,
+    required this.onSelectLevelsPressed,
     required this.onCreditsPressed,
     required this.onLeaderboardPressed,
   }) : super(key: key);
@@ -53,14 +55,8 @@ class _StartMenuState extends State<StartMenu>
     final theme = Theme.of(context);
 
     final titleStyle = theme.textTheme.headline1!.copyWith(color: Colors.brown);
-    final buttonStyle = theme.textTheme.headline2!;
 
-    const iconColor = secondaryColor;
-    const shadowColor = primaryColor;
-    final iconSize = buttonStyle.fontSize! - 8;
-    const iconPadding = EdgeInsets.only(right: 16);
-
-    const spacing = 86.0;
+    const spacing = 64.0;
 
     final bottomImage = Image.asset(
       'assets/animations/toilet_no-lid.webp',
@@ -86,49 +82,31 @@ class _StartMenuState extends State<StartMenu>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(S.of(context).appTitle, style: titleStyle),
-                    const SizedBox(height: spacing * 3),
-                    ElevatedButton.icon(
-                        icon: ShadowIcon(
-                          Icons.play_circle_outline_outlined,
-                          size: iconSize,
-                          color: iconColor,
-                          shadowColor: shadowColor,
-                          padding: iconPadding,
-                        ),
-                        onPressed: () => _startGame(GameModeIdentifier.career),
-                        label: Text(
-                            hasCareerProgress
-                                ? S.of(context).pageStartContinueButtonText
-                                : S.of(context).pageStartPlayButtonText,
-                            style: buttonStyle)),
-                    const SizedBox(height: spacing),
-                    if (hasCareerProgress)
-                      ElevatedButton.icon(
-                        icon: ShadowIcon(
-                          Icons.casino_outlined,
-                          size: iconSize,
-                          color: iconColor,
-                          shadowColor: shadowColor,
-                          padding: iconPadding,
-                        ),
-                        onPressed: () => _startGame(GameModeIdentifier.shuffle),
-                        label: Text(S.of(context).pageStartShuffleButtonText,
-                            style: buttonStyle),
-                      ),
-                    const SizedBox(height: spacing),
-                    ElevatedButton.icon(
-                      icon: ShadowIcon(
-                        Icons.help_outline_outlined,
-                        size: iconSize,
-                        color: iconColor,
-                        shadowColor: shadowColor,
-                        padding: iconPadding,
-                      ),
-                      onPressed: widget.onCreditsPressed,
-                      label: Text(S.of(context).pageStartCreditsButtonText,
-                          style: buttonStyle),
+                    const SizedBox(height: spacing * 2),
+                    _buildButton(
+                      icon: Icons.play_circle_outline_outlined,
+                      label: hasCareerProgress
+                          ? S.of(context).pageStartContinueButtonText
+                          : S.of(context).pageStartPlayButtonText,
+                      onPressed: () => _startGame(GameModeIdentifier.career),
                     ),
-                    const SizedBox(height: spacing),
+                    if (hasCareerProgress)
+                      _buildButton(
+                        icon: Icons.landscape_outlined,
+                        label: 'Levels',
+                        onPressed: widget.onSelectLevelsPressed,
+                      ),
+                    if (hasCareerProgress)
+                      _buildButton(
+                        icon: Icons.casino_outlined,
+                        label: S.of(context).pageStartShuffleButtonText,
+                        onPressed: () => _startGame(GameModeIdentifier.shuffle),
+                      ),
+                    _buildButton(
+                      icon: Icons.help_outline_outlined,
+                      label: S.of(context).pageStartCreditsButtonText,
+                      onPressed: widget.onCreditsPressed,
+                    ),
                   ],
                 ),
               )),
@@ -145,7 +123,40 @@ class _StartMenuState extends State<StartMenu>
   }
 
   bool get hasCareerProgress {
-    final unlockedLevelIndex = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    final unlockedLevelIndex =
+        _prefService.getInt(kPrefKeyUnlockedLevelIndex) ?? 0;
     return unlockedLevelIndex > 0;
+  }
+
+  ShadowIcon _buildShadowIcon(IconData icon, {required double iconSize}) {
+    const iconColor = secondaryColor;
+    const shadowColor = primaryColor;
+    const iconPadding = EdgeInsets.only(right: 16);
+
+    return ShadowIcon(
+      icon,
+      size: iconSize,
+      color: iconColor,
+      shadowColor: shadowColor,
+      padding: iconPadding,
+    );
+  }
+
+  Widget _buildButton(
+      {required IconData icon,
+      required String label,
+      required Function() onPressed}) {
+    final theme = Theme.of(context);
+    final buttonStyle = theme.textTheme.headline2!;
+    final iconSize = buttonStyle.fontSize! - 8;
+    const spacing = 32.0;
+
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: spacing),
+        child: ElevatedButton.icon(
+          icon: _buildShadowIcon(icon, iconSize: iconSize),
+          onPressed: onPressed,
+          label: Text(label, style: buttonStyle),
+        ));
   }
 }

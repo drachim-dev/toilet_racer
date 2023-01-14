@@ -13,14 +13,14 @@ class CreditsMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menuStyle = Theme.of(context).textTheme.headline4;
+    final theme = Theme.of(context);
 
-    final titleStyle = Theme.of(context).textTheme.headline3;
-    final sectionStyle = Theme.of(context).textTheme.headline4;
-    final textStyle = Theme.of(context).textTheme.headline5;
-    final urlStyle = Theme.of(context)
-        .textTheme
-        .headline6!
+    final menuStyle = theme.textTheme.headline4;
+
+    final titleStyle = theme.textTheme.headline3;
+    final sectionStyle = theme.textTheme.headline4;
+    final textStyle = theme.textTheme.headline5;
+    final urlStyle = theme.textTheme.headline6!
         .copyWith(decoration: TextDecoration.underline);
 
     const blur = 10.0;

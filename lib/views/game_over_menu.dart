@@ -88,7 +88,7 @@ class GameOverMenu extends StatelessWidget {
                   if (canPlayNext) _buildNextButton(context, buttonStyle),
                   if (canPlayNext) const SizedBox(height: spacing),
                   TextButton(
-                    onPressed: () => onPlayPressed(PlayOption.repeat),
+                    onPressed: () => onPlayPressed(PlayOption.repeat()),
                     child: Text(
                       S.of(context).pageGameOverTryAgainButtonText,
                       style: buttonStyle,
@@ -110,7 +110,7 @@ class GameOverMenu extends StatelessWidget {
     final String buttonText;
 
     final playOption =
-        hasCompletedGameMode ? PlayOption.restart : PlayOption.next;
+        hasCompletedGameMode ? PlayOption.restart() : PlayOption.next();
 
     if (gameMode?.isShuffle == true) {
       buttonText = S.of(context).pageStartShuffleButtonText;

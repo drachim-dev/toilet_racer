@@ -25,7 +25,7 @@ import 'package:toilet_racer/services/timer_service.dart';
 import 'components/player_component.dart';
 import 'generated/l10n.dart';
 import 'models/level.dart';
-import 'repos/level_repository.dart';
+import 'repos/stage_repository.dart';
 
 typedef AsyncCallback = Future<void> Function();
 
@@ -35,7 +35,7 @@ class RaceGame extends Forge2DGame with TapDetector {
 
   final AdService _adService = locator<AdService>();
   final AudioService _audioService = locator<AudioService>();
-  final LevelRepository _levelRepository = locator<LevelRepository>();
+  final StageRepository _levelRepository = locator<StageRepository>();
   final SharedPreferences _prefService = locator<SharedPreferences>();
   final TimerService _timerService = locator<TimerService>();
 
@@ -103,8 +103,12 @@ class RaceGame extends Forge2DGame with TapDetector {
       required PlayOption playOption}) async {
     overlays.clear();
 
+    if (playOption is NextOption) {
+      _currentLevel = playOption.level;
+    }
+
     if (gameModeIdentifier != null) {
-      gameMode = gameModeIdentifier.gameMode(null);
+      gameMode = gameModeIdentifier.gameMode(_currentLevel?.id);
     }
 
     if (gameMode == null) {
@@ -112,17 +116,20 @@ class RaceGame extends Forge2DGame with TapDetector {
     }
 
     Level nextLevel;
-    switch (playOption) {
-      case PlayOption.repeat:
+    switch (playOption.runtimeType) {
+      case RepeatOption:
         nextLevel = _currentLevel ?? gameMode!.getLevel();
         break;
-      case PlayOption.next:
+      case NextOption:
         nextLevel = gameMode!.getLevel();
         break;
-      case PlayOption.restart:
+      case RestartOption:
         gameMode!.resetProgress();
         nextLevel = gameMode!.getLevel();
         break;
+      default:
+        // should never happen
+        nextLevel = gameMode!.getLevel();
     }
 
     final isNewLevel = _currentLevel == null || nextLevel != _currentLevel;
@@ -250,7 +257,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   void update(double dt) {
     super.update(dt);
 
-    final goalNotReached = _timerService.seconds.value! <= _currentLevel!.goal;
+    final goalNotReached =
+        (_timerService.seconds.value ?? 0) <= _currentLevel!.goal;
 
     if (goalNotReached) {
       _winAnimationCount = 0;
@@ -361,6 +369,8 @@ class RaceGame extends Forge2DGame with TapDetector {
   }
 
   void showStartMenu() => _swapMenuOverlay(kStartMenu);
+  void showStagesMenu() => _swapMenuOverlay(kStagesMenu);
+  void showLevelsMenu() => _swapMenuOverlay(kLevelsMenu);
   void showCreditsMenu() => _swapMenuOverlay(kCreditsMenu);
   void showLeaderboardMenu() => _swapMenuOverlay(kLeaderboardMenu);
 

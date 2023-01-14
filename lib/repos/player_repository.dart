@@ -82,7 +82,7 @@ class PlayerRepository {
     _bugBeetle,
     _policeCar,
     _alien,
-    _mosquitoLarva2,
+    // _mosquitoLarva2,
     _rat,
   ];
 

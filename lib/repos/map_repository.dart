@@ -442,12 +442,12 @@ class MapRepository {
     _toiletEgyptDirty,
     _toiletEgyptHole,
     _friedEgg,
-    _trafficSign,
+    //_trafficSign,
     _tubDrain,
     _toiletForDisabled,
     _robotVacuumCleaner,
-    _abstractEye,
-    _candles,
+    //_abstractEye,
+    //_candles,
     _coffee,
   ];
 

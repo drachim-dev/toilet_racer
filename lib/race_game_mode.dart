@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toilet_racer/app/constants.dart';
 import 'package:toilet_racer/models/level.dart';
-import 'package:toilet_racer/repos/level_repository.dart';
 import 'package:toilet_racer/repos/map_repository.dart';
+import 'package:toilet_racer/repos/stage_repository.dart';
 
 import 'app/locator.dart';
 
@@ -12,12 +12,13 @@ enum GameModeIdentifier { career, shuffle }
 
 extension GameModeIdentifierExtension on GameModeIdentifier {
   GameMode gameMode(int? selectedLevel) {
-    final _prefService = locator<SharedPreferences>();
+    final SharedPreferences _prefService = locator<SharedPreferences>();
 
     switch (this) {
       case GameModeIdentifier.career:
-        final levelIndex =
-            selectedLevel ?? _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+        final levelIndex = selectedLevel ??
+            _prefService.getInt(kPrefKeyUnlockedLevelIndex) ??
+            0;
         return CareerGameMode(selectedLevelIndex: levelIndex);
       case GameModeIdentifier.shuffle:
         return ShuffleGameMode();
@@ -27,7 +28,7 @@ extension GameModeIdentifierExtension on GameModeIdentifier {
 
 abstract class GameMode {
   final SharedPreferences _prefService = locator<SharedPreferences>();
-  final LevelRepository _levelRepository = locator<LevelRepository>();
+  final StageRepository _stageRepository = locator<StageRepository>();
 
   final GameModeIdentifier identifier;
 
@@ -59,18 +60,24 @@ extension GameModeExtension on GameMode {
 class CareerGameMode extends GameMode {
   late Iterator<Level> _levelsIterator;
 
-  CareerGameMode({required int selectedLevelIndex})
+  CareerGameMode(
+      {required int selectedLevelIndex})
       : super(GameModeIdentifier.career) {
     if (hasCompleted) {
       resetProgress();
     } else {
-      _init(selectedLevelIndex: selectedLevelIndex);
+      _init(
+        selectedLevelIndex: selectedLevelIndex,
+      );
     }
   }
 
-  void _init({required int selectedLevelIndex}) {
-    _levelsIterator = _levelRepository
-        .getAllLevels()
+  void _init(
+      {required int selectedLevelIndex}) {
+
+    _levelsIterator = _stageRepository
+        .getStageByLevel(selectedLevelIndex)
+        .levels
         .skip(selectedLevelIndex)
         .iterator
       ..moveNext();
@@ -78,7 +85,7 @@ class CareerGameMode extends GameMode {
 
   @override
   bool get canPlayNext {
-    final allLevels = _levelRepository.getAllLevels();
+    final allLevels = _stageRepository.getAllLevels();
     final nextLevelIndex =
         allLevels.indexWhere((lvl) => lvl.id == _levelsIterator.current.id) + 1;
 
@@ -88,8 +95,9 @@ class CareerGameMode extends GameMode {
 
   @override
   bool get hasCompleted {
-    final unlockedLevelIndexd = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
-    return unlockedLevelIndexd > _levelRepository.getAllLevels().length - 1;
+    final unlockedLevelIndexd =
+        _prefService.getInt(kPrefKeyUnlockedLevelIndex) ?? 0;
+    return unlockedLevelIndexd > _stageRepository.getAllLevels().length - 1;
   }
 
   @override
@@ -112,7 +120,7 @@ class CareerGameMode extends GameMode {
   @override
   Future<bool> updateScoreAndAchievements(double score) async {
     if (score >= _levelsIterator.current.goal) {
-      final allLevels = _levelRepository.getAllLevels();
+      final allLevels = _stageRepository.getAllLevels();
 
       // Set level to won
       _levelsIterator.current.status = LevelStatus.won;
@@ -121,12 +129,12 @@ class CareerGameMode extends GameMode {
           allLevels.indexWhere((lvl) => lvl.id == _levelsIterator.current.id) +
               1;
       final unlockedLevelIndex =
-          _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+          _prefService.getInt(kPrefKeyUnlockedLevelIndex) ?? 0;
 
       // Update last unlocked level index
       if (nextLevelIndex > unlockedLevelIndex &&
           _levelsIterator.current != allLevels.last) {
-        await _prefService.setInt(kPrefKeyUnlockedIndex, nextLevelIndex);
+        await _prefService.setInt(kPrefKeyUnlockedLevelIndex, nextLevelIndex);
       }
     }
 
@@ -135,7 +143,7 @@ class CareerGameMode extends GameMode {
 
   @override
   void resetProgress() {
-    _prefService.setInt(kPrefKeyUnlockedIndex, 0);
+    _prefService.setInt(kPrefKeyUnlockedLevelIndex, 0);
     _init(selectedLevelIndex: 0);
   }
 
@@ -145,7 +153,8 @@ class CareerGameMode extends GameMode {
 
     var timesAskedForReview =
         _prefService.getInt(kPrefKeyTimesAskedForReview) ?? 0;
-    final unlockedLevelIndex = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    final unlockedLevelIndex =
+        _prefService.getInt(kPrefKeyUnlockedLevelIndex) ?? 0;
     final completedLastMap =
         unlockedLevelIndex % _mapRepository.getAllMaps.length == 0;
 
@@ -171,10 +180,11 @@ class ShuffleGameMode extends GameMode {
   /// Returns a random unlocked [Level].
   @override
   Level getLevel() {
-    final unlockedLevelIndex = _prefService.getInt(kPrefKeyUnlockedIndex) ?? 0;
+    final unlockedLevelIndex =
+        _prefService.getInt(kPrefKeyUnlockedLevelIndex) ?? 0;
 
     final unlockedLevels =
-        _levelRepository.getAllLevels().take(unlockedLevelIndex + 1);
+        _stageRepository.getAllLevels().take(unlockedLevelIndex + 1);
     final randomIndex = Random().nextInt(unlockedLevels.length);
     return unlockedLevels.elementAt(randomIndex);
   }
@@ -184,5 +194,4 @@ class ShuffleGameMode extends GameMode {
     // TODO: implement updateScore
     return false;
   }
-
 }

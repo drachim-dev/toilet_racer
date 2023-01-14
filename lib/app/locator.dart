@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toilet_racer/repos/level_repository.dart';
 import 'package:toilet_racer/repos/map_repository.dart';
 import 'package:toilet_racer/repos/player_repository.dart';
+import 'package:toilet_racer/repos/stage_repository.dart';
 import 'package:toilet_racer/services/ad_service.dart';
 import 'package:toilet_racer/services/audio_service.dart';
 import 'package:toilet_racer/services/game_service.dart';
@@ -24,7 +24,7 @@ void setupLocator() {
   locator.registerSingleton<TimerService>(TimerService());
   locator.registerSingleton<MapRepository>(MapRepository());
   locator.registerSingleton<PlayerRepository>(PlayerRepository());
-  locator.registerSingletonWithDependencies<LevelRepository>(
-      () => LevelRepository(),
+  locator.registerSingletonWithDependencies<StageRepository>(
+      () => StageRepository(),
       dependsOn: [SharedPreferences]);
 }

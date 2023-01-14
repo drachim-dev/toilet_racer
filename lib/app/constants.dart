@@ -4,6 +4,8 @@ const double kMenuScreenMargin = 32.0;
 
 // start menu
 const String kStartMenu = 'START_MENU';
+const String kStagesMenu = 'STAGES_MENU';
+const String kLevelsMenu = 'LEVELS_MENU';
 const String kCreditsMenu = 'CREDITS_MENU';
 const String kLeaderboardMenu = 'LEADERBOARD_MENU';
 
@@ -18,7 +20,8 @@ const String kGameOverMenu = 'GAME_OVER_MENU';
 // preferences
 const String kPrefKeyAudioEnabled = 'PREF_KEY_AUDIO_ENABLED';
 const String kPrefKeyGlobalHighscore = 'PREF_KEY_GLOBAL_HIGHSCORE';
-const String kPrefKeyUnlockedIndex = 'PREF_KEY_UNLOCKED_INDEX';
+const String kPrefKeyUnlockedStageIndex = 'PREF_KEY_UNLOCKED_STAGE_INDEX';
+const String kPrefKeyUnlockedLevelIndex = 'PREF_KEY_UNLOCKED_LEVEL_INDEX';
 const String kPrefKeyTimesAskedForReview = 'PREF_KEY_ASKED_FOR_REVIEW';
 
 // audio
@@ -44,3 +47,7 @@ const String kPrefKeyAdIntervalCounter = 'PREF_KEY_AD_INTERVAL_COUNTER';
 // inApp review
 const int kMinProgressAskForReview = 5;
 const int kMaxTimesAskForReview = 3;
+
+// coins
+const double kInitialGoal = 15.0;
+const int kMinimumCoins = 5;
